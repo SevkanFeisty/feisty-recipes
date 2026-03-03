@@ -175,24 +175,24 @@ const featuredRecipes = [
     id: "frikadeller",
     title: "Frikadeller",
     time: "35 min",
-    image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=450&fit=crop",
+    image: "/images/frikadeller.jpg",
   },
   {
     id: "braendende-kaerlighed",
     title: "Brændende Kærlighed",
     time: "45 min",
-    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&h=450&fit=crop",
+    image: "/images/braendende-kaerlighed.jpg",
   },
   {
     id: "rugbrod",
     title: "Rugbrød",
     time: "90 min",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=450&fit=crop",
+    image: "/images/rugbrod.jpg",
   },
   {
     id: "tarteletter",
     title: "Tarteletter",
     time: "60 min",
-    image: "https://images.unsplash.com/photo-1607532941433-304659e8198a?w=600&h=450&fit=crop",
+    image: "/images/tarteletter.jpg",
   },
 ];

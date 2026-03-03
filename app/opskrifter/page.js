@@ -14,7 +14,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "20",
     cookTime: "15",
-    image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&h=600&fit=crop",
+    image: "/images/frikadeller.jpg",
   },
   {
     id: "braendende-kaerlighed",
@@ -23,7 +23,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "15",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800&h=600&fit=crop",
+    image: "/images/braendende-kaerlighed.jpg",
   },
   {
     id: "tarteletter",
@@ -32,7 +32,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "30",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1607532941433-304659e8198a?w=800&h=600&fit=crop",
+    image: "/images/tarteletter.jpg",
   },
   {
     id: "boefstroganoff",
@@ -41,7 +41,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "20",
     cookTime: "25",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop",
+    image: "/images/boefstroganoff.jpg",
   },
   {
     id: "stegte-soedekartofler",
@@ -50,7 +50,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "10",
     cookTime: "20",
-    image: "https://images.unsplash.com/photo-1596097635121-14b63b7a2c49?w=800&h=600&fit=crop",
+    image: "/images/stegte-soedekartofler.jpg",
   },
 
   // === ASIATISK KØKKEN ===
@@ -61,7 +61,7 @@ const recipes = [
     category: "Asiatisk",
     prepTime: "15",
     cookTime: "15",
-    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&h=600&fit=crop",
+    image: "/images/wok-med-nudler.jpg",
   },
   {
     id: "karry-suppe",
@@ -70,7 +70,7 @@ const recipes = [
     category: "Asiatisk",
     prepTime: "15",
     cookTime: "20",
-    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&h=600&fit=crop",
+    image: "/images/karrysuppe.jpg",
   },
   {
     id: "sushi-bowl",
@@ -79,7 +79,7 @@ const recipes = [
     category: "Asiatisk",
     prepTime: "20",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&h=600&fit=crop",
+    image: "/images/sushi-bowl.jpg",
   },
   {
     id: "pad-thai",
@@ -88,7 +88,7 @@ const recipes = [
     category: "Asiatisk",
     prepTime: "15",
     cookTime: "15",
-    image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&h=600&fit=crop",
+    image: "/images/pad-thai.jpg",
   },
   {
     id: "dumplings",
@@ -97,7 +97,7 @@ const recipes = [
     category: "Asiatisk",
     prepTime: "45",
     cookTime: "15",
-    image: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800&h=600&fit=crop",
+    image: "/images/dumplings.jpg",
   },
 
   // === ITALIENSK KØKKEN ===
@@ -108,7 +108,7 @@ const recipes = [
     category: "Italiensk",
     prepTime: "10",
     cookTime: "20",
-    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=600&fit=crop",
+    image: "/images/pasta-carbonara.jpg",
   },
   {
     id: "pizza-margherita",
@@ -117,7 +117,7 @@ const recipes = [
     category: "Italiensk",
     prepTime: "30",
     cookTime: "15",
-    image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&h=600&fit=crop",
+    image: "/images/pizza-margherita.jpg",
   },
   {
     id: "lasagne",
@@ -126,7 +126,7 @@ const recipes = [
     category: "Italiensk",
     prepTime: "30",
     cookTime: "45",
-    image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&h=600&fit=crop",
+    image: "/images/lasagne.jpg",
   },
   {
     id: "risotto",
@@ -135,7 +135,7 @@ const recipes = [
     category: "Italiensk",
     prepTime: "10",
     cookTime: "25",
-    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&h=600&fit=crop",
+    image: "/images/risotto.jpg",
   },
   {
     id: "tiramisu",
@@ -144,7 +144,7 @@ const recipes = [
     category: "Italiensk",
     prepTime: "25",
     cookTime: "0",
-    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&h=600&fit=crop",
+    image: "/images/tiramisu.jpg",
   },
 
   // === BRØD & BAGNING ===
@@ -155,7 +155,7 @@ const recipes = [
     category: "Brød",
     prepTime: "30",
     cookTime: "60",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=600&fit=crop",
+    image: "/images/rugbrod.jpg",
   },
   {
     id: "hveder",
@@ -164,7 +164,7 @@ const recipes = [
     category: "Brød",
     prepTime: "45",
     cookTime: "15",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=600&fit=crop",
+    image: "/images/hveder.jpg",
   },
   {
     id: "croissanter",
@@ -173,7 +173,7 @@ const recipes = [
     category: "Brød",
     prepTime: "60",
     cookTime: "20",
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&h=600&fit=crop",
+    image: "/images/croissanter.jpg",
   },
 
   // === DESSERT ===
@@ -184,7 +184,7 @@ const recipes = [
     category: "Dessert",
     prepTime: "30",
     cookTime: "45",
-    image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&h=600&fit=crop",
+    image: "/images/risalamande.jpg",
   },
   {
     id: "aeblekage",
@@ -193,7 +193,7 @@ const recipes = [
     category: "Dessert",
     prepTime: "20",
     cookTime: "25",
-    image: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=800&h=600&fit=crop",
+    image: "/images/aeblekage.jpg",
   },
   {
     id: "drommekage",
@@ -202,7 +202,7 @@ const recipes = [
     category: "Dessert",
     prepTime: "20",
     cookTime: "40",
-    image: "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=800&h=600&fit=crop",
+    image: "/images/drommekage.jpg",
   },
 
   // === SMØRREBRØD ===
@@ -213,7 +213,7 @@ const recipes = [
     category: "Smørrebrød",
     prepTime: "15",
     cookTime: "45",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop",
+    image: "/images/leverpostej.jpg",
   },
   {
     id: "roeabriet",
@@ -222,7 +222,7 @@ const recipes = [
     category: "Smørrebrød",
     prepTime: "10",
     cookTime: "10",
-    image: "https://images.unsplash.com/photo-1512054502232-120ea5a0b5f5?w=800&h=600&fit=crop",
+    image: "/images/roeget-aal.jpg",
   },
   {
     id: "toerret-torsk",
@@ -231,7 +231,7 @@ const recipes = [
     category: "Smørrebrød",
     prepTime: "10",
     cookTime: "0",
-    image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=800&h=600&fit=crop",
+    image: "/images/toerret-torsk.jpg",
   },
 ];
 
