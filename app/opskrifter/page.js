@@ -23,7 +23,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "15",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800&h=600&fit=crop",
   },
   {
     id: "tarteletter",

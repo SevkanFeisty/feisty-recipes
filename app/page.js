@@ -181,7 +181,7 @@ const featuredRecipes = [
     id: "braendende-kaerlighed",
     title: "Brændende Kærlighed",
     time: "45 min",
-    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&h=450&fit=crop",
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&h=450&fit=crop",
   },
   {
     id: "rugbrod",
