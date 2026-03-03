@@ -154,13 +154,13 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 py-12">
+      <footer className="bg-gradient-to-r from-emerald-600 to-teal-600 py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <img src="/feisty-logo.png" alt="Feisty" className="h-8 w-auto" />
+            <div className="flex items-center gap-3">
+              <img src="/feisty-logo.png" alt="Feisty" className="h-12 w-auto" />
             </div>
-            <p className="text-slate-400 text-sm">
+            <p className="text-white/80 text-sm">
               © 2026 Feisty. Alle rettigheder forbeholdes.
             </p>
           </div>
