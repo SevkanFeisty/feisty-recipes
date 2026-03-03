@@ -483,12 +483,22 @@ export default function MadplanPage() {
                 </div>
                 
                 <div className="space-y-2 pl-2">
-                  {items.map((item, idx) => (
+                  {items.map((item, idx) => {
+                    // Get colors for each day this ingredient is used
+                    const dayColors = item.days.map(d => getDayColor(d));
+                    
+                    return (
                     <label 
                       key={idx} 
-                      className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.days.length > 1 ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}
+                      className={`flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.days.length > 1 ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}
                     >
                       <input type="checkbox" className="w-6 h-6 rounded-lg border-2 border-slate-300 text-emerald-500 focus:ring-emerald-500" />
+                      {/* Day color dots */}
+                      <div className="flex gap-1 flex-shrink-0">
+                        {dayColors.map((color, cIdx) => (
+                          <span key={cIdx} className="w-3 h-3 rounded-full" style={{ backgroundColor: color.color }}></span>
+                        ))}
+                      </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <span className={`font-medium ${item.days.length > 1 ? 'text-amber-700' : 'text-slate-900'}`}>
@@ -506,7 +516,7 @@ export default function MadplanPage() {
                         <div className="font-bold text-slate-900">{item.price.toFixed(2)} kr</div>
                       </div>
                     </label>
-                  ))}
+                    )})}
                 </div>
               </div>
             );
