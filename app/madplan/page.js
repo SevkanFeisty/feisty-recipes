@@ -276,6 +276,15 @@ function generateGroceryList(weeklyPlan) {
 export default function MadplanPage() {
   const [weekOffset, setWeekOffset] = useState(0);
   
+  // Limit navigation to ±2 weeks from current
+  const goToNextWeek = () => {
+    if (weekOffset < 2) setWeekOffset(weekOffset + 1);
+  };
+  
+  const goToPrevWeek = () => {
+    if (weekOffset > -2) setWeekOffset(weekOffset - 1);
+  };
+  
   // Get current ISO week info
   const currentWeekInfo = getCurrentISOWeek();
   const currentWeekString = currentWeekInfo.weekString;
@@ -374,11 +383,23 @@ export default function MadplanPage() {
 
         {/* Week Navigation */}
         <div className="flex items-center justify-center gap-4 mb-6">
-          <button onClick={() => setWeekOffset(weekOffset - 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">←</button>
+          <button 
+            onClick={goToPrevWeek} 
+            disabled={weekOffset <= -2}
+            className={`w-8 h-8 rounded-full flex items-center justify-center ${weekOffset <= -2 ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-white shadow-sm text-slate-600 hover:bg-slate-50'}`}
+          >
+            ←
+          </button>
           <div className="text-lg font-semibold text-slate-900 min-w-[200px] text-center">
             {getWeekLabel()}
           </div>
-          <button onClick={() => setWeekOffset(weekOffset + 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">→</button>
+          <button 
+            onClick={goToNextWeek} 
+            disabled={weekOffset >= 2}
+            className={`w-8 h-8 rounded-full flex items-center justify-center ${weekOffset >= 2 ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-white shadow-sm text-slate-600 hover:bg-slate-50'}`}
+          >
+            →
+          </button>
         </div>
 
         {/* Week Grid */}
