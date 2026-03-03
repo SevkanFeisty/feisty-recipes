@@ -56,7 +56,7 @@ export default function ProfilPage() {
                     <span className="text-emerald-500">✓</span> Automatisk indkøbsliste
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="text-emerald-500">✓</span> Spar op til 20% på indkøb
+                    <span className="text-emerald-500">✓</span> Spar op til 40% på indkøb
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-emerald-500">✓</span> Mindre madspild
