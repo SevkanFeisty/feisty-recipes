@@ -182,7 +182,7 @@ const featuredRecipes = [
     id: "braendende-kaerlighed",
     title: "Brændende Kærlighed",
     time: "45 min",
-    image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&h=450&fit=crop",
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&h=450&fit=crop",
   },
   {
     id: "rugbrod",
@@ -191,9 +191,9 @@ const featuredRecipes = [
     image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=450&fit=crop",
   },
   {
-    id: "toerret-fisk",
-    title: "Tørret Fisch",
-    time: "20 min",
-    image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=600&h=450&fit=crop",
+    id: "tarteletter",
+    title: "Tarteletter",
+    time: "60 min",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=450&fit=crop",
   },
 ];

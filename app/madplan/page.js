@@ -12,228 +12,95 @@ const days = [
   { name: 'Fredag', day_en: 'Friday', color: '#C4B5FD', bg: '#EDE9FE', border: '#8B5CF6' },
 ];
 
-// Recipe data with full details + normalized ingredients for grocery list
+// Recipe data - used in madplan
 const recipesData = {
   "veggie-curry": {
     title: "Veggie Curry",
-    subtitle: "Krydret grøntsagscurry med kokosmælk",
-    description: "En lækker og mættende vegetarisk curry med masser af grøntsager i en cremet kokossovs.",
-    prepTime: "15 min",
-    cookTime: "25 min",
-    servings: 4,
-    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e8254?w=800&h=600&fit=crop",
+    day: "Mandag",
     ingredients: [
       "400 ml kokosmælk",
-      "240 g kikærter (dåse)",
-      "1 broccolibuket",
-      "1 dl grønne ærter",
+      "240 g kikærter",
+      "1 broccoli",
+      "100 g ærter",
       "2 spsk karrypasta",
       "1 løg",
       "2 fed hvidløg",
-      "2 spsk olivenolie",
-      "1 tsk gurkemeje",
-      "400 g ris",
-      "Salt og peber"
-    ],
-    instructions: [
-      "Hak løg og hvidløg fint.",
-      "Sauter løg i olie til gylden.",
-      "Tilsæt karrypasta og hvidløg.",
-      "Tilsæt kokosmælk og kikærter.",
-      "Tilsæt broccoli og ærter.",
-      "Lad simre i 15 minutter.",
-      "Server med ris."
+      "400 g ris"
     ]
   },
   "pasta-primavera": {
     title: "Pasta Primavera",
-    subtitle: "Pastaret med friske grøntsager",
-    description: "En klassisk italiensk pastaret med sæsonens grøntsager og parmesan.",
-    prepTime: "10 min",
-    cookTime: "20 min",
-    servings: 4,
-    image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&h=600&fit=crop",
+    day: "Tirsdag",
     ingredients: [
       "500 g pasta",
       "400 g hakkede tomater",
       "2 squash",
-      "1 rød peberfrugt",
-      "1 broccolibuket",
-      "100 g parmesanost",
-      "3 fed hvidløg",
-      "3 spsk olivenolie",
-      "Frisk basilikum",
-      "Salt og peber"
-    ],
-    instructions: [
-      "Kog pasta efter anvisning.",
-      "Sauter hvidløg i olie.",
-      "Tilsæt grøntsager og steg i 5 min.",
-      "Tilsæt tomater og lad simre.",
-      "Bland med pasta.",
-      "Top med parmesan."
+      "1 peberfrugt",
+      "1 broccoli",
+      "100 g parmesan",
+      "3 fed hvidløg"
     ]
   },
   "veggie-tacos": {
     title: "Veggie Tacos",
-    subtitle: "Mexicanske tacos med grøntsager",
-    description: "Farverige tacos med krydrede grøntsager, majs og kikærter.",
-    prepTime: "15 min",
-    cookTime: "15 min",
-    servings: 4,
-    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&h=600&fit=crop",
+    day: "Onsdag",
     ingredients: [
       "8 majs-tortillas",
-      "285 g majs (dåse)",
-      "240 g kikærter (dåse)",
+      "285 g majs",
+      "240 g kikærter",
       "1 avocado",
       "1 rødløg",
       "2 tomater",
-      "1 håndfuld cilantro",
-      "1 lime",
-      "1 tsk spidskommen",
-      "1 tsk paprika",
-      "Salt og peber"
-    ],
-    instructions: [
-      "Skær grøntsager i tern.",
-      "Varm kikærter og majs.",
-      "Lav guacamole af avocado.",
-      "Varm tortillas.",
-      "Samle tacos med grøntsager.",
-      "Top med koriander og lime."
+      "1 lime"
     ]
   },
   "lentil-soup": {
     title: "Linsesuppe",
-    subtitle: "Nærende linsesuppe med grøntsager",
-    description: "En varmende og sund suppe med røde linser og krydderier.",
-    prepTime: "10 min",
-    cookTime: "30 min",
-    servings: 4,
-    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&h=600&fit=crop",
+    day: "Torsdag",
     ingredients: [
       "300 g røde linser",
       "3 gulerødder",
       "2 porrer",
       "1 løg",
       "3 fed hvidløg",
-      "1 liter grøntsagsbouillon",
-      "1 tsk spidskommen",
-      "1 tsk gurkemeje",
-      "2 laurbærblade",
-      "2 spsk olivenolie",
-      "Cremefraiche",
-      "Frisk persille"
-    ],
-    instructions: [
-      "Hak grøntsager.",
-      "Sauter løg og hvidløg.",
-      "Tilsæt gulerødder og porrer.",
-      "Tilsæt linser og bouillon.",
-      "Krydre med spidskommen.",
-      "Lad koge i 25 min.",
-      "Server med cremefraiche."
+      "1 liter boullion"
     ]
   },
   "falafel-bowl": {
     title: "Falafel Bowl",
-    subtitle: "Proteinrig bowl med falafel og hummus",
-    description: "En mættende bowl med sprøde falafel, hummus og frisk salat.",
-    prepTime: "10 min",
-    cookTime: "15 min",
-    servings: 4,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=600&fit=crop",
+    day: "Fredag",
     ingredients: [
       "300 g falafel",
       "250 g hummus",
-      "1 pose blandet salat",
+      "1 pose salat",
       "1 agurk",
       "2 tomater",
-      "1 rødløg",
-      "4 pitabrød",
-      "150 g tzatziki",
-      "Olivenolie",
-      "Frisk mynte"
-    ],
-    instructions: [
-      "Bag falafel efter anvisning.",
-      "Skær agurk og tomater.",
-      "Anret salat i bunden.",
-      "Tilsæt falafel og hummus.",
-      "Top med grøntsager.",
-      "Servér med pitabrød."
+      "4 pitabrød"
     ]
   }
 };
 
-// Generate grocery list from all recipes
-function generateGroceryList(recipes) {
-  const groceryMap = new Map();
+// Generate combined grocery list from all recipes
+function generateGroceryList() {
+  const allIngredients = [];
   
-  // Ingredients that can be reused across days (leftovers)
-  const reusableItems = ['kikærter', 'løg', 'hvidløg', 'olivenolie', 'salt', 'peber', 'ris'];
-  
-  // Track which days each ingredient appears in
-  const ingredientDays = new Map();
-  
-  Object.entries(recipes).forEach(([recipeId, recipe]) => {
+  Object.values(recipesData).forEach(recipe => {
     recipe.ingredients.forEach(ing => {
-      // Normalize ingredient name (remove quantities, lowercase)
-      const normalizedName = ing.toLowerCase()
-        .replace(/\d+[gmlkdl]?\s*/g, '')
-        .replace(/dåse|pose|buket|fed|stk|håndfuld/g, '')
-        .trim();
-      
-      // Find base ingredient name
-      const baseName = normalizedName.split(' ').slice(-2).join(' ');
-      
-      if (!ingredientDays.has(baseName)) {
-        ingredientDays.set(baseName, []);
-      }
-      ingredientDays.get(baseName).push({ recipe: recipe.title, day: getDanishDayForRecipe(recipeId) });
-      
-      if (!groceryMap.has(baseName)) {
-        groceryMap.set(baseName, {
-          original: ing,
-          baseName,
-          days: [],
-          recipes: [],
-          isReusable: reusableItems.some(item => baseName.includes(item))
-        });
-      }
-      groceryMap.get(baseName).days.push(getDanishDayForRecipe(recipeId));
-      groceryMap.get(baseName).recipes.push(recipe.title);
+      allIngredients.push({
+        name: ing,
+        day: recipe.day
+      });
     });
   });
   
-  return Array.from(groceryMap.values()).sort((a, b) => {
-    // Put reusable/leftover items first
-    if (a.isReusable && !b.isReusable) return -1;
-    if (!a.isReusable && b.isReusable) return 1;
-    return a.baseName.localeCompare(b.baseName);
-  });
+  return allIngredients;
 }
 
-function getDanishDayForRecipe(recipeId) {
-  const dayMap = {
-    'veggie-curry': 'Mandag',
-    'pasta-primavera': 'Tirsdag',
-    'veggie-tacos': 'Onsdag',
-    'lentil-soup': 'Torsdag',
-    'falafel-bowl': 'Fredag'
-  };
-  return dayMap[recipeId] || 'Ukendt';
-}
-
-// Full plan data
 const samplePlan = {
   plan_id: "vegetarian-5day",
   plan_name: "Premium Vegetarian",
   score: 92,
   total_cost_dkk: 189,
-  supermarkets: ["REMA 1000"],
-  dietary_tags: ["vegetarian"],
   days: [
     { day: 1, day_name: "Monday", recipe_id: "veggie-curry", day_total: 44 },
     { day: 2, day_name: "Tuesday", recipe_id: "pasta-primavera", day_total: 59 },
@@ -246,9 +113,7 @@ const samplePlan = {
 export default function MadplanPage() {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState(samplePlan);
-  
-  // Generate grocery list from actual recipes
-  const groceryList = generateGroceryList(recipesData);
+  const groceryList = generateGroceryList();
 
   const getDanishDay = (dayName) => {
     const day = days.find(d => d.day_en === dayName);
@@ -284,13 +149,6 @@ export default function MadplanPage() {
               <span className="font-bold text-emerald-600">{selectedPlan.total_cost_dkk} kr</span>
             </div>
           </div>
-          <div className="flex gap-2">
-            {selectedPlan.dietary_tags.map(tag => (
-              <span key={tag} className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">
-                {tag}
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* Week Navigation */}
@@ -302,7 +160,7 @@ export default function MadplanPage() {
           <button onClick={() => setWeekOffset(weekOffset + 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">→</button>
         </div>
 
-        {/* Week Grid - CLICKABLE RECIPES */}
+        {/* Week Grid */}
         <div className="grid grid-cols-5 gap-2 mb-8">
           {selectedPlan.days.map((dayData) => {
             const dayColor = getDayColor(dayData.day_name);
@@ -338,59 +196,26 @@ export default function MadplanPage() {
           })}
         </div>
 
-        {/* Grocery List - FROM ACTUAL RECIPES */}
+        {/* Grocery List */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Indkøbsliste</h2>
-          <p className="text-sm text-slate-500 mb-6">Baseret på alle opskrifter i denne uges madplan</p>
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">Indkøbsliste</h2>
           
-          {/* Leftover/Reusable highlight */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-amber-600">♻️</span>
-              <span className="font-semibold text-amber-800">GenbrugeLse</span>
-            </div>
-            <p className="text-sm text-amber-700">
-              Disse ingredienser kan købes i større mængder og bruges på tværs af flere dage - spar penge og undgå madspild!
-            </p>
-          </div>
-
-          <div className="space-y-6">
+          <div className="space-y-4">
             {groceryList.map((item, idx) => (
-              <div key={idx} className={`p-4 rounded-xl ${item.isReusable ? 'bg-emerald-50 border border-emerald-200' : 'bg-slate-50'}`}>
-                <div className="flex items-start gap-3">
-                  {/* Leftover indicator */}
-                  {item.isReusable && (
-                    <span className="text-lg" title="Kan genbruges">♻️</span>
-                  )}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className={`font-medium ${item.isReusable ? 'text-emerald-700' : 'text-slate-900'}`}>
-                        {item.original}
-                      </span>
-                      {item.isReusable && (
-                        <span className="text-xs bg-emerald-200 text-emerald-700 px-2 py-0.5 rounded-full">
-                          Genbrug
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xs text-slate-500 mt-1">
-                      Bruges på: {item.days.join(', ')}
-                    </div>
-                  </div>
-                </div>
+              <div key={idx} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                <input type="checkbox" className="w-5 h-5 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500" />
+                <span className="text-slate-700">{item.name}</span>
+                <span className="ml-auto text-xs text-slate-400">{item.day}</span>
               </div>
             ))}
           </div>
 
           <div className="mt-6 pt-4 border-t border-slate-100">
-            <div className="flex gap-6">
-              <span className="font-bold text-slate-900">Total ingredienser: {groceryList.length}</span>
-              <span className="font-bold text-emerald-600">Estimeret pris: ~{selectedPlan.total_cost_dkk} kr</span>
-            </div>
+            <span className="font-bold text-slate-900">I alt: {groceryList.length} ingredienser</span>
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Button */}
         <div className="flex flex-wrap justify-center gap-4 mt-8">
           <button className="px-8 py-4 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition-colors shadow-lg text-lg">
             Generér indkøbsliste
