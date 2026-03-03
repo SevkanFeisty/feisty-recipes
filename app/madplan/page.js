@@ -12,6 +12,51 @@ const days = [
   { name: 'Fredag', day_en: 'Friday', color: '#C4B5FD', bg: '#EDE9FE', border: '#8B5CF6' },
 ];
 
+// Categories for ingredients
+const categories = {
+  "Grøntsager": { icon: "🥬", color: "bg-green-100 border-green-300" },
+  "Frugt": { icon: "🍎", color: "bg-red-100 border-red-300" },
+  "Kød & Fisk": { icon: "🥩", color: "bg-rose-100 border-rose-300" },
+  "Mejeri": { icon: "🧀", color: "bg-yellow-100 border-yellow-300" },
+  "Tørvarer": { icon: "🥫", color: "bg-amber-100 border-amber-300" },
+  "Krydderier": { icon: "🧂", color: "bg-orange-100 border-orange-300" },
+  "Frosne": { icon: "🧊", color: "bg-cyan-100 border-cyan-300" },
+  "Brød": { icon: "🍞", color: "bg-amber-50 border-amber-200" },
+  "Diverse": { icon: "📦", color: "bg-slate-100 border-slate-300" }
+};
+
+// Categorize ingredient
+function categorizeIngredient(name) {
+  const lower = name.toLowerCase();
+  
+  if (lower.includes('løg') || lower.includes('hvidløg') || lower.includes('gulerod') || lower.includes('porre') || 
+      lower.includes('broccoli') || lower.includes('squash') || lower.includes('peberfrugt') || lower.includes('agurk') ||
+      lower.includes('tomater') || lower.includes('salat') || lower.includes('avocado') || lower.includes('lime') ||
+      lower.includes('basilikum') || lower.includes('koriander') || lower.includes('mynte') || lower.includes('persille')) {
+    return "Grøntsager";
+  }
+  if (lower.includes('ært')) return "Grøntsager";
+  if (lower.includes('ris') || lower.includes('pasta') || lower.includes('linser') || lower.includes('kikært') ||
+      lower.includes('majs') || lower.includes('bouillon') || lower.includes('tortilla') || lower.includes('pitabrød')) {
+    return "Tørvarer";
+  }
+  if (lower.includes('mælk') || lower.includes('ost') || lower.includes('parmesan') || lower.includes('cremefraiche') ||
+      lower.includes('tza tziki') || lower.includes('hummus')) {
+    return "Mejeri";
+  }
+  if (lower.includes('olie') || lower.includes('eddike') || lower.includes('soja')) {
+    return "Diverse";
+  }
+  if (lower.includes('salt') || lower.includes('peber') || lower.includes('karry') || lower.includes('spidskommen') ||
+      lower.includes('gurkemeje') || lower.includes('paprika') || lower.includes('laurbær')) {
+    return "Krydderier";
+  }
+  if (lower.includes('falafel')) {
+    return "Frosne";
+  }
+  return "Diverse";
+}
+
 // Recipe data with full ingredient details
 const recipesData = {
   "veggie-curry": {
@@ -25,7 +70,7 @@ const recipesData = {
       { name: "Karrypasta", amount: "290 g", brand: "Blue Dragon", price: 19.95 },
       { name: "Løg", amount: "1 kg", brand: "Frugt & Grønt", price: 8.95 },
       { name: "Hvidløg", amount: "3 fed", brand: "Frugt & Grønt", price: 5.00 },
-      { name: "Jasminris", amount: "1 kg", brand: "Tastic", price: 14.95 }
+      { name: "Jasminris", amount: "1 kg", brand: "Tistic", price: 14.95 }
     ]
   },
   "pasta-primavera": {
@@ -98,9 +143,17 @@ function getMultiDayIngredients() {
   return Object.values(ingredientCount).filter(i => i.count > 1);
 }
 
-// Generate grocery list with prices
+// Generate grocery list grouped by category
 function generateGroceryList() {
-  const allIngredients = [];
+  const categorized = {};
+  const multiDay = getMultiDayIngredients();
+  const multiDayNames = multiDay.map(m => m.name.toLowerCase());
+  
+  // Initialize categories
+  Object.keys(categories).forEach(cat => {
+    categorized[cat] = [];
+  });
+  
   const seen = new Set();
   
   Object.values(recipesData).forEach(recipe => {
@@ -108,29 +161,36 @@ function generateGroceryList() {
       const key = ing.name.toLowerCase();
       if (!seen.has(key)) {
         seen.add(key);
-        allIngredients.push({
+        const category = categorizeIngredient(ing.name);
+        categorized[category].push({
           name: ing.name,
           amount: ing.amount,
           brand: ing.brand,
           price: ing.price,
-          days: [recipe.day]
+          days: [recipe.day],
+          isMultiDay: multiDayNames.includes(key)
         });
       } else {
-        // Add day to existing
-        const existing = allIngredients.find(i => i.name.toLowerCase() === key);
+        const category = categorizeIngredient(ing.name);
+        const existing = categorized[category].find(i => i.name.toLowerCase() === key);
         if (existing && !existing.days.includes(recipe.day)) {
           existing.days.push(recipe.day);
+          existing.isMultiDay = true;
         }
       }
     });
   });
   
-  return allIngredients.sort((a, b) => {
-    // Multi-day items first
-    if (a.days.length > 1 && b.days.length === 1) return -1;
-    if (a.days.length === 1 && b.days.length > 1) return 1;
-    return a.name.localeCompare(b.name);
+  // Sort items within each category
+  Object.keys(categorized).forEach(cat => {
+    categorized[cat].sort((a, b) => {
+      if (a.isMultiDay && !b.isMultiDay) return -1;
+      if (!a.isMultiDay && b.isMultiDay) return 1;
+      return a.name.localeCompare(b.name);
+    });
   });
+  
+  return categorized;
 }
 
 const samplePlan = {
@@ -154,7 +214,7 @@ export default function MadplanPage() {
   const groceryList = generateGroceryList();
   const multiDayIngredients = getMultiDayIngredients();
   
-  const totalPrice = groceryList.reduce((sum, item) => sum + item.price, 0);
+  const totalPrice = Object.values(groceryList).flat().reduce((sum, item) => sum + item.price, 0);
 
   const getDanishDay = (dayName) => {
     const day = days.find(d => d.day_en === dayName);
@@ -181,28 +241,24 @@ export default function MadplanPage() {
         {/* Plan Summary Box */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
           <div className="grid md:grid-cols-4 gap-6">
-            {/* Supermarket */}
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
               <div className="text-3xl mb-2">🏪</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Supermarked</div>
               <div className="text-xl font-bold text-slate-900">{selectedPlan.supermarket}</div>
             </div>
             
-            {/* Total Cost */}
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
               <div className="text-3xl mb-2">💰</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Total Pris</div>
               <div className="text-xl font-bold text-emerald-600">{totalPrice.toFixed(2)} kr</div>
             </div>
             
-            {/* Score */}
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
               <div className="text-3xl mb-2">🏆</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Score</div>
               <div className="text-xl font-bold text-slate-900">{selectedPlan.score}/100</div>
             </div>
             
-            {/* Multi-day items */}
             <div className="text-center p-4 bg-amber-50 rounded-xl">
               <div className="text-3xl mb-2">♻️</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Genbruges</div>
@@ -210,7 +266,6 @@ export default function MadplanPage() {
             </div>
           </div>
           
-          {/* Multi-day ingredients detail */}
           {multiDayIngredients.length > 0 && (
             <div className="mt-4 pt-4 border-t border-amber-200">
               <div className="text-sm text-amber-800 font-medium mb-2">Disse ingredienser bruges på flere dage:</div>
@@ -270,39 +325,57 @@ export default function MadplanPage() {
           })}
         </div>
 
-        {/* Grocery List */}
+        {/* Grocery List - By Category */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-slate-900">Indkøbsliste</h2>
             <span className="text-sm text-slate-500">Klik for at krydse af</span>
           </div>
           
-          <div className="space-y-2">
-            {groceryList.map((item, idx) => (
-              <label key={idx} className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.days.length > 1 ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}>
-                <input 
-                  type="checkbox" 
-                  className="w-6 h-6 rounded-lg border-2 border-slate-300 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-2" 
-                />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className={`font-medium ${item.days.length > 1 ? 'text-amber-700' : 'text-slate-900'}`}>
-                      {item.name}
-                    </span>
-                    {item.days.length > 1 && (
-                      <span className="text-xs bg-amber-200 text-amber-700 px-2 py-0.5 rounded-full">
-                        Bruges {item.days.length} dage
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-sm text-slate-500">{item.amount} • {item.brand}</div>
+          {Object.entries(groceryList).map(([category, items]) => {
+            if (items.length === 0) return null;
+            const catInfo = categories[category];
+            
+            return (
+              <div key={category} className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xl">{catInfo.icon}</span>
+                  <h3 className="text-lg font-bold text-slate-900">{category}</h3>
+                  <span className="text-xs text-slate-500">({items.length} varer)</span>
                 </div>
-                <div className="text-right">
-                  <div className="font-bold text-slate-900">{item.price.toFixed(2)} kr</div>
+                
+                <div className="space-y-2 pl-2">
+                  {items.map((item, idx) => (
+                    <label 
+                      key={idx} 
+                      className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.isMultiDay ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}
+                    >
+                      <input 
+                        type="checkbox" 
+                        className="w-6 h-6 rounded-lg border-2 border-slate-300 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-2" 
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className={`font-medium ${item.isMultiDay ? 'text-amber-700' : 'text-slate-900'}`}>
+                            {item.name}
+                          </span>
+                          {item.isMultiDay && (
+                            <span className="text-xs bg-amber-200 text-amber-700 px-2 py-0.5 rounded-full">
+                              {item.days.length} dage
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm text-slate-500">{item.amount} • {item.brand}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold text-slate-900">{item.price.toFixed(2)} kr</div>
+                      </div>
+                    </label>
+                  ))}
                 </div>
-              </label>
-            ))}
-          </div>
+              </div>
+            );
+          })}
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
             <span className="font-bold text-slate-900">I alt:</span>
