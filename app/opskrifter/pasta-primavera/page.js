@@ -1,36 +1,31 @@
 import Link from "next/link";
 
+const multiDayIngredients = ['kikærter', 'løg', 'hvidløg', 'broccoli', 'tomater'];
+
+function isMultiDayIngredient(name) {
+  const lower = name.toLowerCase();
+  return multiDayIngredients.some(m => lower.includes(m));
+}
+
 export default function PastaPrimaveraPage() {
   const recipe = {
     title: "Pasta Primavera",
     subtitle: "Pastaret med friske grøntsager",
-    description: "En klassisk italiensk pastaret med sæsonens grøntsager og parmesan. Let, frisk og perfekt til foråret.",
+    description: "En klassisk italiensk pastaret med sæsonens grøntsager og parmesan.",
     prepTime: "10 min",
     cookTime: "20 min",
     servings: 4,
     image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=1200&h=800&fit=crop",
     ingredients: [
-      "500 g pasta (penne eller fusilli)",
-      "400 g hakkede tomater",
-      "2 squash",
-      "1 rød peberfrugt",
-      "1 broccolibuket",
-      "100 g parmesanost",
-      "3 fed hvidløg",
-      "3 spsk olivenolie",
-      "Frisk basilikum",
-      "Salt og peber efter smag"
-    ],
-    instructions: [
-      "Kog pasta efter anvisningen på pakken i letsaltet vand.",
-      "Hak hvidløg fint og skær grøntsager i tern.",
-      "Varm olivenolie i en stor pande ved medium varme.",
-      "Tilsæt hvidløg og steg i 30 sekunder.",
-      "Tilsæt squash, peberfrugt og broccoli og steg i 5 minutter.",
-      "Tilsæt hakkede tomater og lad simre i 5 minutter.",
-      "Dræn pastaen og bland med grøntsagsblandingen.",
-      "Riv parmesan over og tilsæt frisk basilikum.",
-      "Smag til med salt og peber og server straks."
+      { name: "500 g pasta", day: "Tirsdag" },
+      { name: "400 g hakkede tomater", day: "Tirsdag" },
+      { name: "2 squash", day: "Tirsdag" },
+      { name: "1 rød peberfrugt", day: "Tirsdag" },
+      { name: "1 broccolibuket", day: "Tirsdag" },
+      { name: "100 g parmesanost", day: "Tirsdag" },
+      { name: "3 fed hvidløg", day: "Tirsdag" },
+      { name: "3 spsk olivenolie", day: "Tirsdag" },
+      { name: "Frisk basilikum", day: "Tirsdag" }
     ]
   };
 
@@ -74,13 +69,25 @@ export default function PastaPrimaveraPage() {
               <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">📝</span>
               Ingredienser
             </h2>
+            
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <p className="text-sm text-amber-700">
+                <span className="font-medium">Orange ingredienser</span> bruges også på andre dage - køb lidt ekstra! ♻️
+              </p>
+            </div>
+            
             <ul className="space-y-3">
-              {recipe.ingredients.map((ing, i) => (
-                <li key={i} className="flex items-start gap-3 text-slate-700">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-emerald-400 flex-shrink-0" />
-                  {ing}
-                </li>
-              ))}
+              {recipe.ingredients.map((ing, i) => {
+                const isMulti = isMultiDayIngredient(ing.name);
+                return (
+                  <li key={i} className={`flex items-start gap-3 p-2 rounded-lg ${isMulti ? 'bg-amber-50 border border-amber-200' : ''}`}>
+                    <span className={`w-2 h-2 mt-2 rounded-full flex-shrink-0 ${isMulti ? 'bg-amber-400' : 'bg-emerald-400'}`} />
+                    <span className={isMulti ? 'text-amber-700 font-medium' : 'text-slate-700'}>
+                      {ing.name}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -90,7 +97,14 @@ export default function PastaPrimaveraPage() {
               Fremgangsmåde
             </h2>
             <ol className="space-y-4">
-              {recipe.instructions.map((step, i) => (
+              {[
+                "Kog pasta efter anvisning.",
+                "Sauter hvidløg i olie.",
+                "Tilsæt grøntsager og steg i 5 min.",
+                "Tilsæt tomater og lad simre.",
+                "Bland med pasta.",
+                "Top med parmesan."
+              ].map((step, i) => (
                 <li key={i} className="flex gap-4">
                   <span className="flex-shrink-0 w-7 h-7 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">
                     {i + 1}

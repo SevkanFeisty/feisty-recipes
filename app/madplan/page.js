@@ -12,88 +12,125 @@ const days = [
   { name: 'Fredag', day_en: 'Friday', color: '#C4B5FD', bg: '#EDE9FE', border: '#8B5CF6' },
 ];
 
-// Recipe data - used in madplan
+// Recipe data with full ingredient details
 const recipesData = {
   "veggie-curry": {
     title: "Veggie Curry",
     day: "Mandag",
     ingredients: [
-      "400 ml kokosmælk",
-      "240 g kikærter",
-      "1 broccoli",
-      "100 g ærter",
-      "2 spsk karrypasta",
-      "1 løg",
-      "2 fed hvidløg",
-      "400 g ris"
+      { name: "Kokosmælk", amount: "400 ml", brand: "Coco", price: 12.95 },
+      { name: "Kikærter", amount: "400 g", brand: "Casablanca", price: 8.95 },
+      { name: "Broccoli", amount: "1 stk", brand: "Frugt & Grønt", price: 9.95 },
+      { name: "Ærter", amount: "300 g", brand: "Frozen", price: 12.50 },
+      { name: "Karrypasta", amount: "290 g", brand: "Blue Dragon", price: 19.95 },
+      { name: "Løg", amount: "1 kg", brand: "Frugt & Grønt", price: 8.95 },
+      { name: "Hvidløg", amount: "3 fed", brand: "Frugt & Grønt", price: 5.00 },
+      { name: "Jasminris", amount: "1 kg", brand: "Tastic", price: 14.95 }
     ]
   },
   "pasta-primavera": {
     title: "Pasta Primavera",
     day: "Tirsdag",
     ingredients: [
-      "500 g pasta",
-      "400 g hakkede tomater",
-      "2 squash",
-      "1 peberfrugt",
-      "1 broccoli",
-      "100 g parmesan",
-      "3 fed hvidløg"
+      { name: "Pasta", amount: "500 g", brand: "Barilla", price: 9.95 },
+      { name: "Hakkede tomater", amount: "400 g", brand: "Mutti", price: 14.95 },
+      { name: "Squash", amount: "2 stk", brand: "Frugt & Grønt", price: 10.00 },
+      { name: "Peberfrugt", amount: "2 stk", brand: "Frugt & Grønt", price: 12.00 },
+      { name: "Broccoli", amount: "1 stk", brand: "Frugt & Grønt", price: 9.95 },
+      { name: "Parmesan", amount: "200 g", brand: "Arla", price: 29.95 },
+      { name: "Hvidløg", amount: "1 hoved", brand: "Frugt & Grønt", price: 3.00 }
     ]
   },
   "veggie-tacos": {
     title: "Veggie Tacos",
     day: "Onsdag",
     ingredients: [
-      "8 majs-tortillas",
-      "285 g majs",
-      "240 g kikærter",
-      "1 avocado",
-      "1 rødløg",
-      "2 tomater",
-      "1 lime"
+      { name: "Majs-tortillas", amount: "8 stk", brand: "Santa Maria", price: 18.95 },
+      { name: "Majs", amount: "340 g", brand: "Sweet Corn", price: 7.95 },
+      { name: "Kikærter", amount: "400 g", brand: "Casablanca", price: 8.95 },
+      { name: "Avocado", amount: "2 stk", brand: "Frugt & Grønt", price: 14.00 },
+      { name: "Rødløg", amount: "2 stk", brand: "Frugt & Grønt", price: 6.00 },
+      { name: "Tomater", amount: "4 stk", brand: "Frugt & Grønt", price: 12.00 },
+      { name: "Lime", amount: "2 stk", brand: "Frugt & Grønt", price: 8.00 }
     ]
   },
   "lentil-soup": {
     title: "Linsesuppe",
     day: "Torsdag",
     ingredients: [
-      "300 g røde linser",
-      "3 gulerødder",
-      "2 porrer",
-      "1 løg",
-      "3 fed hvidløg",
-      "1 liter boullion"
+      { name: "Røde linser", amount: "500 g", brand: "Bobs Red Mill", price: 19.95 },
+      { name: "Gulerødder", amount: "1 kg", brand: "Frugt & Grønt", price: 9.95 },
+      { name: "Porrer", amount: "2 stk", brand: "Frugt & Grønt", price: 8.00 },
+      { name: "Løg", amount: "1 kg", brand: "Frugt & Grønt", price: 8.95 },
+      { name: "Hvidløg", amount: "1 hoved", brand: "Frugt & Grønt", price: 3.00 },
+      { name: "Grøntsagsbouillon", amount: "6 stk", brand: "Knorr", price: 15.95 }
     ]
   },
   "falafel-bowl": {
     title: "Falafel Bowl",
     day: "Fredag",
     ingredients: [
-      "300 g falafel",
-      "250 g hummus",
-      "1 pose salat",
-      "1 agurk",
-      "2 tomater",
-      "4 pitabrød"
+      { name: "Falafel", amount: "300 g", brand: "D四个字", price: 22.95 },
+      { name: "Hummus", amount: "250 g", brand: "Pulsar", price: 14.95 },
+      { name: "Salatmix", amount: "250 g", brand: "Evergreen", price: 12.95 },
+      { name: "Agurk", amount: "1 stk", brand: "Frugt & Grønt", price: 5.00 },
+      { name: "Tomater", amount: "4 stk", brand: "Frugt & Grønt", price: 12.00 },
+      { name: "Pitabrød", amount: "4 stk", brand: "Al Arabi", price: 14.95 }
     ]
   }
 };
 
-// Generate combined grocery list from all recipes
-function generateGroceryList() {
-  const allIngredients = [];
+// Find ingredients used in multiple days
+function getMultiDayIngredients() {
+  const ingredientCount = {};
   
   Object.values(recipesData).forEach(recipe => {
     recipe.ingredients.forEach(ing => {
-      allIngredients.push({
-        name: ing,
-        day: recipe.day
-      });
+      const key = ing.name.toLowerCase();
+      if (!ingredientCount[key]) {
+        ingredientCount[key] = { name: ing.name, days: [], count: 0 };
+      }
+      ingredientCount[key].days.push(recipe.day);
+      ingredientCount[key].count++;
     });
   });
   
-  return allIngredients;
+  return Object.values(ingredientCount).filter(i => i.count > 1);
+}
+
+// Generate grocery list with prices
+function generateGroceryList() {
+  const allIngredients = [];
+  const seen = new Set();
+  
+  Object.values(recipesData).forEach(recipe => {
+    recipe.ingredients.forEach(ing => {
+      const key = ing.name.toLowerCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        allIngredients.push({
+          name: ing.name,
+          amount: ing.amount,
+          brand: ing.brand,
+          price: ing.price,
+          days: [recipe.day]
+        });
+      } else {
+        // Add day to existing
+        const existing = allIngredients.find(i => i.name.toLowerCase() === key);
+        if (existing && !existing.days.includes(recipe.day)) {
+          existing.days.push(recipe.day);
+        }
+      }
+    });
+  });
+  
+  return allIngredients.sort((a, b) => {
+    // Multi-day items first
+    if (a.days.length > 1 && b.days.length === 1) return -1;
+    if (a.days.length === 1 && b.days.length > 1) return 1;
+    return a.name.localeCompare(b.name);
+  });
 }
 
 const samplePlan = {
@@ -101,6 +138,7 @@ const samplePlan = {
   plan_name: "Premium Vegetarian",
   score: 92,
   total_cost_dkk: 189,
+  supermarket: "REMA 1000",
   days: [
     { day: 1, day_name: "Monday", recipe_id: "veggie-curry", day_total: 44 },
     { day: 2, day_name: "Tuesday", recipe_id: "pasta-primavera", day_total: 59 },
@@ -114,6 +152,9 @@ export default function MadplanPage() {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState(samplePlan);
   const groceryList = generateGroceryList();
+  const multiDayIngredients = getMultiDayIngredients();
+  
+  const totalPrice = groceryList.reduce((sum, item) => sum + item.price, 0);
 
   const getDanishDay = (dayName) => {
     const day = days.find(d => d.day_en === dayName);
@@ -136,19 +177,52 @@ export default function MadplanPage() {
       </div>
 
       <main className="mx-auto max-w-7xl px-4 py-6">
-        {/* Plan Info Bar */}
-        <div className="bg-white rounded-xl shadow-sm p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🏆</span>
-              <span className="font-bold text-slate-900">Score: {selectedPlan.score}/100</span>
+        
+        {/* Plan Summary Box */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+          <div className="grid md:grid-cols-4 gap-6">
+            {/* Supermarket */}
+            <div className="text-center p-4 bg-emerald-50 rounded-xl">
+              <div className="text-3xl mb-2">🏪</div>
+              <div className="text-xs text-slate-500 uppercase tracking-wide">Supermarked</div>
+              <div className="text-xl font-bold text-slate-900">{selectedPlan.supermarket}</div>
             </div>
-            <div className="h-6 w-px bg-slate-200"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">💰</span>
-              <span className="font-bold text-emerald-600">{selectedPlan.total_cost_dkk} kr</span>
+            
+            {/* Total Cost */}
+            <div className="text-center p-4 bg-emerald-50 rounded-xl">
+              <div className="text-3xl mb-2">💰</div>
+              <div className="text-xs text-slate-500 uppercase tracking-wide">Total Pris</div>
+              <div className="text-xl font-bold text-emerald-600">{totalPrice.toFixed(2)} kr</div>
+            </div>
+            
+            {/* Score */}
+            <div className="text-center p-4 bg-emerald-50 rounded-xl">
+              <div className="text-3xl mb-2">🏆</div>
+              <div className="text-xs text-slate-500 uppercase tracking-wide">Score</div>
+              <div className="text-xl font-bold text-slate-900">{selectedPlan.score}/100</div>
+            </div>
+            
+            {/* Multi-day items */}
+            <div className="text-center p-4 bg-amber-50 rounded-xl">
+              <div className="text-3xl mb-2">♻️</div>
+              <div className="text-xs text-slate-500 uppercase tracking-wide">Genbruges</div>
+              <div className="text-xl font-bold text-amber-600">{multiDayIngredients.length} varer</div>
             </div>
           </div>
+          
+          {/* Multi-day ingredients detail */}
+          {multiDayIngredients.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-amber-200">
+              <div className="text-sm text-amber-800 font-medium mb-2">Disse ingredienser bruges på flere dage:</div>
+              <div className="flex flex-wrap gap-2">
+                {multiDayIngredients.map((item, idx) => (
+                  <span key={idx} className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">
+                    {item.name} ({item.days.join(', ')})
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Week Navigation */}
@@ -198,20 +272,41 @@ export default function MadplanPage() {
 
         {/* Grocery List */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Indkøbsliste</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">Indkøbsliste</h2>
+            <span className="text-sm text-slate-500">Klik for at krydse af</span>
+          </div>
           
-          <div className="space-y-4">
+          <div className="space-y-2">
             {groceryList.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
-                <input type="checkbox" className="w-5 h-5 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500" />
-                <span className="text-slate-700">{item.name}</span>
-                <span className="ml-auto text-xs text-slate-400">{item.day}</span>
-              </div>
+              <label key={idx} className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.days.length > 1 ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}>
+                <input 
+                  type="checkbox" 
+                  className="w-6 h-6 rounded-lg border-2 border-slate-300 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-2" 
+                />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className={`font-medium ${item.days.length > 1 ? 'text-amber-700' : 'text-slate-900'}`}>
+                      {item.name}
+                    </span>
+                    {item.days.length > 1 && (
+                      <span className="text-xs bg-amber-200 text-amber-700 px-2 py-0.5 rounded-full">
+                        Bruges {item.days.length} dage
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-sm text-slate-500">{item.amount} • {item.brand}</div>
+                </div>
+                <div className="text-right">
+                  <div className="font-bold text-slate-900">{item.price.toFixed(2)} kr</div>
+                </div>
+              </label>
             ))}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-100">
-            <span className="font-bold text-slate-900">I alt: {groceryList.length} ingredienser</span>
+          <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
+            <span className="font-bold text-slate-900">I alt:</span>
+            <span className="text-2xl font-bold text-emerald-600">{totalPrice.toFixed(2)} kr</span>
           </div>
         </div>
 

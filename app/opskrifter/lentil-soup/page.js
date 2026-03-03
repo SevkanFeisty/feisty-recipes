@@ -1,39 +1,33 @@
 import Link from "next/link";
 
+const multiDayIngredients = ['kikærter', 'løg', 'hvidløg', 'broccoli', 'tomater'];
+
+function isMultiDayIngredient(name) {
+  const lower = name.toLowerCase();
+  return multiDayIngredients.some(m => lower.includes(m));
+}
+
 export default function LentilSoupPage() {
   const recipe = {
     title: "Linsesuppe",
     subtitle: "Nærende linsesuppe med grøntsager",
-    description: "En varmende og sund suppe med røde linser og krydderier. Perfekt på kolde dage og bundsolide næringsstoffer.",
+    description: "En varmende og sund suppe med røde linser og krydderier.",
     prepTime: "10 min",
     cookTime: "30 min",
     servings: 4,
     image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=1200&h=800&fit=crop",
     ingredients: [
-      "300 g røde linser",
-      "3 gulerødder",
-      "2 porrer",
-      "1 stort løg",
-      "3 fed hvidløg",
-      "1 liter grøntsagsbouillon",
-      "1 tsk spidskommen",
-      "1 tsk gurkemeje",
-      "2 laurbærblade",
-      "2 spsk olivenolie",
-      "Cremefraiche til servering",
-      "Frisk persille"
-    ],
-    instructions: [
-      "Skyl linserne under koldt vand og lad dem dryppe af.",
-      "Hak løg, hvidløg, gulerødder og porrer.",
-      "Varm olivenolie i en stor gryde ved medium varme.",
-      "Sauter løg og hvidløg i 3 minutter indtil blødt.",
-      "Tilsæt gulerødder og porrer og steg i 2 minutter.",
-      "Tilsæt spidskommen og gurkemeje og rør rundt.",
-      "Tilsæt linser, bouillon og laurbærblade.",
-      "Bring i kog, skru ned og lad simre i 20-25 minutter.",
-      "Fjern laurbærblade og smag til med salt og peber.",
-      "Server med en skefuld cremefraiche og frisk persille."
+      { name: "300 g røde linser", day: "Torsdag" },
+      { name: "3 gulerødder", day: "Torsdag" },
+      { name: "2 porrer", day: "Torsdag" },
+      { name: "1 løg", day: "Torsdag" },
+      { name: "3 fed hvidløg", day: "Torsdag" },
+      { name: "1 liter grøntsagsbouillon", day: "Torsdag" },
+      { name: "1 tsk spidskommen", day: "Torsdag" },
+      { name: "1 tsk gurkemeje", day: "Torsdag" },
+      { name: "2 laurbærblade", day: "Torsdag" },
+      { name: "2 spsk olivenolie", day: "Torsdag" },
+      { name: "Cremefraiche", day: "Torsdag" }
     ]
   };
 
@@ -77,13 +71,25 @@ export default function LentilSoupPage() {
               <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">📝</span>
               Ingredienser
             </h2>
+            
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <p className="text-sm text-amber-700">
+                <span className="font-medium">Orange ingredienser</span> bruges også på andre dage - køb lidt ekstra! ♻️
+              </p>
+            </div>
+            
             <ul className="space-y-3">
-              {recipe.ingredients.map((ing, i) => (
-                <li key={i} className="flex items-start gap-3 text-slate-700">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-emerald-400 flex-shrink-0" />
-                  {ing}
-                </li>
-              ))}
+              {recipe.ingredients.map((ing, i) => {
+                const isMulti = isMultiDayIngredient(ing.name);
+                return (
+                  <li key={i} className={`flex items-start gap-3 p-2 rounded-lg ${isMulti ? 'bg-amber-50 border border-amber-200' : ''}`}>
+                    <span className={`w-2 h-2 mt-2 rounded-full flex-shrink-0 ${isMulti ? 'bg-amber-400' : 'bg-emerald-400'}`} />
+                    <span className={isMulti ? 'text-amber-700 font-medium' : 'text-slate-700'}>
+                      {ing.name}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -93,7 +99,15 @@ export default function LentilSoupPage() {
               Fremgangsmåde
             </h2>
             <ol className="space-y-4">
-              {recipe.instructions.map((step, i) => (
+              {[
+                "Hak grøntsager.",
+                "Sauter løg og hvidløg.",
+                "Tilsæt gulerødder og porrer.",
+                "Tilsæt linser og bouillon.",
+                "Krydre med spidskommen.",
+                "Lad koge i 25 min.",
+                "Server med cremefraiche."
+              ].map((step, i) => (
                 <li key={i} className="flex gap-4">
                   <span className="flex-shrink-0 w-7 h-7 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">
                     {i + 1}

@@ -1,38 +1,32 @@
 import Link from "next/link";
 
+const multiDayIngredients = ['kikærter', 'løg', 'hvidløg', 'broccoli', 'tomater'];
+
+function isMultiDayIngredient(name) {
+  const lower = name.toLowerCase();
+  return multiDayIngredients.some(m => lower.includes(m));
+}
+
 export default function FalafelBowlPage() {
   const recipe = {
     title: "Falafel Bowl",
     subtitle: "Proteinrig bowl med falafel og hummus",
-    description: "En mættende bowl med sprøde falafel, hummus og frisk salat. Hurtig, sund og proppet med smag.",
+    description: "En mættende bowl med sprøde falafel, hummus og frisk salat.",
     prepTime: "10 min",
     cookTime: "15 min",
     servings: 4,
     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=800&fit=crop",
     ingredients: [
-      "300 g færdige falafel",
-      "250 g hummus",
-      "1 pose blandet salat",
-      "1 agurk",
-      "2 tomater",
-      "1 rødløg",
-      "4 pitabrød",
-      "150 g tzatziki",
-      "Olivenolie",
-      "Frisk mynte",
-      "Granatæblekerner (ekstra)"
-    ],
-    instructions: [
-      "Tænd ovnen på 200°C.",
-      "Læg falafel på en bageplade med bagepapir.",
-      "Bag falafel i 12-15 minutter indtil gylden og sprød.",
-      "Skær agurk og tomater i tern og rødløg i tynde ringe.",
-      "Varm pitabrød i ovnen eller på en tør pande.",
-      "Anret salaten i bunden af 4 skåle.",
-      "Fordel hummus i midten af hver skål.",
-      "Læg varme falafel ovenpå hummus.",
-      "Top med agurk, tomater og rødløg.",
-      "Server med tzatziki, pitabrød og frisk mynte."
+      { name: "300 g falafel", day: "Fredag" },
+      { name: "250 g hummus", day: "Fredag" },
+      { name: "1 pose blandet salat", day: "Fredag" },
+      { name: "1 agurk", day: "Fredag" },
+      { name: "2 tomater", day: "Fredag" },
+      { name: "1 rødløg", day: "Fredag" },
+      { name: "4 pitabrød", day: "Fredag" },
+      { name: "150 g tzatziki", day: "Fredag" },
+      { name: "Olivenolie", day: "Fredag" },
+      { name: "Frisk mynte", day: "Fredag" }
     ]
   };
 
@@ -76,13 +70,25 @@ export default function FalafelBowlPage() {
               <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">📝</span>
               Ingredienser
             </h2>
+            
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <p className="text-sm text-amber-700">
+                <span className="font-medium">Orange ingredienser</span> bruges også på andre dage - køb lidt ekstra! ♻️
+              </p>
+            </div>
+            
             <ul className="space-y-3">
-              {recipe.ingredients.map((ing, i) => (
-                <li key={i} className="flex items-start gap-3 text-slate-700">
-                  <span className="w-2 h-2 mt-2 rounded-full bg-emerald-400 flex-shrink-0" />
-                  {ing}
-                </li>
-              ))}
+              {recipe.ingredients.map((ing, i) => {
+                const isMulti = isMultiDayIngredient(ing.name);
+                return (
+                  <li key={i} className={`flex items-start gap-3 p-2 rounded-lg ${isMulti ? 'bg-amber-50 border border-amber-200' : ''}`}>
+                    <span className={`w-2 h-2 mt-2 rounded-full flex-shrink-0 ${isMulti ? 'bg-amber-400' : 'bg-emerald-400'}`} />
+                    <span className={isMulti ? 'text-amber-700 font-medium' : 'text-slate-700'}>
+                      {ing.name}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -92,7 +98,14 @@ export default function FalafelBowlPage() {
               Fremgangsmåde
             </h2>
             <ol className="space-y-4">
-              {recipe.instructions.map((step, i) => (
+              {[
+                "Bag falafel efter anvisning.",
+                "Skær agurk og tomater.",
+                "Anret salat i bunden.",
+                "Tilsæt falafel og hummus.",
+                "Top med grøntsager.",
+                "Servér med pitabrød."
+              ].map((step, i) => (
                 <li key={i} className="flex gap-4">
                   <span className="flex-shrink-0 w-7 h-7 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">
                     {i + 1}
