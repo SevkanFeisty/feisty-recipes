@@ -278,11 +278,15 @@ export default function MadplanPage() {
   
   // Limit navigation to ±2 weeks from current
   const goToNextWeek = () => {
-    if (weekOffset < 2) setWeekOffset(weekOffset + 1);
+    if (weekOffset < 2 && hasPlanForOffset(weekOffset + 1)) {
+      setWeekOffset(weekOffset + 1);
+    }
   };
   
   const goToPrevWeek = () => {
-    if (weekOffset > -2) setWeekOffset(weekOffset - 1);
+    if (weekOffset > -2 && hasPlanForOffset(weekOffset - 1)) {
+      setWeekOffset(weekOffset - 1);
+    }
   };
   
   // Get current ISO week info
@@ -307,6 +311,15 @@ export default function MadplanPage() {
     return `Uge ${adjustedWeekNum} ${targetYear}`;
   };
 
+  // Check if plan exists for a given offset
+  const hasPlanForOffset = (offset) => {
+    const targetWeek = currentWeekInfo.week + offset;
+    const targetY = currentWeekInfo.year + Math.floor((targetWeek - 1) / 52);
+    const adjustedWeek = ((targetWeek - 1) % 52) + 1;
+    const weekKey = `${targetY}-W${adjustedWeek.toString().padStart(2, '0')}`;
+    return !!weeklyPlans[weekKey];
+  };
+
   const getDanishDayName = (dayName) => {
     const map = {
       'Monday': 'Mandag', 'Tuesday': 'Tirsdag', 'Wednesday': 'Onsdag',
@@ -320,7 +333,7 @@ export default function MadplanPage() {
     return day || days[0];
   };
 
-  // No plan found
+  // Show message if no plan available
   if (!weeklyPlan) {
     return (
       <div className="min-h-screen bg-stone-50">
@@ -330,10 +343,10 @@ export default function MadplanPage() {
           </div>
         </div>
         <div className="mx-auto max-w-7xl px-4 py-12">
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
-            <div className="text-4xl mb-4">⚠️</div>
-            <h2 className="text-xl font-bold text-red-800 mb-2">Ingen madplan tilgængelig</h2>
-            <p className="text-red-600">Der er ikke uploadet en madplan for {targetWeekString} endnu.</p>
+          <div className="bg-slate-100 border border-slate-200 rounded-2xl p-8 text-center">
+            <div className="text-4xl mb-4">📅</div>
+            <h2 className="text-xl font-bold text-slate-700 mb-2">Ingen madplan tilgængelig</h2>
+            <p className="text-slate-500">Der er ikke uploadet en madplan for denne uge endnu.</p>
           </div>
         </div>
       </div>
@@ -385,8 +398,8 @@ export default function MadplanPage() {
         <div className="flex items-center justify-center gap-4 mb-6">
           <button 
             onClick={goToPrevWeek} 
-            disabled={weekOffset <= -2}
-            className={`w-8 h-8 rounded-full flex items-center justify-center ${weekOffset <= -2 ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-white shadow-sm text-slate-600 hover:bg-slate-50'}`}
+            disabled={weekOffset <= -2 || !hasPlanForOffset(weekOffset - 1)}
+            className={`w-8 h-8 rounded-full flex items-center justify-center ${weekOffset <= -2 || !hasPlanForOffset(weekOffset - 1) ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-white shadow-sm text-slate-600 hover:bg-slate-50'}`}
           >
             ←
           </button>
@@ -395,8 +408,8 @@ export default function MadplanPage() {
           </div>
           <button 
             onClick={goToNextWeek} 
-            disabled={weekOffset >= 2}
-            className={`w-8 h-8 rounded-full flex items-center justify-center ${weekOffset >= 2 ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-white shadow-sm text-slate-600 hover:bg-slate-50'}`}
+            disabled={weekOffset >= 2 || !hasPlanForOffset(weekOffset + 1)}
+            className={`w-8 h-8 rounded-full flex items-center justify-center ${weekOffset >= 2 || !hasPlanForOffset(weekOffset + 1) ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-white shadow-sm text-slate-600 hover:bg-slate-50'}`}
           >
             →
           </button>
