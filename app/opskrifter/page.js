@@ -2,12 +2,11 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Opskrifter - Feisty",
-  description: "Find klassiske danske opskrifter. Fra frikadeller til drømmekage.",
+  description: "Find klassiske danske opskrifter og internationale retter. Fra frikadeller til sushi.",
 };
 
-// High-quality recipe images - matching Jamie Oliver's style
 const recipes = [
-  // Main Dishes
+  // === DANSKE KLASSIKERE - Hovedretter ===
   {
     id: "frikadeller",
     title: "Frikadeller",
@@ -24,7 +23,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "15",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=800&h=600&fit=crop",
   },
   {
     id: "tarteletter",
@@ -33,7 +32,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "30",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop",
   },
   {
     id: "boefstroganoff",
@@ -42,9 +41,113 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "20",
     cookTime: "25",
-    image: "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop",
   },
-  // Breads
+  {
+    id: "stegte-soedekartofler",
+    title: "Stegte Sødekartofler",
+    subtitle: "Sprøde stegte sødekartofler med sukker og kanel",
+    category: "Hovedretter",
+    prepTime: "10",
+    cookTime: "20",
+    image: "https://images.unsplash.com/photo-1596097635121-14b63b7a2c49?w=800&h=600&fit=crop",
+  },
+
+  // === ASIATISK KØKKEN ===
+  {
+    id: "wok-med-nudler",
+    title: "Wok med Nudler",
+    subtitle: "Asiatisk inspireret wok med grøntsager og nudler",
+    category: "Asiatisk",
+    prepTime: "15",
+    cookTime: "15",
+    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&h=600&fit=crop",
+  },
+  {
+    id: "karry-suppe",
+    title: "Karrysuppe",
+    subtitle: "Thailandsk inspireret karrysuppe med kokosmælk",
+    category: "Asiatisk",
+    prepTime: "15",
+    cookTime: "20",
+    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&h=600&fit=crop",
+  },
+  {
+    id: "sushi-bowl",
+    title: "Sushi Bowl",
+    subtitle: "Hjemmelavet sushi bowl med laks og avocado",
+    category: "Asiatisk",
+    prepTime: "20",
+    cookTime: "30",
+    image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&h=600&fit=crop",
+  },
+  {
+    id: "pad-thai",
+    title: "Pad Thai",
+    subtitle: "Klassisk thailandsk pad thai med rejer og peanuts",
+    category: "Asiatisk",
+    prepTime: "15",
+    cookTime: "15",
+    image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&h=600&fit=crop",
+  },
+  {
+    id: "dumplings",
+    title: "Dumplings",
+    subtitle: "Hjemmelavede dumplings med svinekød og kål",
+    category: "Asiatisk",
+    prepTime: "45",
+    cookTime: "15",
+    image: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800&h=600&fit=crop",
+  },
+
+  // === ITALIENSK KØKKEN ===
+  {
+    id: "pasta-carbonara",
+    title: "Pasta Carbonara",
+    subtitle: "Klassisk italiensk carbonara med æg, parmesan og bacon",
+    category: "Italiensk",
+    prepTime: "10",
+    cookTime: "20",
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=600&fit=crop",
+  },
+  {
+    id: "pizza-margherita",
+    title: "Pizza Margherita",
+    subtitle: "Autentisk italiensk pizza med tomatsauce og mozzarella",
+    category: "Italiensk",
+    prepTime: "30",
+    cookTime: "15",
+    image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&h=600&fit=crop",
+  },
+  {
+    id: "lasagne",
+    title: "Lasagne",
+    subtitle: "Klassisk italiensk lasagne med kødsovs og béchamel",
+    category: "Italiensk",
+    prepTime: "30",
+    cookTime: "45",
+    image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&h=600&fit=crop",
+  },
+  {
+    id: "risotto",
+    title: "Risotto",
+    subtitle: "Cremede risotto med parmesan og hvidvin",
+    category: "Italiensk",
+    prepTime: "10",
+    cookTime: "25",
+    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&h=600&fit=crop",
+  },
+  {
+    id: "tiramisu",
+    title: "Tiramisu",
+    subtitle: "Italiensk klassiker med kaffe, mascarpone og kakao",
+    category: "Italiensk",
+    prepTime: "25",
+    cookTime: "0",
+    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&h=600&fit=crop",
+  },
+
+  // === BRØD & BAGNING ===
   {
     id: "rugbrod",
     title: "Rugbrød",
@@ -63,7 +166,17 @@ const recipes = [
     cookTime: "15",
     image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=600&fit=crop",
   },
-  // Desserts
+  {
+    id: "croissanter",
+    title: "Croissanter",
+    subtitle: "Hjemmelavede croissanter med smør",
+    category: "Brød",
+    prepTime: "60",
+    cookTime: "20",
+    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&h=600&fit=crop",
+  },
+
+  // === DESSERT ===
   {
     id: "risalamande",
     title: "Risalamande",
@@ -91,7 +204,8 @@ const recipes = [
     cookTime: "40",
     image: "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=800&h=600&fit=crop",
   },
-  // Smørrebrød
+
+  // === SMØRREBRØD ===
   {
     id: "leverpostej",
     title: "Leverpostej",
@@ -102,28 +216,30 @@ const recipes = [
     image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop",
   },
   {
-    id: "kartoffel",
-    title: "Kartoffel",
-    subtitle: "Klassisk kartoffelmad på rugbrød med rødløg",
+    id: "roeabriet",
+    title: "Røget Ål",
+    subtitle: "Klassisk dansk smørrebrød med røget ål og æg",
     category: "Smørrebrød",
     prepTime: "10",
-    cookTime: "0",
+    cookTime: "10",
     image: "https://images.unsplash.com/photo-1512054502232-120ea5a0b5f5?w=800&h=600&fit=crop",
   },
   {
-    id: "roedbede",
-    title: "Rødbede",
-    subtitle: "Rødbede og æg på rugbrød med dild",
+    id: "toerret-torsk",
+    title: "Tørret Torsk",
+    subtitle: "Traditionelt dansk smørrebrød med torsk og mayonnaise",
     category: "Smørrebrød",
     prepTime: "10",
     cookTime: "0",
-    image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=800&h=600&fit=crop",
   },
 ];
 
 const categories = [
   { name: "Alle", slug: "all" },
   { name: "Hovedretter", slug: "hovedretter" },
+  { name: "Asiatisk", slug: "asiatisk" },
+  { name: "Italiensk", slug: "italiensk" },
   { name: "Brød", slug: "brod" },
   { name: "Dessert", slug: "dessert" },
   { name: "Smørrebrød", slug: "smorrebrod" },
@@ -142,7 +258,7 @@ export default function OpskrifterPage() {
         <div className="relative mx-auto max-w-7xl px-4 h-full flex items-center">
           <div className="text-white">
             <h1 className="text-4xl font-bold tracking-tight font-display">Opskrifter</h1>
-            <p className="mt-2 text-lg text-emerald-100">Klassiske danske retter til hele familien</p>
+            <p className="mt-2 text-lg text-emerald-100">Klassiske danske retter og internationale favoritter</p>
           </div>
         </div>
       </div>
@@ -150,7 +266,7 @@ export default function OpskrifterPage() {
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {categories.map((cat, i) => (
+          {categories.map((cat) => (
             <button
               key={cat.slug}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 border border-emerald-200 bg-white text-slate-600 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 shadow-sm hover:shadow-md"
@@ -174,12 +290,11 @@ export default function OpskrifterPage() {
           </div>
         </div>
 
-        {/* Recipe Grid - Jamie Oliver Style */}
+        {/* Recipe Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {recipes.map((recipe, i) => (
-            <Link key={recipe.id} href={`/opskrifter/${recipe.id}`} className="group" style={{animationDelay: `${i * 0.05}s`}}>
+            <Link key={recipe.id} href={`/opskrifter/${recipe.id}`} className="group">
               <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
-                {/* Image - The star of the show */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={recipe.image}
@@ -192,8 +307,6 @@ export default function OpskrifterPage() {
                     </span>
                   </div>
                 </div>
-
-                {/* Content */}
                 <div className="p-4">
                   <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
                     {recipe.title}
@@ -201,8 +314,6 @@ export default function OpskrifterPage() {
                   <p className="mt-1 text-sm text-slate-500 line-clamp-2">
                     {recipe.subtitle}
                   </p>
-                  
-                  {/* Time Info */}
                   <div className="mt-4 flex items-center gap-4 text-xs text-slate-400">
                     <span className="flex items-center gap-1">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
