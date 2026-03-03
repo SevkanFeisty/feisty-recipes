@@ -12,7 +12,7 @@ const days = [
   { name: 'Fredag', day_en: 'Friday', color: '#C4B5FD', bg: '#EDE9FE', border: '#8B5CF6' },
 ];
 
-// Recipe data with full details
+// Recipe data with full details + normalized ingredients for grocery list
 const recipesData = {
   "veggie-curry": {
     title: "Veggie Curry",
@@ -30,7 +30,10 @@ const recipesData = {
       "2 spsk karrypasta",
       "1 løg",
       "2 fed hvidløg",
-      "Ris til servering"
+      "2 spsk olivenolie",
+      "1 tsk gurkemeje",
+      "400 g ris",
+      "Salt og peber"
     ],
     instructions: [
       "Hak løg og hvidløg fint.",
@@ -54,11 +57,13 @@ const recipesData = {
       "500 g pasta",
       "400 g hakkede tomater",
       "2 squash",
-      "1 peberfrugt",
+      "1 rød peberfrugt",
       "1 broccolibuket",
       "100 g parmesanost",
       "3 fed hvidløg",
-      "Olivenolie"
+      "3 spsk olivenolie",
+      "Frisk basilikum",
+      "Salt og peber"
     ],
     instructions: [
       "Kog pasta efter anvisning.",
@@ -80,12 +85,15 @@ const recipesData = {
     ingredients: [
       "8 majs-tortillas",
       "285 g majs (dåse)",
-      "240 g kikærter",
+      "240 g kikærter (dåse)",
       "1 avocado",
       "1 rødløg",
       "2 tomater",
-      "Cilantro",
-      "Lime"
+      "1 håndfuld cilantro",
+      "1 lime",
+      "1 tsk spidskommen",
+      "1 tsk paprika",
+      "Salt og peber"
     ],
     instructions: [
       "Skær grøntsager i tern.",
@@ -112,7 +120,11 @@ const recipesData = {
       "3 fed hvidløg",
       "1 liter grøntsagsbouillon",
       "1 tsk spidskommen",
-      "Cremefraiche"
+      "1 tsk gurkemeje",
+      "2 laurbærblade",
+      "2 spsk olivenolie",
+      "Cremefraiche",
+      "Frisk persille"
     ],
     instructions: [
       "Hak grøntsager.",
@@ -135,11 +147,14 @@ const recipesData = {
     ingredients: [
       "300 g falafel",
       "250 g hummus",
-      "1 pose salatmix",
+      "1 pose blandet salat",
       "1 agurk",
       "2 tomater",
-      "Pitabrød",
-      "Tzatziki"
+      "1 rødløg",
+      "4 pitabrød",
+      "150 g tzatziki",
+      "Olivenolie",
+      "Frisk mynte"
     ],
     instructions: [
       "Bag falafel efter anvisning.",
@@ -152,7 +167,66 @@ const recipesData = {
   }
 };
 
-// Full plan data from Anna-Lysa's API
+// Generate grocery list from all recipes
+function generateGroceryList(recipes) {
+  const groceryMap = new Map();
+  
+  // Ingredients that can be reused across days (leftovers)
+  const reusableItems = ['kikærter', 'løg', 'hvidløg', 'olivenolie', 'salt', 'peber', 'ris'];
+  
+  // Track which days each ingredient appears in
+  const ingredientDays = new Map();
+  
+  Object.entries(recipes).forEach(([recipeId, recipe]) => {
+    recipe.ingredients.forEach(ing => {
+      // Normalize ingredient name (remove quantities, lowercase)
+      const normalizedName = ing.toLowerCase()
+        .replace(/\d+[gmlkdl]?\s*/g, '')
+        .replace(/dåse|pose|buket|fed|stk|håndfuld/g, '')
+        .trim();
+      
+      // Find base ingredient name
+      const baseName = normalizedName.split(' ').slice(-2).join(' ');
+      
+      if (!ingredientDays.has(baseName)) {
+        ingredientDays.set(baseName, []);
+      }
+      ingredientDays.get(baseName).push({ recipe: recipe.title, day: getDanishDayForRecipe(recipeId) });
+      
+      if (!groceryMap.has(baseName)) {
+        groceryMap.set(baseName, {
+          original: ing,
+          baseName,
+          days: [],
+          recipes: [],
+          isReusable: reusableItems.some(item => baseName.includes(item))
+        });
+      }
+      groceryMap.get(baseName).days.push(getDanishDayForRecipe(recipeId));
+      groceryMap.get(baseName).recipes.push(recipe.title);
+    });
+  });
+  
+  return Array.from(groceryMap.values()).sort((a, b) => {
+    // Put reusable/leftover items first
+    if (a.isReusable && !b.isReusable) return -1;
+    if (!a.isReusable && b.isReusable) return 1;
+    return a.baseName.localeCompare(b.baseName);
+  });
+}
+
+function getDanishDayForRecipe(recipeId) {
+  const dayMap = {
+    'veggie-curry': 'Mandag',
+    'pasta-primavera': 'Tirsdag',
+    'veggie-tacos': 'Onsdag',
+    'lentil-soup': 'Torsdag',
+    'falafel-bowl': 'Fredag'
+  };
+  return dayMap[recipeId] || 'Ukendt';
+}
+
+// Full plan data
 const samplePlan = {
   plan_id: "vegetarian-5day",
   plan_name: "Premium Vegetarian",
@@ -166,45 +240,15 @@ const samplePlan = {
     { day: 3, day_name: "Wednesday", recipe_id: "veggie-tacos", day_total: 26 },
     { day: 4, day_name: "Thursday", recipe_id: "lentil-soup", day_total: 33 },
     { day: 5, day_name: "Friday", recipe_id: "falafel-bowl", day_total: 36 }
-  ],
-  grocery_list: {
-    "Monday": [
-      { name: "Kokosmælk", quantity: "400", unit: "ml", price: 8.95 },
-      { name: "Kikærter", quantity: "240", unit: "g", price: 7.86 },
-      { name: "Broccoli", quantity: "1", unit: "stk", price: 15 },
-      { name: "Ris", quantity: "1", unit: "kg", price: 12 }
-    ],
-    "Tuesday": [
-      { name: "Pasta", quantity: "500", unit: "g", price: 7.66 },
-      { name: "Hakkede tomater", quantity: "400", unit: "g", price: 6.37 },
-      { name: "Grøntsager", quantity: "1", unit: "pose", price: 25 },
-      { name: "Ost", quantity: "200", unit: "g", price: 20 }
-    ],
-    "Wednesday": [
-      { name: "Majs", quantity: "285", unit: "g", price: 7.91 },
-      { name: "Agurk", quantity: "1", unit: "stk", price: 10 },
-      { name: "Rød peber", quantity: "1", unit: "stk", price: 8.50 }
-    ],
-    "Thursday": [
-      { name: "Linser", quantity: "300", unit: "g", price: 12 },
-      { name: "Gulerødder", quantity: "1", unit: "kg", price: 5 },
-      { name: "Porrer", quantity: "1", unit: "stk", price: 6.50 }
-    ],
-    "Friday": [
-      { name: "Falafel", quantity: "300", unit: "g", price: 18 },
-      { name: "Hummus", quantity: "250", unit: "g", price: 15 },
-      { name: "Salatmix", quantity: "1", unit: "pose", price: 12 }
-    ]
-  },
-  leftovers: [
-    { from: "Monday", to: "Wednesday", item: "Kikærter" },
-    { from: "Monday", to: "Friday", item: "Ris" }
   ]
 };
 
 export default function MadplanPage() {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState(samplePlan);
+  
+  // Generate grocery list from actual recipes
+  const groceryList = generateGroceryList(recipesData);
 
   const getDanishDay = (dayName) => {
     const day = days.find(d => d.day_en === dayName);
@@ -215,8 +259,6 @@ export default function MadplanPage() {
     const day = days.find(d => d.day_en === dayName);
     return day ? day : days[0];
   };
-
-  const leftoverSavings = selectedPlan.leftovers ? selectedPlan.leftovers.length * 8 : 0;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -241,11 +283,6 @@ export default function MadplanPage() {
               <span className="text-2xl">💰</span>
               <span className="font-bold text-emerald-600">{selectedPlan.total_cost_dkk} kr</span>
             </div>
-            <div className="h-6 w-px bg-slate-200"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">♻️</span>
-              <span className="font-bold text-amber-600">-{leftoverSavings} kr</span>
-            </div>
           </div>
           <div className="flex gap-2">
             {selectedPlan.dietary_tags.map(tag => (
@@ -258,11 +295,11 @@ export default function MadplanPage() {
 
         {/* Week Navigation */}
         <div className="flex items-center justify-center gap-4 mb-6">
-          <button onClick={() => setWeekOffset(weekOffset - 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600">←</button>
+          <button onClick={() => setWeekOffset(weekOffset - 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">←</button>
           <span className="text-lg font-semibold text-slate-900 min-w-[150px] text-center">
             {weekOffset === 0 ? "Denne uge" : weekOffset === 1 ? "Næste uge" : `${weekOffset} uger frem`}
           </span>
-          <button onClick={() => setWeekOffset(weekOffset + 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600">→</button>
+          <button onClick={() => setWeekOffset(weekOffset + 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">→</button>
         </div>
 
         {/* Week Grid - CLICKABLE RECIPES */}
@@ -301,55 +338,54 @@ export default function MadplanPage() {
           })}
         </div>
 
-        {/* Leftover Chain */}
-        {selectedPlan.leftovers && selectedPlan.leftovers.length > 0 && (
-          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 mb-8 border border-amber-200">
-            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="text-2xl">♻️</span> Sådan genbruger vi rester
-            </h2>
-            <div className="space-y-2">
-              {selectedPlan.leftovers.map((leftover, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">{getDanishDay(leftover.from)}</span>
-                  <span className="text-slate-600">→</span>
-                  <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">{leftover.item}</span>
-                  <span className="text-slate-600">→</span>
-                  <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">{getDanishDay(leftover.to)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Grocery List */}
+        {/* Grocery List - FROM ACTUAL RECIPES */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Indkøbsliste</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Indkøbsliste</h2>
+          <p className="text-sm text-slate-500 mb-6">Baseret på alle opskrifter i denne uges madplan</p>
           
-          {days.map((day) => {
-            const dayColor = getDayColor(day.day_en);
-            const dayItems = selectedPlan.grocery_list[day.day_en];
-            
-            return (
-              <div key={day.day_en} className="mb-6">
-                <h3 className="text-sm font-bold mb-3 flex items-center gap-2" style={{ color: dayColor.border }}>
-                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: dayColor.color }}></span>
-                  {day.name}
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {dayItems && dayItems.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg">
-                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: dayColor.color }}></span>
-                      <span className="text-xs text-slate-700 truncate">{item.name}</span>
+          {/* Leftover/Reusable highlight */}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-amber-600">♻️</span>
+              <span className="font-semibold text-amber-800">GenbrugeLse</span>
+            </div>
+            <p className="text-sm text-amber-700">
+              Disse ingredienser kan købes i større mængder og bruges på tværs af flere dage - spar penge og undgå madspild!
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {groceryList.map((item, idx) => (
+              <div key={idx} className={`p-4 rounded-xl ${item.isReusable ? 'bg-emerald-50 border border-emerald-200' : 'bg-slate-50'}`}>
+                <div className="flex items-start gap-3">
+                  {/* Leftover indicator */}
+                  {item.isReusable && (
+                    <span className="text-lg" title="Kan genbruges">♻️</span>
+                  )}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className={`font-medium ${item.isReusable ? 'text-emerald-700' : 'text-slate-900'}`}>
+                        {item.original}
+                      </span>
+                      {item.isReusable && (
+                        <span className="text-xs bg-emerald-200 text-emerald-700 px-2 py-0.5 rounded-full">
+                          Genbrug
+                        </span>
+                      )}
                     </div>
-                  ))}
+                    <div className="text-xs text-slate-500 mt-1">
+                      Bruges på: {item.days.join(', ')}
+                    </div>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
 
           <div className="mt-6 pt-4 border-t border-slate-100">
             <div className="flex gap-6">
-              <span className="font-bold text-slate-900">Total: {selectedPlan.total_cost_dkk} kr</span>
+              <span className="font-bold text-slate-900">Total ingredienser: {groceryList.length}</span>
+              <span className="font-bold text-emerald-600">Estimeret pris: ~{selectedPlan.total_cost_dkk} kr</span>
             </div>
           </div>
         </div>
