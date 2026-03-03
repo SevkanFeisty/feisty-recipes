@@ -45,6 +45,7 @@ function TopNav() {
     { href: "/", label: "Forside" },
     { href: "/opskrifter", label: "Opskrifter" },
     { href: "/madplan", label: "Madplan" },
+    { href: "/abonnement", label: "Abonnement" },
     { href: "/profil", label: "Profil" },
   ];
 
