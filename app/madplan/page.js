@@ -3,164 +3,343 @@
 import { useState } from "react";
 import Link from "next/link";
 
+// Pastel colors for each day
+const days = [
+  { name: 'Mandag', day_en: 'Monday', color: '#93C5FD', bg: '#DBEAFE', border: '#3B82F6' },
+  { name: 'Tirsdag', day_en: 'Tuesday', color: '#86EFAC', bg: '#DCFCE7', border: '#22C55E' },
+  { name: 'Onsdag', day_en: 'Wednesday', color: '#FCD34D', bg: '#FEF3C7', border: '#F59E0B' },
+  { name: 'Torsdag', day_en: 'Thursday', color: '#FCA5A5', bg: '#FEE2E2', border: '#EF4444' },
+  { name: 'Fredag', day_en: 'Friday', color: '#C4B5FD', bg: '#EDE9FE', border: '#8B5CF6' },
+];
+
+// Recipe data with full details
+const recipesData = {
+  "veggie-curry": {
+    title: "Veggie Curry",
+    subtitle: "Krydret grøntsagscurry med kokosmælk",
+    description: "En lækker og mættende vegetarisk curry med masser af grøntsager i en cremet kokossovs.",
+    prepTime: "15 min",
+    cookTime: "25 min",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e8254?w=800&h=600&fit=crop",
+    ingredients: [
+      "400 ml kokosmælk",
+      "240 g kikærter (dåse)",
+      "1 broccolibuket",
+      "1 dl grønne ærter",
+      "2 spsk karrypasta",
+      "1 løg",
+      "2 fed hvidløg",
+      "Ris til servering"
+    ],
+    instructions: [
+      "Hak løg og hvidløg fint.",
+      "Sauter løg i olie til gylden.",
+      "Tilsæt karrypasta og hvidløg.",
+      "Tilsæt kokosmælk og kikærter.",
+      "Tilsæt broccoli og ærter.",
+      "Lad simre i 15 minutter.",
+      "Server med ris."
+    ]
+  },
+  "pasta-primavera": {
+    title: "Pasta Primavera",
+    subtitle: "Pastaret med friske grøntsager",
+    description: "En klassisk italiensk pastaret med sæsonens grøntsager og parmesan.",
+    prepTime: "10 min",
+    cookTime: "20 min",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&h=600&fit=crop",
+    ingredients: [
+      "500 g pasta",
+      "400 g hakkede tomater",
+      "2 squash",
+      "1 peberfrugt",
+      "1 broccolibuket",
+      "100 g parmesanost",
+      "3 fed hvidløg",
+      "Olivenolie"
+    ],
+    instructions: [
+      "Kog pasta efter anvisning.",
+      "Sauter hvidløg i olie.",
+      "Tilsæt grøntsager og steg i 5 min.",
+      "Tilsæt tomater og lad simre.",
+      "Bland med pasta.",
+      "Top med parmesan."
+    ]
+  },
+  "veggie-tacos": {
+    title: "Veggie Tacos",
+    subtitle: "Mexicanske tacos med grøntsager",
+    description: "Farverige tacos med krydrede grøntsager, majs og kikærter.",
+    prepTime: "15 min",
+    cookTime: "15 min",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&h=600&fit=crop",
+    ingredients: [
+      "8 majs-tortillas",
+      "285 g majs (dåse)",
+      "240 g kikærter",
+      "1 avocado",
+      "1 rødløg",
+      "2 tomater",
+      "Cilantro",
+      "Lime"
+    ],
+    instructions: [
+      "Skær grøntsager i tern.",
+      "Varm kikærter og majs.",
+      "Lav guacamole af avocado.",
+      "Varm tortillas.",
+      "Samle tacos med grøntsager.",
+      "Top med koriander og lime."
+    ]
+  },
+  "lentil-soup": {
+    title: "Linsesuppe",
+    subtitle: "Nærende linsesuppe med grøntsager",
+    description: "En varmende og sund suppe med røde linser og krydderier.",
+    prepTime: "10 min",
+    cookTime: "30 min",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&h=600&fit=crop",
+    ingredients: [
+      "300 g røde linser",
+      "3 gulerødder",
+      "2 porrer",
+      "1 løg",
+      "3 fed hvidløg",
+      "1 liter grøntsagsbouillon",
+      "1 tsk spidskommen",
+      "Cremefraiche"
+    ],
+    instructions: [
+      "Hak grøntsager.",
+      "Sauter løg og hvidløg.",
+      "Tilsæt gulerødder og porrer.",
+      "Tilsæt linser og bouillon.",
+      "Krydre med spidskommen.",
+      "Lad koge i 25 min.",
+      "Server med cremefraiche."
+    ]
+  },
+  "falafel-bowl": {
+    title: "Falafel Bowl",
+    subtitle: "Proteinrig bowl med falafel og hummus",
+    description: "En mættende bowl med sprøde falafel, hummus og frisk salat.",
+    prepTime: "10 min",
+    cookTime: "15 min",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=600&fit=crop",
+    ingredients: [
+      "300 g falafel",
+      "250 g hummus",
+      "1 pose salatmix",
+      "1 agurk",
+      "2 tomater",
+      "Pitabrød",
+      "Tzatziki"
+    ],
+    instructions: [
+      "Bag falafel efter anvisning.",
+      "Skær agurk og tomater.",
+      "Anret salat i bunden.",
+      "Tilsæt falafel og hummus.",
+      "Top med grøntsager.",
+      "Servér med pitabrød."
+    ]
+  }
+};
+
+// Full plan data from Anna-Lysa's API
+const samplePlan = {
+  plan_id: "vegetarian-5day",
+  plan_name: "Premium Vegetarian",
+  score: 92,
+  total_cost_dkk: 189,
+  supermarkets: ["REMA 1000"],
+  dietary_tags: ["vegetarian"],
+  days: [
+    { day: 1, day_name: "Monday", recipe_id: "veggie-curry", day_total: 44 },
+    { day: 2, day_name: "Tuesday", recipe_id: "pasta-primavera", day_total: 59 },
+    { day: 3, day_name: "Wednesday", recipe_id: "veggie-tacos", day_total: 26 },
+    { day: 4, day_name: "Thursday", recipe_id: "lentil-soup", day_total: 33 },
+    { day: 5, day_name: "Friday", recipe_id: "falafel-bowl", day_total: 36 }
+  ],
+  grocery_list: {
+    "Monday": [
+      { name: "Kokosmælk", quantity: "400", unit: "ml", price: 8.95 },
+      { name: "Kikærter", quantity: "240", unit: "g", price: 7.86 },
+      { name: "Broccoli", quantity: "1", unit: "stk", price: 15 },
+      { name: "Ris", quantity: "1", unit: "kg", price: 12 }
+    ],
+    "Tuesday": [
+      { name: "Pasta", quantity: "500", unit: "g", price: 7.66 },
+      { name: "Hakkede tomater", quantity: "400", unit: "g", price: 6.37 },
+      { name: "Grøntsager", quantity: "1", unit: "pose", price: 25 },
+      { name: "Ost", quantity: "200", unit: "g", price: 20 }
+    ],
+    "Wednesday": [
+      { name: "Majs", quantity: "285", unit: "g", price: 7.91 },
+      { name: "Agurk", quantity: "1", unit: "stk", price: 10 },
+      { name: "Rød peber", quantity: "1", unit: "stk", price: 8.50 }
+    ],
+    "Thursday": [
+      { name: "Linser", quantity: "300", unit: "g", price: 12 },
+      { name: "Gulerødder", quantity: "1", unit: "kg", price: 5 },
+      { name: "Porrer", quantity: "1", unit: "stk", price: 6.50 }
+    ],
+    "Friday": [
+      { name: "Falafel", quantity: "300", unit: "g", price: 18 },
+      { name: "Hummus", quantity: "250", unit: "g", price: 15 },
+      { name: "Salatmix", quantity: "1", unit: "pose", price: 12 }
+    ]
+  },
+  leftovers: [
+    { from: "Monday", to: "Wednesday", item: "Kikærter" },
+    { from: "Monday", to: "Friday", item: "Ris" }
+  ]
+};
+
 export default function MadplanPage() {
-  const days = [
-    { name: 'Mandag', color: '#3B82F6', bg: 'bg-blue-500' },
-    { name: 'Tirsdag', color: '#10B981', bg: 'bg-emerald-500' },
-    { name: 'Onsdag', color: '#F59E0B', bg: 'bg-amber-500' },
-    { name: 'Torsdag', color: '#EF4444', bg: 'bg-red-500' },
-    { name: 'Fredag', color: '#8B5CF6', bg: 'bg-violet-500' },
-    { name: 'Lørdag', color: '#EC4899', bg: 'bg-pink-500' },
-    { name: 'Søndag', color: '#06B6D4', bg: 'bg-cyan-500' },
-  ];
-  const meals = ['Morgenmad', 'Frokost', 'Aftensmad'];
-  
   const [weekOffset, setWeekOffset] = useState(0);
-  const [mealPlan, setMealPlan] = useState({
-    'Mandag-Aftensmad': { id: "frikadeller", title: "Frikadeller", category: "Hovedret", ingredients: ['hakket svinekød', 'løg', 'æg', 'mel', 'mælk', 'smør'] },
-    'Tirsdag-Aftensmad': { id: "braendende-kaerlighed", title: "Brændende Kærlighed", category: "Hovedret", ingredients: ['kartofler', 'bacon', 'løg', 'smør'] },
-    'Onsdag-Aftensmad': { id: "tarteletter", title: "Tarteletter", category: "Hovedret", ingredients: ['kylling', 'asparges', 'mel', 'mælk', 'smør'] },
-  });
+  const [selectedPlan, setSelectedPlan] = useState(samplePlan);
 
-  // Collect all ingredients with their days
-  const [groceryList, setGroceryList] = useState([
-    { name: 'Hakket svinekød', days: ['Mandag'], category: 'Kød' },
-    { name: 'Løg', days: ['Mandag', 'Tirsdag', 'Onsdag'], category: 'Grøntsager' },
-    { name: 'Æg', days: ['Mandag'], category: 'Mejeri' },
-    { name: 'Mel', days: ['Mandag', 'Onsdag'], category: 'Tørvarer' },
-    { name: 'Mælk', days: ['Mandag', 'Onsdag'], category: 'Mejeri' },
-    { name: 'Smør', days: ['Mandag', 'Tirsdag', 'Onsdag'], category: 'Mejeri' },
-    { name: 'Kartofler', days: ['Tirsdag'], category: 'Grøntsager' },
-    { name: 'Bacon', days: ['Tirsdag'], category: 'Kød' },
-    { name: 'Kylling', days: ['Onsdag'], category: 'Kød' },
-    { name: 'Asparges', days: ['Onsdag'], category: 'Grøntsager' },
-  ]);
-
-  const getWeekLabel = (offset) => {
-    if (offset === 0) return "Denne uge";
-    if (offset === 1) return "Næste uge";
-    return `${offset} uger frem`;
+  const getDanishDay = (dayName) => {
+    const day = days.find(d => d.day_en === dayName);
+    return day ? day.name : dayName;
   };
 
   const getDayColor = (dayName) => {
-    const day = days.find(d => d.name === dayName);
-    return day ? day.color : '#94A3B8';
+    const day = days.find(d => d.day_en === dayName);
+    return day ? day : days[0];
   };
+
+  const leftoverSavings = selectedPlan.leftovers ? selectedPlan.leftovers.length * 8 : 0;
 
   return (
     <div className="min-h-screen bg-stone-50">
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 to-teal-500 py-12">
+      <div className="bg-gradient-to-r from-emerald-600 to-teal-500 py-6">
         <div className="mx-auto max-w-7xl px-4 text-center text-white">
-          <h1 className="font-display text-3xl font-bold">Madplan</h1>
-          <p className="mt-2 text-emerald-100">Planlæg ugens måltider</p>
+          <h1 className="font-display text-2xl font-bold">Madplan</h1>
+          <p className="mt-1 text-emerald-100 text-sm">{selectedPlan.plan_name} • {selectedPlan.total_cost_dkk} kr</p>
         </div>
       </div>
 
-      <main className="mx-auto max-w-7xl px-4 py-8">
-        {/* Week Navigation */}
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <button 
-            onClick={() => setWeekOffset(weekOffset - 1)}
-            className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50"
-          >
-            ←
-          </button>
-          <span className="text-lg font-semibold text-slate-900 min-w-[150px] text-center">
-            {getWeekLabel(weekOffset)}
-          </span>
-          <button 
-            onClick={() => setWeekOffset(weekOffset + 1)}
-            className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50"
-          >
-            →
-          </button>
-        </div>
-
-        {/* Week Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-7 gap-3 mb-8">
-          {days.map((day) => (
-            <div key={day.name} className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {/* Day Header */}
-              <div className={`${day.bg} text-white py-2 text-center`}>
-                <span className="font-semibold text-sm">{day.name}</span>
-              </div>
-              
-              {/* Meals */}
-              <div className="divide-y divide-slate-100">
-                {meals.map((meal) => {
-                  const mealKey = `${day.name}-${meal}`;
-                  const plannedMeal = mealPlan[mealKey];
-                  
-                  return (
-                    <div key={meal} className="p-2 hover:bg-slate-50 transition-colors min-h-[60px]">
-                      <span className="block text-[10px] text-slate-400 mb-1">{meal}</span>
-                      {plannedMeal ? (
-                        <Link 
-                          href={`/opskrifter/${plannedMeal.id}`}
-                          className="text-xs font-medium text-slate-700 hover:text-emerald-600 block"
-                        >
-                          {plannedMeal.title}
-                        </Link>
-                      ) : (
-                        <button className="text-xs text-emerald-500 hover:text-emerald-600">
-                          + Tilføj
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+      <main className="mx-auto max-w-7xl px-4 py-6">
+        {/* Plan Info Bar */}
+        <div className="bg-white rounded-xl shadow-sm p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🏆</span>
+              <span className="font-bold text-slate-900">Score: {selectedPlan.score}/100</span>
             </div>
-          ))}
+            <div className="h-6 w-px bg-slate-200"></div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">💰</span>
+              <span className="font-bold text-emerald-600">{selectedPlan.total_cost_dkk} kr</span>
+            </div>
+            <div className="h-6 w-px bg-slate-200"></div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">♻️</span>
+              <span className="font-bold text-amber-600">-{leftoverSavings} kr</span>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            {selectedPlan.dietary_tags.map(tag => (
+              <span key={tag} className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
 
-        {/* Grocery List with Color Coding */}
-        <div className="bg-white rounded-2xl shadow-sm p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-slate-900">Indkøbsliste</h2>
-            <div className="flex gap-2">
-              {days.map((day) => (
-                <div key={day.name} className="flex items-center gap-1">
-                  <span 
-                    className="w-3 h-3 rounded-full" 
-                    style={{ backgroundColor: day.color }}
-                    title={day.name}
-                  />
-                  <span className="text-xs text-slate-500">{day.name.slice(0, 2)}</span>
+        {/* Week Navigation */}
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <button onClick={() => setWeekOffset(weekOffset - 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600">←</button>
+          <span className="text-lg font-semibold text-slate-900 min-w-[150px] text-center">
+            {weekOffset === 0 ? "Denne uge" : weekOffset === 1 ? "Næste uge" : `${weekOffset} uger frem`}
+          </span>
+          <button onClick={() => setWeekOffset(weekOffset + 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600">→</button>
+        </div>
+
+        {/* Week Grid - CLICKABLE RECIPES */}
+        <div className="grid grid-cols-5 gap-2 mb-8">
+          {selectedPlan.days.map((dayData) => {
+            const dayColor = getDayColor(dayData.day_name);
+            const recipe = recipesData[dayData.recipe_id];
+            
+            return (
+              <div key={dayData.day} className="bg-white rounded-xl shadow-sm overflow-hidden border-2" style={{ borderColor: dayColor.border }}>
+                <div className="py-3 text-center font-bold text-sm" style={{ backgroundColor: dayColor.bg, color: dayColor.border }}>
+                  {getDanishDay(dayData.day_name)}
+                </div>
+                
+                <div className="divide-y divide-slate-100">
+                  {recipe ? (
+                    <Link href={`/opskrifter/${dayData.recipe_id}`} className="block p-3 hover:bg-emerald-50 transition-colors">
+                      <span className="text-xs text-slate-400 block mb-1">Aftensmad</span>
+                      <span className="text-sm font-medium text-emerald-600 hover:text-emerald-700 block">
+                        {recipe.title}
+                      </span>
+                      <span className="text-xs text-slate-400 mt-1 block">Klik for opskrift →</span>
+                    </Link>
+                  ) : (
+                    <div className="p-3">
+                      <span className="text-xs text-slate-400 block">Aftensmad</span>
+                      <span className="text-xs text-slate-500">+ Tilføj</span>
+                    </div>
+                  )}
+                  <div className="p-2 bg-slate-50">
+                    <span className="text-xs font-bold" style={{ color: dayColor.border }}>{dayData.day_total} kr</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Leftover Chain */}
+        {selectedPlan.leftovers && selectedPlan.leftovers.length > 0 && (
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 mb-8 border border-amber-200">
+            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <span className="text-2xl">♻️</span> Sådan genbruger vi rester
+            </h2>
+            <div className="space-y-2">
+              {selectedPlan.leftovers.map((leftover, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">{getDanishDay(leftover.from)}</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">{leftover.item}</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">{getDanishDay(leftover.to)}</span>
                 </div>
               ))}
             </div>
           </div>
+        )}
 
-          {/* Group by category */}
-          {['Kød', 'Mejeri', 'Grøntsager', 'Tørvarer'].map((category) => {
-            const items = groceryList.filter(item => item.category === category);
-            if (items.length === 0) return null;
+        {/* Grocery List */}
+        <div className="bg-white rounded-2xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">Indkøbsliste</h2>
+          
+          {days.map((day) => {
+            const dayColor = getDayColor(day.day_en);
+            const dayItems = selectedPlan.grocery_list[day.day_en];
             
             return (
-              <div key={category} className="mb-6 last:mb-0">
-                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">{category}</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {items.map((item) => (
-                    <div 
-                      key={item.name} 
-                      className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg"
-                    >
-                      {/* Colored dots for each day */}
-                      <div className="flex gap-1 flex-shrink-0">
-                        {days.map((day) => (
-                          item.days.includes(day.name) ? (
-                            <span 
-                              key={day.name}
-                              className="w-2 h-2 rounded-full"
-                              style={{ backgroundColor: day.color }}
-                              title={day.name}
-                            />
-                          ) : null
-                        ))}
-                      </div>
-                      <span className="text-sm text-slate-700 truncate">{item.name}</span>
+              <div key={day.day_en} className="mb-6">
+                <h3 className="text-sm font-bold mb-3 flex items-center gap-2" style={{ color: dayColor.border }}>
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: dayColor.color }}></span>
+                  {day.name}
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {dayItems && dayItems.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg">
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: dayColor.color }}></span>
+                      <span className="text-xs text-slate-700 truncate">{item.name}</span>
                     </div>
                   ))}
                 </div>
@@ -168,31 +347,17 @@ export default function MadplanPage() {
             );
           })}
 
-          {/* Summary */}
           <div className="mt-6 pt-4 border-t border-slate-100">
-            <div className="flex flex-wrap gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <span className="text-slate-500">I alt:</span>
-                <span className="font-semibold text-slate-900">{groceryList.length} varer</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-slate-500">Estimeret:</span>
-                <span className="font-semibold text-emerald-600">~350 kr</span>
-              </div>
+            <div className="flex gap-6">
+              <span className="font-bold text-slate-900">Total: {selectedPlan.total_cost_dkk} kr</span>
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mt-8">
-          <button className="px-6 py-3 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition-colors shadow-lg">
+          <button className="px-8 py-4 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition-colors shadow-lg text-lg">
             Generér indkøbsliste
-          </button>
-          <button className="px-6 py-3 bg-white text-slate-700 font-semibold rounded-full border border-slate-200 hover:bg-slate-50 transition-colors">
-            Gem madplan
-          </button>
-          <button className="px-6 py-3 bg-white text-slate-700 font-semibold rounded-full border border-slate-200 hover:bg-slate-50 transition-colors">
-            Udskriv
           </button>
         </div>
       </main>
