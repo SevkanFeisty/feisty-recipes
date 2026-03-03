@@ -158,7 +158,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <img src="/feisty-logo.png" alt="Feisty" className="h-12 w-auto" />
+              <img src="/feisty-logo.png" alt="Feisty" className="h-10 w-auto rounded-md" style={{background: 'linear-gradient(to right, #10b981, #14b8a6)'}} />
             </div>
             <p className="text-white/80 text-sm">
               © 2026 Feisty. Alle rettigheder forbeholdes.
