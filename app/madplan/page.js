@@ -304,14 +304,20 @@ export default function MadplanPage() {
 
         {/* Week Grid */}
         <div className="grid grid-cols-5 gap-2 mb-8">
-          {selectedPlan.days.map((dayData) => {
+          {selectedPlan.days.map((dayData, idx) => {
             const dayColor = getDayColor(dayData.day_name);
             const recipe = recipesData[dayData.recipe_id];
             
+            // Calculate actual date for this day
+            const weekStart = new Date('2026-03-02');
+            weekStart.setDate(weekStart.getDate() + (weekOffset * 7) + idx);
+            const dayDate = `${weekStart.getDate()}/${weekStart.getMonth() + 1}`;
+            
             return (
               <div key={dayData.day} className="bg-white rounded-xl shadow-sm overflow-hidden border-2" style={{ borderColor: dayColor.border }}>
-                <div className="py-3 text-center font-bold text-sm" style={{ backgroundColor: dayColor.bg, color: dayColor.border }}>
-                  {getDanishDay(dayData.day_name)}
+                <div className="py-2 px-1 text-center font-bold text-sm" style={{ backgroundColor: dayColor.bg, color: dayColor.border }}>
+                  <div>{getDanishDay(dayData.day_name)}</div>
+                  <div className="text-xs opacity-75">{dayDate}</div>
                 </div>
                 
                 <div className="divide-y divide-slate-100">
