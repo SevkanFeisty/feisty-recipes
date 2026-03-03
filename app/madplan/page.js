@@ -232,7 +232,7 @@ export default function MadplanPage() {
       <div className="bg-gradient-to-r from-emerald-600 to-teal-500 py-6">
         <div className="mx-auto max-w-7xl px-4 text-center text-white">
           <h1 className="font-display text-2xl font-bold">Madplan</h1>
-          <p className="mt-1 text-emerald-100 text-sm">{selectedPlan.plan_name} • {selectedPlan.total_cost_dkk} kr</p>
+          <p className="mt-1 text-emerald-100 text-sm">{selectedPlan.plan_name} • {totalPrice.toFixed(2)} kr</p>
         </div>
       </div>
 
@@ -265,19 +265,6 @@ export default function MadplanPage() {
               <div className="text-xl font-bold text-amber-600">{multiDayIngredients.length} varer</div>
             </div>
           </div>
-          
-          {multiDayIngredients.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-amber-200">
-              <div className="text-sm text-amber-800 font-medium mb-2">Disse ingredienser bruges på flere dage:</div>
-              <div className="flex flex-wrap gap-2">
-                {multiDayIngredients.map((item, idx) => (
-                  <span key={idx} className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">
-                    {item.name} ({item.days.join(', ')})
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Week Navigation */}
@@ -327,9 +314,9 @@ export default function MadplanPage() {
 
         {/* Grocery List - By Category */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900">Indkøbsliste</h2>
-            <span className="text-sm text-slate-500">Klik for at krydse af</span>
+            <p className="text-sm text-slate-500 mt-1">Klik for at krydse af</p>
           </div>
           
           {Object.entries(groceryList).map(([category, items]) => {
@@ -382,6 +369,24 @@ export default function MadplanPage() {
             <span className="text-2xl font-bold text-emerald-600">{totalPrice.toFixed(2)} kr</span>
           </div>
         </div>
+
+        {/* Multi-day ingredients - below grocery list */}
+        {multiDayIngredients.length > 0 && (
+          <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl">♻️</span>
+              <h3 className="text-lg font-bold text-amber-800">Disse ingredienser bruges på flere dage</h3>
+            </div>
+            <p className="text-sm text-amber-700 mb-4">Køb lidt ekstra af disse varer for at undgå madspild:</p>
+            <div className="flex flex-wrap gap-2">
+              {multiDayIngredients.map((item, idx) => (
+                <span key={idx} className="px-4 py-2 bg-white border border-amber-300 text-amber-700 rounded-full text-sm font-medium">
+                  {item.name} → bruges {item.days.length} dage ({item.days.join(', ')})
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Action Button */}
         <div className="flex flex-wrap justify-center gap-4 mt-8">

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Opskrifter - Feisty",
-  description: "Find klassiske danske opskrifter og internationale retter. Fra frikadeller til sushi.",
+  description: "Find klassiske danske opskrifter og internationale favoritter. Fra frikadeller til sushi.",
 };
 
 const recipes = [
@@ -23,7 +23,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "15",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&h=600&fit=crop",
   },
   {
     id: "tarteletter",
@@ -32,7 +32,7 @@ const recipes = [
     category: "Hovedretter",
     prepTime: "30",
     cookTime: "30",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1607532941433-304659e8198a?w=800&h=600&fit=crop",
   },
   {
     id: "boefstroganoff",
