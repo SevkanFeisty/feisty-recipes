@@ -7,7 +7,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 
 export const metadata = {
   title: "Feisty - Danske Opskrifter",
-  description: "Klassiske danske opskrifter til hele familien. Fra frikadeller til drømmekage.",
+  description: "Klassiske danske opskrifter til hele familien. Spar tid og penge med smarte madplaner.",
 };
 
 export default function RootLayout({ children }) {
@@ -29,11 +29,10 @@ export default function RootLayout({ children }) {
           .delay-100 { animation-delay: 0.1s; }
           .delay-200 { animation-delay: 0.2s; }
           .delay-300 { animation-delay: 0.3s; }
-          .delay-400 { animation-delay: 0.4s; }
           .font-display { font-family: 'Playfair Display', Georgia, serif; }
         `}</style>
       </head>
-      <body className="antialiased" style={{fontFamily: 'Inter, system-ui, sans-serif'}}>
+      <body className="antialiased min-h-screen bg-white">
         <TopNav />
         {children}
       </body>
@@ -46,11 +45,11 @@ function TopNav() {
     { href: "/", label: "Forside" },
     { href: "/opskrifter", label: "Opskrifter" },
     { href: "/madplan", label: "Madplan" },
-    { href: "/abonnement", label: "Abonnement" },
+    { href: "/profil", label: "Profil" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 shadow-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold text-emerald-600">
           <span className="text-2xl">🍽️</span> 
@@ -67,11 +66,14 @@ function TopNav() {
             </Link>
           ))}
         </nav>
-        <button className="md:hidden p-2 text-slate-600">
+        <Link 
+          href="/profil"
+          className="md:hidden p-2 text-slate-600"
+        >
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
-        </button>
+        </Link>
       </div>
     </header>
   );
