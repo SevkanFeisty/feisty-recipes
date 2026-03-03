@@ -10,6 +10,8 @@ const days = [
   { name: 'Onsdag', day_en: 'Wednesday', color: '#FCD34D', bg: '#FEF3C7', border: '#F59E0B' },
   { name: 'Torsdag', day_en: 'Thursday', color: '#FCA5A5', bg: '#FEE2E2', border: '#EF4444' },
   { name: 'Fredag', day_en: 'Friday', color: '#C4B5FD', bg: '#EDE9FE', border: '#8B5CF6' },
+  { name: 'Lørdag', day_en: 'Saturday', color: '#F9A8D4', bg: '#FCE7F3', border: '#EC4899' },
+  { name: 'Søndag', day_en: 'Sunday', color: '#FB923C', bg: '#FFEDD5', border: '#F97316' },
 ];
 
 // Categories for ingredients
@@ -32,16 +34,16 @@ function categorizeIngredient(name) {
   if (lower.includes('løg') || lower.includes('hvidløg') || lower.includes('gulerod') || lower.includes('porre') || 
       lower.includes('broccoli') || lower.includes('squash') || lower.includes('peberfrugt') || lower.includes('agurk') ||
       lower.includes('tomater') || lower.includes('salat') || lower.includes('avocado') || lower.includes('lime') ||
-      lower.includes('basilikum') || lower.includes('koriander') || lower.includes('mynte') || lower.includes('persille')) {
+      lower.includes('basilikum') || lower.includes('koriander') || lower.includes('mynte') || lower.includes('persille') ||
+      lower.includes('grøntsager') || lower.includes('grønt')) {
     return "Grøntsager";
   }
-  if (lower.includes('ært')) return "Grøntsager";
   if (lower.includes('ris') || lower.includes('pasta') || lower.includes('linser') || lower.includes('kikært') ||
       lower.includes('majs') || lower.includes('bouillon') || lower.includes('tortilla') || lower.includes('pitabrød')) {
     return "Tørvarer";
   }
   if (lower.includes('mælk') || lower.includes('ost') || lower.includes('parmesan') || lower.includes('cremefraiche') ||
-      lower.includes('tza tziki') || lower.includes('hummus')) {
+      lower.includes('tza tziki') || lower.includes('hummus') || lower.includes('yoghurt')) {
     return "Mejeri";
   }
   if (lower.includes('olie') || lower.includes('eddike') || lower.includes('soja')) {
@@ -51,205 +53,265 @@ function categorizeIngredient(name) {
       lower.includes('gurkemeje') || lower.includes('paprika') || lower.includes('laurbær')) {
     return "Krydderier";
   }
-  if (lower.includes('falafel')) {
-    return "Frosne";
-  }
   return "Diverse";
 }
 
-// Recipe data with full ingredient details
-const recipesData = {
-  "veggie-curry": {
-    title: "Veggie Curry",
-    day: "Mandag",
-    ingredients: [
-      { name: "Kokosmælk", amount: "400 ml", brand: "Coco", price: 12.95 },
-      { name: "Kikærter", amount: "400 g", brand: "Casablanca", price: 8.95 },
-      { name: "Broccoli", amount: "1 stk", brand: "Frugt & Grønt", price: 9.95 },
-      { name: "Ærter", amount: "300 g", brand: "Frozen", price: 12.50 },
-      { name: "Karrypasta", amount: "290 g", brand: "Blue Dragon", price: 19.95 },
-      { name: "Løg", amount: "1 kg", brand: "Frugt & Grønt", price: 8.95 },
-      { name: "Hvidløg", amount: "3 fed", brand: "Frugt & Grønt", price: 5.00 },
-      { name: "Jasminris", amount: "1 kg", brand: "Tistic", price: 14.95 }
-    ]
-  },
-  "pasta-primavera": {
-    title: "Pasta Primavera",
-    day: "Tirsdag",
-    ingredients: [
-      { name: "Pasta", amount: "500 g", brand: "Barilla", price: 9.95 },
-      { name: "Hakkede tomater", amount: "400 g", brand: "Mutti", price: 14.95 },
-      { name: "Squash", amount: "2 stk", brand: "Frugt & Grønt", price: 10.00 },
-      { name: "Peberfrugt", amount: "2 stk", brand: "Frugt & Grønt", price: 12.00 },
-      { name: "Broccoli", amount: "1 stk", brand: "Frugt & Grønt", price: 9.95 },
-      { name: "Parmesan", amount: "200 g", brand: "Arla", price: 29.95 },
-      { name: "Hvidløg", amount: "1 hoved", brand: "Frugt & Grønt", price: 3.00 }
-    ]
-  },
-  "veggie-tacos": {
-    title: "Veggie Tacos",
-    day: "Onsdag",
-    ingredients: [
-      { name: "Majs-tortillas", amount: "8 stk", brand: "Santa Maria", price: 18.95 },
-      { name: "Majs", amount: "340 g", brand: "Sweet Corn", price: 7.95 },
-      { name: "Kikærter", amount: "400 g", brand: "Casablanca", price: 8.95 },
-      { name: "Avocado", amount: "2 stk", brand: "Frugt & Grønt", price: 14.00 },
-      { name: "Rødløg", amount: "2 stk", brand: "Frugt & Grønt", price: 6.00 },
-      { name: "Tomater", amount: "4 stk", brand: "Frugt & Grønt", price: 12.00 },
-      { name: "Lime", amount: "2 stk", brand: "Frugt & Grønt", price: 8.00 }
-    ]
-  },
-  "lentil-soup": {
-    title: "Linsesuppe",
-    day: "Torsdag",
-    ingredients: [
-      { name: "Røde linser", amount: "500 g", brand: "Bobs Red Mill", price: 19.95 },
-      { name: "Gulerødder", amount: "1 kg", brand: "Frugt & Grønt", price: 9.95 },
-      { name: "Porrer", amount: "2 stk", brand: "Frugt & Grønt", price: 8.00 },
-      { name: "Løg", amount: "1 kg", brand: "Frugt & Grønt", price: 8.95 },
-      { name: "Hvidløg", amount: "1 hoved", brand: "Frugt & Grønt", price: 3.00 },
-      { name: "Grøntsagsbouillon", amount: "6 stk", brand: "Knorr", price: 15.95 }
-    ]
-  },
-  "falafel-bowl": {
-    title: "Falafel Bowl",
-    day: "Fredag",
-    ingredients: [
-      { name: "Falafel", amount: "300 g", brand: "D四个字", price: 22.95 },
-      { name: "Hummus", amount: "250 g", brand: "Pulsar", price: 14.95 },
-      { name: "Salatmix", amount: "250 g", brand: "Evergreen", price: 12.95 },
-      { name: "Agurk", amount: "1 stk", brand: "Frugt & Grønt", price: 5.00 },
-      { name: "Tomater", amount: "4 stk", brand: "Frugt & Grønt", price: 12.00 },
-      { name: "Pitabrød", amount: "4 stk", brand: "Al Arabi", price: 14.95 }
-    ]
-  }
-};
-
-// Find ingredients used in multiple days
-function getMultiDayIngredients() {
-  const ingredientCount = {};
-  
-  Object.values(recipesData).forEach(recipe => {
-    recipe.ingredients.forEach(ing => {
-      const key = ing.name.toLowerCase();
-      if (!ingredientCount[key]) {
-        ingredientCount[key] = { name: ing.name, days: [], count: 0 };
-      }
-      ingredientCount[key].days.push(recipe.day);
-      ingredientCount[key].count++;
-    });
-  });
-  
-  return Object.values(ingredientCount).filter(i => i.count > 1);
+// Get current ISO week string
+function getCurrentISOWeek() {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const weekNum = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+  return `${d.getUTCFullYear()}-W${weekNum.toString().padStart(2, '0')}`;
 }
 
-// Generate grocery list grouped by category
-function generateGroceryList() {
-  const categorized = {};
-  const multiDay = getMultiDayIngredients();
-  const multiDayNames = multiDay.map(m => m.name.toLowerCase());
+// Generate grocery list from weekly plan
+function generateGroceryList(weeklyPlan) {
+  if (!weeklyPlan || !weeklyPlan.days) return { categorized: {}, total: 0, multiDay: [] };
   
-  // Initialize categories
+  const allIngredients = [];
+  const seen = new Set();
+  const multiDayIngredients = [];
+  
+  weeklyPlan.days.forEach(day => {
+    if (day.grocery_list) {
+      day.grocery_list.forEach(item => {
+        const key = item.name.toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          allIngredients.push({
+            name: item.name,
+            quantity: item.quantity,
+            unit: item.unit,
+            store: item.store || 'Generic',
+            price: item.price || 0,
+            days: [day.day_name]
+          });
+        } else {
+          const existing = allIngredients.find(i => i.name.toLowerCase() === key);
+          if (existing && !existing.days.includes(day.day_name)) {
+            existing.days.push(day.day_name);
+            if (existing.days.length > 1 && !multiDayIngredients.includes(existing)) {
+              multiDayIngredients.push(existing);
+            }
+          }
+        }
+      });
+    }
+  });
+  
+  // Categorize
+  const categorized = {};
   Object.keys(categories).forEach(cat => {
     categorized[cat] = [];
   });
   
-  const seen = new Set();
-  
-  Object.values(recipesData).forEach(recipe => {
-    recipe.ingredients.forEach(ing => {
-      const key = ing.name.toLowerCase();
-      if (!seen.has(key)) {
-        seen.add(key);
-        const category = categorizeIngredient(ing.name);
-        categorized[category].push({
-          name: ing.name,
-          amount: ing.amount,
-          brand: ing.brand,
-          price: ing.price,
-          days: [recipe.day],
-          isMultiDay: multiDayNames.includes(key)
-        });
-      } else {
-        const category = categorizeIngredient(ing.name);
-        const existing = categorized[category].find(i => i.name.toLowerCase() === key);
-        if (existing && !existing.days.includes(recipe.day)) {
-          existing.days.push(recipe.day);
-          existing.isMultiDay = true;
-        }
-      }
-    });
+  allIngredients.forEach(ing => {
+    const category = categorizeIngredient(ing.name);
+    categorized[category].push(ing);
   });
   
-  // Sort items within each category
+  // Sort: multi-day items first
   Object.keys(categorized).forEach(cat => {
     categorized[cat].sort((a, b) => {
-      if (a.isMultiDay && !b.isMultiDay) return -1;
-      if (!a.isMultiDay && b.isMultiDay) return 1;
+      if (a.days.length > 1 && b.days.length === 1) return -1;
+      if (a.days.length === 1 && b.days.length > 1) return 1;
       return a.name.localeCompare(b.name);
     });
   });
   
-  return categorized;
+  const total = allIngredients.reduce((sum, item) => sum + (item.price || 0), 0);
+  
+  return { categorized, total, multiDay: multiDayIngredients };
 }
-
-const samplePlan = {
-  plan_id: "vegetarian-5day",
-  plan_name: "Premium Vegetarian",
-  score: 92,
-  total_cost_dkk: 189,
-  supermarket: "REMA 1000",
-  days: [
-    { day: 1, day_name: "Monday", recipe_id: "veggie-curry", day_total: 44 },
-    { day: 2, day_name: "Tuesday", recipe_id: "pasta-primavera", day_total: 59 },
-    { day: 3, day_name: "Wednesday", recipe_id: "veggie-tacos", day_total: 26 },
-    { day: 4, day_name: "Thursday", recipe_id: "lentil-soup", day_total: 33 },
-    { day: 5, day_name: "Friday", recipe_id: "falafel-bowl", day_total: 36 }
-  ]
-};
 
 export default function MadplanPage() {
   const [weekOffset, setWeekOffset] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState(samplePlan);
-  const groceryList = generateGroceryList();
-  const multiDayIngredients = getMultiDayIngredients();
+  const [planLoaded, setPlanLoaded] = useState(false);
+  const [error, setError] = useState(null);
   
-  const totalPrice = Object.values(groceryList).flat().reduce((sum, item) => sum + item.price, 0);
-
-  // Calculate week dates - week starting Monday March 2nd, 2026
-  const getWeekLabel = (offset) => {
-    const startDate = new Date('2026-03-02'); // Monday of current week
-    startDate.setDate(startDate.getDate() + (offset * 7));
-    
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 4); // Friday
-    
-    const startDay = startDate.getDate();
-    const endDay = endDate.getDate();
-    const month = startDate.toLocaleDateString('da-DK', { month: 'short' });
-    
-    if (offset === 0) return `Uge ${getWeekNumber(startDate)} - ${month}`;
-    if (offset === 1) return `Næste uge (${month})`;
-    if (offset === -1) return `Sidste uge (${month})`;
-    return `${month} ${startDay}-${endDay}`;
+  // Current ISO week (would be used to load the file)
+  const currentWeek = getCurrentISOWeek();
+  
+  // Sample data - this would be loaded from JSON file based on ISO week
+  // File naming: {YYYY-W##}.json (e.g., 2026-W10.json)
+  const sampleWeeklyPlan = {
+    week_id: currentWeek,
+    plan_id: "vegetarian-5day",
+    plan_name: "Premium Vegetarian",
+    duration: 5,
+    score: 92,
+    total_cost_dkk: 189,
+    supermarkets: ["REMA 1000"],
+    dietary_tags: ["vegetarian"],
+    days: [
+      {
+        day: 1,
+        day_name: "Monday",
+        meals: [
+          {
+            type: "dinner",
+            recipe_name: "Veggie Curry",
+            recipe_type: "curry",
+            servings: 2,
+            ingredients: [
+              {name: "Kokosmælk", quantity: 400, unit: "ml"},
+              {name: "Kikærter", quantity: 240, unit: "g"},
+              {name: "Broccoli", quantity: 1, unit: "stk"},
+              {name: "Ris", quantity: 1, unit: "kg"}
+            ],
+            instructions: ["Kog ris", "Tilsæt kokosmælk", "Tilsæt kikærter og broccoli", "Lad simre", "Server"]
+          }
+        ],
+        grocery_list: [
+          {name: "Kokosmælk", quantity: 400, unit: "ml", store: "REMA 1000", price: 8.95},
+          {name: "Kikærter", quantity: 240, unit: "g", store: "REMA 1000", price: 7.86},
+          {name: "Broccoli", quantity: 1, unit: "stk", store: "REMA 1000", price: 15.00},
+          {name: "Ris", quantity: 1, unit: "kg", store: "REMA 1000", price: 12.00}
+        ],
+        day_total: 44
+      },
+      {
+        day: 2,
+        day_name: "Tuesday",
+        meals: [
+          {
+            type: "dinner",
+            recipe_name: "Pasta Primavera",
+            recipe_type: "pasta",
+            servings: 2,
+            ingredients: [
+              {name: "Pasta", quantity: 500, unit: "g"},
+              {name: "Hakkede tomater", quantity: 400, unit: "g"},
+              {name: "Grøntsager", quantity: 1, unit: "pose"},
+              {name: "Parmesan", quantity: 200, unit: "g"}
+            ],
+            instructions: ["Kog pasta", "Varm tomater", "Tilsæt grøntsager", "Bland", "Top med ost"]
+          }
+        ],
+        grocery_list: [
+          {name: "Pasta", quantity: 500, unit: "g", store: "REMA 1000", price: 9.95},
+          {name: "Hakkede tomater", quantity: 400, unit: "g", store: "REMA 1000", price: 14.95},
+          {name: "Grøntsager", quantity: 1, unit: "pose", store: "REMA 1000", price: 25.00},
+          {name: "Parmesan", quantity: 200, unit: "g", store: "REMA 1000", price: 29.95}
+        ],
+        day_total: 59
+      },
+      {
+        day: 3,
+        day_name: "Wednesday",
+        meals: [
+          {
+            type: "dinner",
+            recipe_name: "Veggie Tacos",
+            recipe_type: "mexican",
+            servings: 2,
+            ingredients: [
+              {name: "Majs-tortillas", quantity: 8, unit: "stk"},
+              {name: "Majs", quantity: 285, unit: "g"},
+              {name: "Kikærter", quantity: 240, unit: "g"},
+              {name: "Avocado", quantity: 1, unit: "stk"}
+            ],
+            instructions: ["Varm tortillas", "Lav guacamole", "Steg majs og kikærter", "Samle tacos", "Server"]
+          }
+        ],
+        grocery_list: [
+          {name: "Majs-tortillas", quantity: 8, unit: "stk", store: "REMA 1000", price: 18.95},
+          {name: "Majs", quantity: 285, unit: "g", store: "REMA 1000", price: 7.95},
+          {name: "Kikærter", quantity: 240, unit: "g", store: "REMA 1000", price: 7.86},
+          {name: "Avocado", quantity: 1, unit: "stk", store: "REMA 1000", price: 8.00}
+        ],
+        day_total: 26
+      },
+      {
+        day: 4,
+        day_name: "Thursday",
+        meals: [
+          {
+            type: "dinner",
+            recipe_name: "Linsesuppe",
+            recipe_type: "soup",
+            servings: 2,
+            ingredients: [
+              {name: "Røde linser", quantity: 300, unit: "g"},
+              {name: "Gulerødder", quantity: 1, unit: "kg"},
+              {name: "Porrer", quantity: 2, unit: "stk"},
+              {name: "Løg", quantity: 1, unit: "stk"}
+            ],
+            instructions: ["Hak grøntsager", "Kog linser", "Tilsæt grøntsager", "Krydre", "Server med brød"]
+          }
+        ],
+        grocery_list: [
+          {name: "Røde linser", quantity: 300, unit: "g", store: "REMA 1000", price: 12.00},
+          {name: "Gulerødder", quantity: 1, unit: "kg", store: "REMA 1000", price: 9.95},
+          {name: "Porrer", quantity: 2, unit: "stk", store: "REMA 1000", price: 8.00},
+          {name: "Løg", quantity: 1, unit: "kg", store: "REMA 1000", price: 8.95}
+        ],
+        day_total: 33
+      },
+      {
+        day: 5,
+        day_name: "Friday",
+        meals: [
+          {
+            type: "dinner",
+            recipe_name: "Falafel Bowl",
+            recipe_type: "bowl",
+            servings: 2,
+            ingredients: [
+              {name: "Falafel", quantity: 300, unit: "g"},
+              {name: "Hummus", quantity: 250, unit: "g"},
+              {name: "Salatmix", quantity: 1, unit: "pose"},
+              {name: "Agurk", quantity: 1, unit: "stk"}
+            ],
+            instructions: ["Bag falafel", "Anret salat", "Tilsæt hummus og falafel", "Top med grøntsager", "Server"]
+          }
+        ],
+        grocery_list: [
+          {name: "Falafel", quantity: 300, unit: "g", store: "REMA 1000", price: 22.95},
+          {name: "Hummus", quantity: 250, unit: "g", store: "REMA 1000", price: 14.95},
+          {name: "Salatmix", quantity: 1, unit: "pose", store: "REMA 1000", price: 12.95},
+          {name: "Agurk", quantity: 1, unit: "stk", store: "REMA 1000", price: 5.00}
+        ],
+        day_total: 36
+      }
+    ]
   };
 
-  const getWeekNumber = (date) => {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const weeklyPlan = sampleWeeklyPlan;
+  const groceryData = generateGroceryList(weeklyPlan);
+
+  // Calculate week label
+  const getWeekLabel = (offset) => {
+    const now = new Date();
+    const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
     const dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    const currentWeekNum = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    
+    const targetWeekNum = currentWeekNum + offset;
+    const targetYear = d.getUTCFullYear() + Math.floor((targetWeekNum - 1) / 52);
+    
+    if (offset === 0) return `Uge ${targetWeekNum} - ${targetYear}`;
+    if (offset === 1) return `Næste uge (Uge ${targetWeekNum})`;
+    if (offset === -1) return `Sidste uge (Uge ${targetWeekNum})`;
+    return `Uge ${targetWeekNum} ${targetYear}`;
   };
 
-  const getDanishDay = (dayName) => {
-    const day = days.find(d => d.day_en === dayName);
-    return day ? day.name : dayName;
+  const getDanishDayName = (dayName) => {
+    const map = {
+      'Monday': 'Mandag', 'Tuesday': 'Tirsdag', 'Wednesday': 'Onsdag',
+      'Thursday': 'Torsdag', 'Friday': 'Fredag', 'Saturday': 'Lørdag', 'Sunday': 'Søndag'
+    };
+    return map[dayName] || dayName;
   };
 
   const getDayColor = (dayName) => {
     const day = days.find(d => d.day_en === dayName);
-    return day ? day : days[0];
+    return day || days[0];
   };
 
   return (
@@ -258,7 +320,7 @@ export default function MadplanPage() {
       <div className="bg-gradient-to-r from-emerald-600 to-teal-500 py-6">
         <div className="mx-auto max-w-7xl px-4 text-center text-white">
           <h1 className="font-display text-2xl font-bold">Madplan</h1>
-          <p className="mt-1 text-emerald-100 text-sm">{selectedPlan.plan_name} • {totalPrice.toFixed(2)} kr</p>
+          <p className="mt-1 text-emerald-100 text-sm">{weeklyPlan.plan_name} • {weeklyPlan.total_cost_dkk} kr</p>
         </div>
       </div>
 
@@ -270,25 +332,25 @@ export default function MadplanPage() {
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
               <div className="text-3xl mb-2">🏪</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Supermarked</div>
-              <div className="text-xl font-bold text-slate-900">{selectedPlan.supermarket}</div>
+              <div className="text-xl font-bold text-slate-900">{weeklyPlan.supermarkets?.join(', ') || 'Ikke specificeret'}</div>
             </div>
             
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
               <div className="text-3xl mb-2">💰</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Total Pris</div>
-              <div className="text-xl font-bold text-emerald-600">{totalPrice.toFixed(2)} kr</div>
+              <div className="text-xl font-bold text-emerald-600">{groceryData.total.toFixed(2)} kr</div>
             </div>
             
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
               <div className="text-3xl mb-2">🏆</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Score</div>
-              <div className="text-xl font-bold text-slate-900">{selectedPlan.score}/100</div>
+              <div className="text-xl font-bold text-slate-900">{weeklyPlan.score}/100</div>
             </div>
             
             <div className="text-center p-4 bg-amber-50 rounded-xl">
               <div className="text-3xl mb-2">♻️</div>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Genbruges</div>
-              <div className="text-xl font-bold text-amber-600">{multiDayIngredients.length} varer</div>
+              <div className="text-xl font-bold text-amber-600">{groceryData.multiDay.length} varer</div>
             </div>
           </div>
         </div>
@@ -304,39 +366,42 @@ export default function MadplanPage() {
 
         {/* Week Grid */}
         <div className="grid grid-cols-5 gap-2 mb-8">
-          {selectedPlan.days.map((dayData, idx) => {
+          {weeklyPlan.days.map((dayData, idx) => {
             const dayColor = getDayColor(dayData.day_name);
-            const recipe = recipesData[dayData.recipe_id];
+            const meal = dayData.meals?.[0];
             
-            // Calculate actual date for this day
-            const weekStart = new Date('2026-03-02');
-            weekStart.setDate(weekStart.getDate() + (weekOffset * 7) + idx);
-            const dayDate = `${weekStart.getDate()}/${weekStart.getMonth() + 1}`;
+            // Calculate date
+            const now = new Date();
+            const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+            const dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum + (weekOffset * 7) + idx);
+            const dayDate = `${d.getUTCDate()}/${d.getUTCMonth() + 1}`;
             
             return (
               <div key={dayData.day} className="bg-white rounded-xl shadow-sm overflow-hidden border-2" style={{ borderColor: dayColor.border }}>
                 <div className="py-2 px-1 text-center font-bold text-sm" style={{ backgroundColor: dayColor.bg, color: dayColor.border }}>
-                  <div>{getDanishDay(dayData.day_name)}</div>
+                  <div>{getDanishDayName(dayData.day_name)}</div>
                   <div className="text-xs opacity-75">{dayDate}</div>
                 </div>
                 
                 <div className="divide-y divide-slate-100">
-                  {recipe ? (
-                    <Link href={`/opskrifter/${dayData.recipe_id}`} className="block p-3 hover:bg-emerald-50 transition-colors">
+                  {meal ? (
+                    <div className="p-3">
                       <span className="text-xs text-slate-400 block mb-1">Aftensmad</span>
-                      <span className="text-sm font-medium text-emerald-600 hover:text-emerald-700 block">
-                        {recipe.title}
+                      <span className="text-sm font-medium text-emerald-600 block">
+                        {meal.recipe_name}
                       </span>
                       <span className="text-xs text-slate-400 mt-1 block">Klik for opskrift →</span>
-                    </Link>
+                    </div>
                   ) : (
                     <div className="p-3">
-                      <span className="text-xs text-slate-400 block">Aftensmad</span>
-                      <span className="text-xs text-slate-500">+ Tilføj</span>
+                      <span className="text-xs text-slate-400 block">Ingen ret planlagt</span>
                     </div>
                   )}
                   <div className="p-2 bg-slate-50">
-                    <span className="text-xs font-bold" style={{ color: dayColor.border }}>{dayData.day_total} kr</span>
+                    <span className="text-xs font-bold" style={{ color: dayColor.border }}>
+                      {dayData.day_total} kr
+                    </span>
                   </div>
                 </div>
               </div>
@@ -344,14 +409,32 @@ export default function MadplanPage() {
           })}
         </div>
 
-        {/* Grocery List - By Category */}
+        {/* Multi-day ingredients - below week grid */}
+        {groceryData.multiDay.length > 0 && (
+          <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl">♻️</span>
+              <h3 className="text-lg font-bold text-amber-800">Disse ingredienser bruges på flere dage</h3>
+            </div>
+            <p className="text-sm text-amber-700 mb-4">Køb lidt ekstra af disse varer for at undgå madspild:</p>
+            <div className="flex flex-wrap gap-2">
+              {groceryData.multiDay.map((item, idx) => (
+                <span key={idx} className="px-4 py-2 bg-white border border-amber-300 text-amber-700 rounded-full text-sm font-medium">
+                  {item.name} → bruges {item.days.length} dage ({item.days.map(d => getDanishDayName(d)).join(', ')})
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Grocery List */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900">Indkøbsliste</h2>
             <p className="text-sm text-slate-500 mt-1">Klik for at krydse af</p>
           </div>
           
-          {Object.entries(groceryList).map(([category, items]) => {
+          {Object.entries(groceryData.categorized).map(([category, items]) => {
             if (items.length === 0) return null;
             const catInfo = categories[category];
             
@@ -367,7 +450,7 @@ export default function MadplanPage() {
                   {items.map((item, idx) => (
                     <label 
                       key={idx} 
-                      className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.isMultiDay ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}
+                      className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all hover:shadow-md ${item.days.length > 1 ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50'}`}
                     >
                       <input 
                         type="checkbox" 
@@ -375,16 +458,16 @@ export default function MadplanPage() {
                       />
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <span className={`font-medium ${item.isMultiDay ? 'text-amber-700' : 'text-slate-900'}`}>
+                          <span className={`font-medium ${item.days.length > 1 ? 'text-amber-700' : 'text-slate-900'}`}>
                             {item.name}
                           </span>
-                          {item.isMultiDay && (
+                          {item.days.length > 1 && (
                             <span className="text-xs bg-amber-200 text-amber-700 px-2 py-0.5 rounded-full">
                               {item.days.length} dage
                             </span>
                           )}
                         </div>
-                        <div className="text-sm text-slate-500">{item.amount} • {item.brand}</div>
+                        <div className="text-sm text-slate-500">{item.quantity} {item.unit} • {item.store}</div>
                       </div>
                       <div className="text-right">
                         <div className="font-bold text-slate-900">{item.price.toFixed(2)} kr</div>
@@ -398,27 +481,9 @@ export default function MadplanPage() {
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
             <span className="font-bold text-slate-900">I alt:</span>
-            <span className="text-2xl font-bold text-emerald-600">{totalPrice.toFixed(2)} kr</span>
+            <span className="text-2xl font-bold text-emerald-600">{groceryData.total.toFixed(2)} kr</span>
           </div>
         </div>
-
-        {/* Multi-day ingredients - below grocery list */}
-        {multiDayIngredients.length > 0 && (
-          <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">♻️</span>
-              <h3 className="text-lg font-bold text-amber-800">Disse ingredienser bruges på flere dage</h3>
-            </div>
-            <p className="text-sm text-amber-700 mb-4">Køb lidt ekstra af disse varer for at undgå madspild:</p>
-            <div className="flex flex-wrap gap-2">
-              {multiDayIngredients.map((item, idx) => (
-                <span key={idx} className="px-4 py-2 bg-white border border-amber-300 text-amber-700 rounded-full text-sm font-medium">
-                  {item.name} → bruges {item.days.length} dage ({item.days.join(', ')})
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Action Button */}
         <div className="flex flex-wrap justify-center gap-4 mt-8">
