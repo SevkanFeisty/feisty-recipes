@@ -216,6 +216,32 @@ export default function MadplanPage() {
   
   const totalPrice = Object.values(groceryList).flat().reduce((sum, item) => sum + item.price, 0);
 
+  // Calculate week dates - week starting Monday March 2nd, 2026
+  const getWeekLabel = (offset) => {
+    const startDate = new Date('2026-03-02'); // Monday of current week
+    startDate.setDate(startDate.getDate() + (offset * 7));
+    
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 4); // Friday
+    
+    const startDay = startDate.getDate();
+    const endDay = endDate.getDate();
+    const month = startDate.toLocaleDateString('da-DK', { month: 'short' });
+    
+    if (offset === 0) return `Uge ${getWeekNumber(startDate)} - ${month}`;
+    if (offset === 1) return `Næste uge (${month})`;
+    if (offset === -1) return `Sidste uge (${month})`;
+    return `${month} ${startDay}-${endDay}`;
+  };
+
+  const getWeekNumber = (date) => {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+  };
+
   const getDanishDay = (dayName) => {
     const day = days.find(d => d.day_en === dayName);
     return day ? day.name : dayName;
@@ -270,9 +296,9 @@ export default function MadplanPage() {
         {/* Week Navigation */}
         <div className="flex items-center justify-center gap-4 mb-6">
           <button onClick={() => setWeekOffset(weekOffset - 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">←</button>
-          <span className="text-lg font-semibold text-slate-900 min-w-[150px] text-center">
-            {weekOffset === 0 ? "Denne uge" : weekOffset === 1 ? "Næste uge" : `${weekOffset} uger frem`}
-          </span>
+          <div className="text-lg font-semibold text-slate-900 min-w-[200px] text-center">
+            {getWeekLabel(weekOffset)}
+          </div>
           <button onClick={() => setWeekOffset(weekOffset + 1)} className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50">→</button>
         </div>
 
