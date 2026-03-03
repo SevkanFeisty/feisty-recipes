@@ -133,7 +133,7 @@ export default function OpskrifterPage() {
   return (
     <div className="min-h-screen bg-stone-50">
       {/* Hero Banner */}
-      <div className="relative h-64 bg-gradient-to-r from-emerald-600 to-teal-500 overflow-hidden">
+      <div className="relative h-56 bg-gradient-to-r from-emerald-600 to-teal-500 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -141,19 +141,19 @@ export default function OpskrifterPage() {
         </div>
         <div className="relative mx-auto max-w-7xl px-4 h-full flex items-center">
           <div className="text-white">
-            <h1 className="text-4xl font-bold tracking-tight">Opskrifter</h1>
+            <h1 className="text-4xl font-bold tracking-tight font-display">Opskrifter</h1>
             <p className="mt-2 text-lg text-emerald-100">Klassiske danske retter til hele familien</p>
           </div>
         </div>
       </div>
 
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        {/* Category Filter - Clean horizontal scroll on mobile */}
+        {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {categories.map((cat) => (
+          {categories.map((cat, i) => (
             <button
               key={cat.slug}
-              className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 border border-emerald-200 bg-white text-slate-600 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 shadow-sm"
+              className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 border border-emerald-200 bg-white text-slate-600 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 shadow-sm hover:shadow-md"
             >
               {cat.name}
             </button>
@@ -174,11 +174,11 @@ export default function OpskrifterPage() {
           </div>
         </div>
 
-        {/* Recipe Grid - Jamie Oliver Style: Large images, clean cards */}
+        {/* Recipe Grid - Jamie Oliver Style */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {recipes.map((recipe) => (
-            <Link key={recipe.id} href={`/opskrifter/${recipe.id}`} className="group">
-              <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          {recipes.map((recipe, i) => (
+            <Link key={recipe.id} href={`/opskrifter/${recipe.id}`} className="group" style={{animationDelay: `${i * 0.05}s`}}>
+              <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
                 {/* Image - The star of the show */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
@@ -202,7 +202,7 @@ export default function OpskrifterPage() {
                     {recipe.subtitle}
                   </p>
                   
-                  {/* Time Info - Clean display */}
+                  {/* Time Info */}
                   <div className="mt-4 flex items-center gap-4 text-xs text-slate-400">
                     <span className="flex items-center gap-1">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
