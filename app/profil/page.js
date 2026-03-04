@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { recipes } from "../../data/recipes-danish";
 
 function getWeekNumber(date) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -29,6 +28,18 @@ const week11Data = {
     { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod" }] },
     { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", leftover: true }] },
     { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Æg og Gryde", recipe_id: "aeg-og-gryde" }] },
+  ],
+  // FULL grocery list from Arnold - with purchase quantities AND prices
+  grocery: [
+    { name: "Hakket kyllingekød", qty: 400, unit: "g", price: 29, days: [1, 2], store: "REMA 1000" },
+    { name: "Hakket oksekød", qty: 400, unit: "g", price: 29, days: [3], store: "REMA 1000" },
+    { name: "Pasta", qty: 1000, unit: "g", price: 15.32, days: [2, 3, 4], store: "REMA 1000" },
+    { name: "Hakkede tomater", qty: 800, unit: "g", price: 12.74, days: [1, 3], store: "REMA 1000" },
+    { name: "Æg", qty: 4, unit: "stk", price: 8, days: [5], store: "REMA 1000" },
+    { name: "Pastaplaner", qty: 200, unit: "g", price: 5, days: [4], store: "REMA 1000" },
+    { name: "Kokosmælk", qty: 200, unit: "ml", price: 12, days: [1], store: "REMA 1000" },
+    { name: "Karry", qty: 2, unit: "tsk", price: 8, days: [1], store: "REMA 1000" },
+    { name: "Ris", qty: 200, unit: "g", price: 6, days: [1], store: "REMA 1000" },
   ]
 };
 
@@ -44,49 +55,27 @@ const week12Data = {
     { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Stegt Flæsk", recipe_id: "stegt-flaesk" }] },
     { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Kylling i Curry", recipe_id: "kylling-curry" }] },
     { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Frikadeller", recipe_id: "frikadeller" }] },
+  ],
+  grocery: [
+    { name: "Hakket svinekod", qty: 500, unit: "g", price: 25, days: [1], store: "REMA 1000" },
+    { name: "Hakket oksekød", qty: 500, unit: "g", price: 35, days: [1], store: "REMA 1000" },
+    { name: "Svinemørbrad", qty: 600, unit: "g", price: 45, days: [2], store: "REMA 1000" },
+    { name: "Champignons", qty: 250, unit: "g", price: 15, days: [2], store: "REMA 1000" },
+    { name: "Fløde", qty: 3, unit: "dl", price: 15, days: [2], store: "REMA 1000" },
+    { name: "Stegt flæsk", qty: 800, unit: "g", price: 35, days: [3], store: "REMA 1000" },
+    { name: "Kartofler", qty: 1, unit: "kg", price: 12, days: [3], store: "REMA 1000" },
+    { name: "Persille", qty: 1, unit: "bdt", price: 8, days: [3], store: "REMA 1000" },
+    { name: "Kyllingebryst", qty: 500, unit: "g", price: 30, days: [4], store: "REMA 1000" },
+    { name: "Yoghurt", qty: 2, unit: "dl", price: 10, days: [4], store: "REMA 1000" },
+    { name: "Kokosmælk", qty: 4, unit: "dl", price: 15, days: [4], store: "REMA 1000" },
+    { name: "Æg", qty: 6, unit: "stk", price: 15, days: [5], store: "REMA 1000" },
+    { name: "Løg", qty: 4, unit: "stk", price: 8, days: [1, 2], store: "REMA 1000" },
   ]
 };
 
 const allPlans = {
   "2026-W11": week11Data,
   "2026-W12": week12Data,
-};
-
-// Price mapping from Arnold's data (REMA 1000)
-const priceFromArnold = {
-  "Hakket kyllingekød": { price: 29, store: "REMA 1000" },
-  "Hakket oksekød": { price: 29, store: "REMA 1000" },
-  "Hakket svinekod": { price: 25, store: "REMA 1000" },
-  "Pasta": { price: 15.32, store: "REMA 1000" }, // for 1000g
-  "Hakkede tomater": { price: 12.74, store: "REMA 1000" }, // for 800g
-  "Kokosmælk": { price: 12, store: "REMA 1000" },
-  "Karry": { price: 8, store: "REMA 1000" },
-  "Karrypasta": { price: 8, store: "REMA 1000" },
-  "Ris": { price: 6, store: "REMA 1000" },
-  "Æg": { price: 8, store: "REMA 1000" },
-  "Pastaplaner": { price: 5, store: "REMA 1000" },
-  "Havregryn": { price: 8, store: "REMA 1000" },
-  "Løg": { price: 4, store: "REMA 1000" },
-  "Hvidløg": { price: 4, store: "REMA 1000" },
-  "Olivenolie": { price: 15, store: "REMA 1000" },
-  "Gulerødder": { price: 6, store: "REMA 1000" },
-  "Smør": { price: 15, store: "REMA 1000" },
-  "Mælk": { price: 5, store: "REMA 1000" },
-  "Fløde": { price: 10, store: "REMA 1000" },
-  "Mozzarella": { price: 20, store: "REMA 1000" },
-  "Parmesan": { price: 25, store: "REMA 1000" },
-  "Parmesanost": { price: 20, store: "REMA 1000" },
-  "Tomatpure": { price: 8, store: "REMA 1000" },
-  "Oregano": { price: 5, store: "REMA 1000" },
-  "Laurbærblade": { price: 5, store: "REMA 1000" },
-  "Oksebouillon": { price: 5, store: "REMA 1000" },
-  "Rødvin": { price: 20, store: "REMA 1000" },
-  "Stangselleri": { price: 10, store: "REMA 1000" },
-  "Champignons": { price: 15, store: "REMA 1000" },
-  "Svinemørbrad": { price: 45, store: "REMA 1000" },
-  "Yoghurt": { price: 10, store: "REMA 1000" },
-  "Cherrytomater": { price: 15, store: "REMA 1000" },
-  "Frisk basilikum": { price: 10, store: "REMA 1000" },
 };
 
 const dayColors = {
@@ -96,56 +85,6 @@ const dayColors = {
   4: { bg: '#FEE2E2', border: '#DC2626', label: 'Torsdag', dot: '#DC2626' },
   5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
-
-// Get all recipe ingredients for a day
-function getDayIngredients(dayNum, recipeId) {
-  const recipe = recipes.find(r => r.id === recipeId);
-  if (!recipe || !recipe.ingredients) return [];
-  
-  return recipe.ingredients.map(ing => ({
-    name: ing.name.trim(),
-    qty: parseInt(ing.quantity) || 0,
-    unit: ing.unit,
-    day: dayNum
-  }));
-}
-
-// Build grocery list from all recipe ingredients + match prices
-function buildGroceryList(days) {
-  const agg = {};
-  
-  days.forEach(day => {
-    const meal = day.meals?.[0];
-    if (!meal) return;
-    
-    const ingredients = getDayIngredients(day.day, meal.recipe_id);
-    
-    ingredients.forEach(ing => {
-      const key = ing.name;
-      if (!key) return;
-      
-      if (!agg[key]) {
-        const priceData = priceFromArnold[key];
-        agg[key] = {
-          name: key,
-          qty: ing.qty,
-          unit: ing.unit,
-          days: [ing.day],
-          hasPrice: !!priceData,
-          price: priceData?.price || null,
-          store: priceData?.store || null
-        };
-      } else {
-        if (!agg[key].days.includes(ing.day)) {
-          agg[key].days.push(ing.day);
-          agg[key].qty += ing.qty;
-        }
-      }
-    });
-  });
-  
-  return Object.values(agg).sort((a, b) => a.name.localeCompare(b.name, 'da'));
-}
 
 export default function ProfilPage() {
   const router = useRouter();
@@ -172,11 +111,8 @@ export default function ProfilPage() {
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
 
-  // Build grocery list from recipe ingredients
-  const groceryItems = useMemo(() => {
-    if (!plan) return [];
-    return buildGroceryList(plan.days);
-  }, [plan]);
+  // Use Arnold's grocery data directly
+  const groceryItems = plan?.grocery || [];
 
   const [checkedItems, setCheckedItems] = useState(groceryItems.map(() => false));
 
@@ -191,8 +127,8 @@ export default function ProfilPage() {
   };
 
   const checkedCount = checkedItems.filter(Boolean).length;
-  const totalWithPrice = groceryItems.filter(i => i.hasPrice).reduce((sum, i) => sum + i.price, 0);
-  const itemsWithoutPrice = groceryItems.filter(i => !i.hasPrice).length;
+  const checkedTotal = groceryItems.reduce((sum, item, i) => checkedItems[i] ? sum + item.price : sum, 0);
+  const totalPrice = groceryItems.reduce((sum, item) => sum + item.price, 0);
 
   const logout = () => {
     if (typeof window !== 'undefined') {
@@ -249,7 +185,7 @@ export default function ProfilPage() {
               <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
               </div>
-              <div><p className="text-xs text-slate-500">Total</p><p className="font-semibold text-emerald-600">{totalWithPrice.toFixed(2)} kr</p></div>
+              <div><p className="text-xs text-slate-500">Total</p><p className="font-semibold text-emerald-600">{totalPrice.toFixed(2)} kr</p></div>
             </div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
@@ -289,7 +225,7 @@ export default function ProfilPage() {
           })}
         </div>
 
-        {/* Grocery List - ALL recipe ingredients with color dots */}
+        {/* Grocery List - from Arnold with purchase quantities */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
@@ -301,18 +237,13 @@ export default function ProfilPage() {
             </div>
           </div>
           <div className="p-6">
-            {itemsWithoutPrice > 0 && (
-              <p className="text-sm text-amber-600 mb-4 bg-amber-50 px-4 py-2 rounded-lg">
-                {itemsWithoutPrice} varer mangler pris data (?) 
-              </p>
-            )}
             <div className="space-y-2">
               {groceryItems.map((item, i) => {
                 const primaryDay = item.days[0];
                 const color = dayColors[primaryDay];
                 return (
                   <label key={i} className={`flex items-center gap-4 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
-                    {/* Color dots for each day item is used */}
+                    {/* Color dots for each day */}
                     <div className="flex gap-1 flex-shrink-0">
                       {item.days.map((d, idx) => (
                         <div key={idx} className="w-3 h-3 rounded-full" style={{ backgroundColor: dayColors[d]?.dot }}></div>
@@ -321,18 +252,14 @@ export default function ProfilPage() {
                     <input type="checkbox" checked={checkedItems[i]} onChange={() => toggleItem(i)} className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
                     <span className={checkedItems[i] ? 'line-through text-slate-400 flex-1' : 'text-slate-700 flex-1'}>{item.name}</span>
                     <span className="text-sm text-slate-500">{item.qty} {item.unit}</span>
-                    {item.hasPrice ? (
-                      <span className="font-semibold text-emerald-600">{item.price.toFixed(2)} kr</span>
-                    ) : (
-                      <span className="font-semibold text-amber-500">(?)</span>
-                    )}
+                    <span className="font-semibold text-emerald-600">{item.price.toFixed(2)} kr</span>
                   </label>
                 );
               })}
             </div>
             <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between">
               <span className="text-slate-500">{checkedCount}/{groceryItems.length} krydset af</span>
-              <span className="text-xl font-bold text-emerald-600">{totalWithPrice.toFixed(2)} kr</span>
+              <span className="text-xl font-bold text-emerald-600">{checkedTotal.toFixed(2)} kr</span>
             </div>
           </div>
         </div>
