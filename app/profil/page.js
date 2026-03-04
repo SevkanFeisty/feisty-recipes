@@ -44,11 +44,11 @@ export default async function ProfilPage() {
   ]
 
   const dayColors = {
-    1: { bg: '#DBEAFE', border: '#3B82F6', label: 'Mandag' },
-    2: { bg: '#DCFCE7', border: '#22C55E', label: 'Tirsdag' },
-    3: { bg: '#FEF3C7', border: '#F59E0B', label: 'Onsdag' },
-    4: { bg: '#FEE2E2', border: '#EF4444', label: 'Torsdag' },
-    5: { bg: '#EDE9FE', border: '#8B5CF6', label: 'Fredag' },
+    1: { bg: '#DBEAFE', border: '#3B82F6', color: '#93C5FD', label: 'Mandag' },
+    2: { bg: '#DCFCE7', border: '#22C55E', color: '#86EFAC', label: 'Tirsdag' },
+    3: { bg: '#FEF3C7', border: '#F59E0B', color: '#FCD34D', label: 'Onsdag' },
+    4: { bg: '#FEE2E2', border: '#EF4444', color: '#FCA5A5', label: 'Torsdag' },
+    5: { bg: '#EDE9FE', border: '#8B5CF6', color: '#C4B5FD', label: 'Fredag' },
   }
 
   return (
