@@ -15,31 +15,94 @@ function getWeekNumber(date) {
 const currentWeek = getWeekNumber(new Date());
 const currentYear = new Date().getFullYear();
 
-// REAL meal plans from Arnold's data
+// REAL PRICES from Arnold's MASTER database
+const prices = {
+  "Hakket kyllingekød": { price: 29, store: "REMA", qty: "400g" },
+  "Hakket oksekød": { price: 29, store: "REMA", qty: "400g" },
+  "Kyllingebryst": { price: 29, store: "REMA", qty: "450g" },
+  "Svinemørbrad": { price: 59.94, store: "REMA", qty: "600g" },
+  "Æg": { price: 12, store: "REMA", qty: "10 stk" },
+  "Mælk": { price: 10.50, store: "REMA", qty: "1L" },
+  "Yoghurt": { price: 10, store: "REMA", qty: "1kg" },
+  "Smør": { price: 27.95, store: "REMA", qty: "200g" },
+  "Fløde": { price: 13.95, store: "REMA", qty: "250ml" },
+  "Mozzarella": { price: 12, store: "REMA", qty: "200g" },
+  "Gulerødder": { price: 5, store: "REMA", qty: "1kg" },
+  "Løg": { price: 6, store: "REMA", qty: "1kg" },
+  "Hvidløg": { price: 8, store: "REMA", qty: "2 fed" },
+  "Cherrytomater": { price: 15, store: "REMA", qty: "250g" },
+  "Persille": { price: 8, store: "REMA", qty: "1 bdt" },
+  "Champignons": { price: 15, store: "REMA", qty: "250g" },
+  "Kartofler": { price: 10, store: "REMA", qty: "2.5kg" },
+  "Hakkede tomater": { price: 6.37, store: "REMA", qty: "400g" },
+  "Tomatpure": { price: 6.10, store: "REMA", qty: "140g" },
+  "Kokosmælk": { price: 8.95, store: "REMA", qty: "400ml" },
+  "Pasta": { price: 7.66, store: "REMA", qty: "500g" },
+  "Havregryn": { price: 8.95, store: "REMA", qty: "1kg" },
+  "Hvedemel": { price: 11.66, store: "REMA", qty: "2kg" },
+  "Ris": { price: 12, store: "REMA", qty: "1kg" },
+};
+
+// Day colors
+const dayColors = {
+  1: { bg: '#DBEAFE', border: '#2563EB', label: 'Mandag', dot: '#2563EB' },
+  2: { bg: '#DCFCE7', border: '#16A34A', label: 'Tirsdag', dot: '#16A34A' },
+  3: { bg: '#FEF9C3', border: '#CA8A04', label: 'Onsdag', dot: '#CA8A04' },
+  4: { bg: '#FEE2E2', border: '#DC2626', label: 'Torsdag', dot: '#DC2626' },
+  5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
+};
+
+// COMPLETE grocery list from ALL recipe ingredients - Week 11
 const week11Data = {
   week_id: "2026-W11",
   plan_name: "Budget Champion",
   type: "single",
   score: 95,
-  total_cost_dkk: 125,
   supermarkets: ["REMA 1000"],
   days: [
-    { day: 1, day_name: "Mandag", day_name_en: "Monday", meals: [{ recipe_name: "Kyllingekød i Karry", recipe_id: "kylling-i-karry" }], day_total: 29 },
-    { day: 2, day_name: "Tirsdag", day_name_en: "Tuesday", meals: [{ recipe_name: "Pasta med Kylling", recipe_id: "pasta-med-kylling", leftover: true }], day_total: 10 },
-    { day: 3, day_name: "Onsdag", day_name_en: "Wednesday", meals: [{ recipe_name: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod" }], day_total: 37 },
-    { day: 4, day_name: "Torsdag", day_name_en: "Thursday", meals: [{ recipe_name: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", leftover: true }], day_total: 11 },
-    { day: 5, day_name: "Fredag", day_name_en: "Friday", meals: [{ recipe_name: "Æg og Gryde", recipe_id: "aeg-og-gryde" }], day_total: 8 },
+    { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Kyllingekød i Karry", recipe_id: "kylling-i-karry" }] },
+    { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Pasta med Kylling", recipe_id: "pasta-med-kylling", leftover: true }] },
+    { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod" }] },
+    { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", leftover: true }] },
+    { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Æg og Gryde", recipe_id: "aeg-og-gryde" }] },
   ],
-  // REAL grocery list from Arnold's data
+  // COMPLETE list from ALL recipes (not Arnold's optimized list)
   grocery: [
-    { name: "Hakket kyllingekød", amount: "400g", price: 29, days: [1], category: "Kød" },
-    { name: "Hakket oksekød", amount: "400g", price: 29, days: [3], category: "Kød" },
-    { name: "Pasta", amount: "800g", price: 15.32, days: [2, 3], category: "Tørvarer" },
-    { name: "Hakkede tomater", amount: "800g", price: 8, days: [1, 3], category: "Konserves" },
-    { name: "Gulerødder", amount: "200g", price: 4, days: [2, 5], category: "Grøntsager" },
-    { name: "Æg", amount: "4 stk", price: 8, days: [5], category: "Mejeri" },
-    { name: "Pastaplaner", amount: "200g", price: 5, days: [4], category: "Tørvarer" },
-    { name: "Mozzarella", amount: "100g", price: 6, days: [4], category: "Mejeri" },
+    // Monday - Kylling i Karry
+    { name: "Hakket kyllingekød", amount: "400", unit: "g", price: 29, days: [1], store: "REMA" },
+    { name: "Hakkede tomater", amount: "400", unit: "g", price: 6.37, days: [1], store: "REMA" },
+    { name: "Kokosmælk", amount: "200", unit: "ml", price: 8.95, days: [1], store: "REMA" },
+    { name: "Karrypasta", amount: "2", unit: "spsk", price: null, days: [1], store: null },
+    { name: "Løg", amount: "1", unit: "stk", price: 6, days: [1], store: "REMA" },
+    { name: "Hvidløg", amount: "2", unit: "fed", price: 8, days: [1], store: "REMA" },
+    { name: "Olivenolie", amount: "2", unit: "spsk", price: null, days: [1], store: null },
+    { name: "Ris", amount: "400", unit: "g", price: 12, days: [1], store: "REMA" },
+    // Tuesday - Pasta med Kylling (uses leftover chicken from Mon)
+    { name: "Pasta", amount: "400", unit: "g", price: 7.66, days: [2], store: "REMA" },
+    { name: "Fløde", amount: "2", unit: "dl", price: 13.95, days: [2], store: "REMA" },
+    { name: "Parmesanost", amount: "50", unit: "g", price: null, days: [2], store: null },
+    { name: "Cherrytomater", amount: "200", unit: "g", price: 15, days: [2], store: "REMA" },
+    { name: "Hvidløg", amount: "2", unit: "fed", price: 8, days: [2], store: "REMA" }, // from Mon
+    // Wednesday - Bolognese med Oksekød
+    { name: "Hakket oksekød", amount: "500", unit: "g", price: 29, days: [3], store: "REMA" },
+    { name: "Løg", amount: "2", unit: "stk", price: 6, days: [3], store: "REMA" },
+    { name: "Gulerødder", amount: "2", unit: "stk", price: 5, days: [3], store: "REMA" },
+    { name: "Stangselleri", amount: "2", unit: "stængler", price: null, days: [3], store: null },
+    { name: "Hakkede tomater", amount: "400", unit: "g", price: 6.37, days: [3], store: "REMA" }, // from Mon
+    { name: "Tomatpure", amount: "2", unit: "spsk", price: 6.10, days: [3], store: "REMA" },
+    { name: "Rødvin", amount: "1", unit: "dl", price: null, days: [3], store: null },
+    { name: "Oksebouillon", amount: "2", unit: "dl", price: null, days: [3], store: null },
+    { name: "Laurbærblade", amount: "2", unit: "stk", price: null, days: [3], store: null },
+    { name: "Oregano", amount: "1", unit: "tsk", price: null, days: [3], store: null },
+    { name: "Pasta", amount: "500", unit: "g", price: 7.66, days: [3], store: "REMA" },
+    // Thursday - Lasagne med Bolognese (uses leftover bolognese from Wed)
+    { name: "Lasagneplader", amount: "12", unit: "stk", price: null, days: [4], store: null },
+    { name: "Mælk", amount: "5", unit: "dl", price: 10.50, days: [4], store: "REMA" },
+    { name: "Smør", amount: "50", unit: "g", price: 27.95, days: [4], store: "REMA" },
+    { name: "Hvedemel", amount: "4", unit: "spsk", price: 11.66, days: [4], store: "REMA" },
+    { name: "Mozzarella", amount: "200", unit: "g", price: 12, days: [4], store: "REMA" },
+    // Friday - Æg og Gryde
+    { name: "Æg", amount: "4", unit: "stk", price: 12, days: [5], store: "REMA" },
   ]
 };
 
@@ -48,43 +111,20 @@ const week12Data = {
   plan_name: "Family Favorites",
   type: "family",
   score: 92,
-  total_cost_dkk: 285,
   supermarkets: ["REMA 1000"],
   days: [
-    { day: 1, day_name: "Mandag", day_name_en: "Monday", meals: [{ recipe_name: "Boller i Karry", recipe_id: "boller-i-karry" }], day_total: 87 },
-    { day: 2, day_name: "Tirsdag", day_name_en: "Tuesday", meals: [{ recipe_name: "Mørbradgryde", recipe_id: "morbradgryde" }], day_total: 95 },
-    { day: 3, day_name: "Onsdag", day_name_en: "Wednesday", meals: [{ recipe_name: "Stegt Flæsk", recipe_id: "stegt-flaesk" }], day_total: 63 },
-    { day: 4, day_name: "Torsdag", day_name_en: "Thursday", meals: [{ recipe_name: "Kylling i Curry", recipe_id: "kylling-curry" }], day_total: 45 },
-    { day: 5, day_name: "Fredag", day_name_en: "Friday", meals: [{ recipe_name: "Frikadeller", recipe_id: "frikadeller" }], day_total: 55 },
+    { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Boller i Karry", recipe_id: "boller-i-karry" }] },
+    { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Mørbradgryde", recipe_id: "morbradgryde" }] },
+    { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Stegt Flæsk", recipe_id: "stegt-flaesk" }] },
+    { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Kylling i Curry", recipe_id: "kylling-curry" }] },
+    { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Frikadeller", recipe_id: "frikadeller" }] },
   ],
-  grocery: [
-    { name: "Hakket svinekod", amount: "500g", price: 25, days: [1], category: "Kød" },
-    { name: "Hakket oksekød", amount: "500g", price: 35, days: [1], category: "Kød" },
-    { name: "Svinemørbrad", amount: "600g", price: 45, days: [2], category: "Kød" },
-    { name: "Champignons", amount: "250g", price: 15, days: [2], category: "Grøntsager" },
-    { name: "Fløde", amount: "3 dl", price: 15, days: [2], category: "Mejeri" },
-    { name: "Stegt flæsk", amount: "800g", price: 35, days: [3], category: "Kød" },
-    { name: "Kartofler", amount: "1 kg", price: 12, days: [3], category: "Grøntsager" },
-    { name: "Persille", amount: "1 bdt", price: 8, days: [3], category: "Krydderier" },
-    { name: "Kyllingebryst", amount: "500g", price: 30, days: [4], category: "Kød" },
-    { name: "Yoghurt", amount: "2 dl", price: 10, days: [4], category: "Mejeri" },
-    { name: "Kokosmælk", amount: "4 dl", price: 15, days: [4], category: "Mejeri" },
-    { name: "Æg", amount: "6 stk", price: 15, days: [5], category: "Mejeri" },
-    { name: "Løg", amount: "4 stk", price: 8, days: [1, 2], category: "Grøntsager" },
-  ]
+  grocery: []
 };
 
 const allPlans = {
   "2026-W11": week11Data,
   "2026-W12": week12Data,
-};
-
-const dayColors = {
-  1: { bg: '#DBEAFE', border: '#3B82F6', label: 'Mandag', dot: '#3B82F6' },
-  2: { bg: '#DCFCE7', border: '#22C55E', label: 'Tirsdag', dot: '#22C55E' },
-  3: { bg: '#FEF3C7', border: '#F59E0B', label: 'Onsdag', dot: '#F59E0B' },
-  4: { bg: '#FEE2E2', border: '#EF4444', label: 'Torsdag', dot: '#EF4444' },
-  5: { bg: '#EDE9FE', border: '#8B5CF6', label: 'Fredag', dot: '#8B5CF6' },
 };
 
 export default function ProfilPage() {
@@ -112,14 +152,20 @@ export default function ProfilPage() {
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
 
-  // Dynamic grocery items from the plan
   const groceryItems = plan?.grocery || [];
+  
+  const totalWithPrice = groceryItems
+    .filter(i => i.price !== null)
+    .reduce((sum, i) => sum + i.price, 0);
+  
+  const itemsWithPrice = groceryItems.filter(i => i.price !== null).length;
+  const itemsWithoutPrice = groceryItems.filter(i => i.price === null).length;
 
   const [checkedItems, setCheckedItems] = useState(groceryItems.map(() => false));
 
   useEffect(() => {
     setCheckedItems(groceryItems.map(() => false));
-  }, [selectedWeek]);
+  }, [selectedWeek, groceryItems]);
 
   const toggleItem = (index) => {
     const newChecked = [...checkedItems];
@@ -128,7 +174,7 @@ export default function ProfilPage() {
   };
 
   const checkedCount = checkedItems.filter(Boolean).length;
-  const checkedTotal = groceryItems.reduce((sum, item, i) => checkedItems[i] ? sum + item.price : sum, 0);
+  const checkedTotal = groceryItems.reduce((sum, item, i) => checkedItems[i] && item.price ? sum + item.price : sum, 0);
 
   const logout = () => {
     if (typeof window !== 'undefined') {
@@ -149,7 +195,7 @@ export default function ProfilPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 py-8">
+      <div className="bg-gradient-to-r from-emerald-500 to-teal-500 py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
             <div>
@@ -185,7 +231,7 @@ export default function ProfilPage() {
               <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
               </div>
-              <div><p className="text-xs text-slate-500">Total Pris</p><p className="font-semibold text-emerald-600">{plan?.total_cost_dkk} kr</p></div>
+              <div><p className="text-xs text-slate-500">Total</p><p className="font-semibold text-emerald-600">{totalWithPrice.toFixed(2)} kr</p></div>
             </div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
@@ -205,43 +251,67 @@ export default function ProfilPage() {
             const meal = day.meals?.[0];
             return (
               <Link key={day.day} href={meal ? `/opskrifter/${meal.recipe_id}` : '#'} className="group">
-                <div className="rounded-xl p-4 text-center border-2 transition-all group-hover:scale-105" style={{ backgroundColor: color.bg, borderColor: color.border }}>
+                <div className="rounded-xl p-4 text-center border-2 transition-all group-hover:scale-105 h-full flex flex-col" style={{ backgroundColor: color.bg, borderColor: color.border }}>
                   <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
-                  {meal ? <><p className="text-sm font-medium text-slate-700 line-clamp-2">{meal.recipe_name}</p>
-                  {meal.leftover && <p className="text-xs text-emerald-600 mt-1 font-medium">Rest fra dag {day.day - 1}</p>}</> : <p className="text-sm text-slate-400">Ingen ret</p>}
-                  <p className="text-sm mt-2 font-semibold" style={{ color: color.border }}>{day.day_total} kr</p>
+                  {meal ? (
+                    <>
+                      <p className="text-sm font-medium text-slate-700 flex-grow">{meal.recipe_name}</p>
+                      {meal.leftover && (
+                        <div className="mt-2 px-2 py-1 bg-emerald-100 rounded-full">
+                          <p className="text-xs text-emerald-700 font-medium">Spar penge med rest</p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-sm text-slate-400 flex-grow">Ingen ret</p>
+                  )}
                 </div>
               </Link>
             );
           })}
         </div>
 
-        {/* Grocery List - REAL DATA */}
+        {/* Indkøbsliste - COMPLETE from all recipes */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-4">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
-              <div><h2 className="text-lg font-bold text-white">Indkøbsliste</h2><p className="text-teal-100 text-sm">{groceryItems.length} varer - {groceryItems.reduce((s,i)=>s+i.price,0).toFixed(2)} kr</p></div>
+              <div>
+                <h2 className="text-lg font-bold text-white">Indkøbsliste</h2>
+                <p className="text-emerald-100 text-sm">{groceryItems.length} varer ({itemsWithPrice} med pris, {itemsWithoutPrice} uden)</p>
+              </div>
               <span className="text-white/80 text-sm">{plan?.supermarkets?.[0]}</span>
             </div>
           </div>
+          
           <div className="p-6">
             <div className="space-y-2">
               {groceryItems.map((item, i) => (
-                <label key={i} className={`flex items-center gap-4 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
-                  {/* Multiple color dots for multiple days */}
-                  <div className="flex gap-1 flex-shrink-0">
-                    {item.days.map((d, idx) => (
-                      <div key={idx} className="w-3 h-3 rounded-full" style={{ backgroundColor: dayColors[d]?.dot }}></div>
+                <label key={i} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
+                  {/* Color dots - ONLY for days used */}
+                  <div className="flex gap-0.5 flex-shrink-0 w-12">
+                    {item.days.map(d => (
+                      <div key={d} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: dayColors[d]?.dot }}></div>
                     ))}
                   </div>
+                  
                   <input type="checkbox" checked={checkedItems[i]} onChange={() => toggleItem(i)} className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
-                  <span className={checkedItems[i] ? 'line-through text-slate-400 flex-1' : 'text-slate-700 flex-1'}>{item.name}</span>
-                  <span className="text-sm text-slate-500">{item.amount}</span>
-                  <span className="font-semibold">{item.price.toFixed(2)} kr</span>
+                  
+                  <span className={checkedItems[i] ? 'line-through text-slate-400 flex-1' : 'text-slate-700 flex-1'}>
+                    {item.name}
+                  </span>
+                  
+                  <span className="text-sm text-slate-500 w-20 text-right">
+                    {item.amount} {item.unit}
+                  </span>
+                  
+                  <span className={`w-20 text-right font-medium ${item.price ? 'text-emerald-600' : 'text-amber-500'}`}>
+                    {item.price !== null ? `${item.price.toFixed(2)} kr` : '(?)'}
+                  </span>
                 </label>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between">
+            
+            <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
               <span className="text-slate-500">{checkedCount}/{groceryItems.length} krydset af</span>
               <span className="text-xl font-bold text-emerald-600">{checkedTotal.toFixed(2)} kr</span>
             </div>
