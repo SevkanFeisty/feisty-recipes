@@ -264,7 +264,7 @@ export default function MadplanPage() {
                     <>
                       <p className="text-sm font-medium text-slate-700 line-clamp-2">{meal.recipe_name}</p>
                       {day.leftover && planType === "single" && (
-                        <p className="text-xs text-emerald-600 mt-1 font-medium">♻️ {day.leftover}</p>
+                        <p className="text-xs text-emerald-600 mt-1 font-medium"> {day.leftover}</p>
                       )}
                     </>
                   ) : (
