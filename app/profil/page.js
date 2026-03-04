@@ -16,7 +16,7 @@ function getWeekNumber(date) {
 const currentWeek = getWeekNumber(new Date());
 const currentYear = new Date().getFullYear();
 
-// Week plan - recipe IDs
+// Week 11 recipes (5 days)
 const week11Data = {
   week_id: "2026-W11",
   plan_name: "Budget Champion",
@@ -32,6 +32,7 @@ const week11Data = {
   ]
 };
 
+// Week 12 recipes (5 days)
 const week12Data = {
   week_id: "2026-W12",
   plan_name: "Family Favorites",
@@ -52,15 +53,27 @@ const allPlans = {
   "2026-W12": week12Data,
 };
 
+// Day colors (per rules)
 const dayColors = {
-  1: { bg: '#E0F2FE', border: '#0284C7', label: 'Mandag', dot: '#0284C7' },
+  1: { bg: '#DBEAFE', border: '#2563EB', label: 'Mandag', dot: '#2563EB' },
   2: { bg: '#DCFCE7', border: '#16A34A', label: 'Tirsdag', dot: '#16A34A' },
-  3: { bg: '#FEF3C7', border: '#D97706', label: 'Onsdag', dot: '#D97706' },
+  3: { bg: '#FEF9C3', border: '#CA8A04', label: 'Onsdag', dot: '#CA8A04' },
   4: { bg: '#FEE2E2', border: '#DC2626', label: 'Torsdag', dot: '#DC2626' },
   5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
 
-// Build grocery list from ALL recipe ingredients
+// PRICES FROM ARNOLD'S DATA (only 6 items have prices - this is real data)
+// Per rule: if not in this list, show (?)
+const pricesFromArnold = {
+  "Hakket kyllingekød": { price: 29, store: "REMA 1000" },
+  "Hakket oksekød": { price: 29, store: "REMA 1000" },
+  "Pasta": { price: 15.32, store: "REMA 1000" },
+  "Hakkede tomater": { price: 12.74, store: "REMA 1000" },
+  "Æg": { price: 8, store: "REMA 1000" },
+  "Pastaplaner": { price: 5, store: "REMA 1000" },
+};
+
+// Build grocery from recipe ingredients + match prices
 function buildGroceryList(days) {
   const agg = {};
   
@@ -77,8 +90,19 @@ function buildGroceryList(days) {
       const unit = ing.unit || "";
       if (!name || qty === 0) return;
       
+      // Check if we have price data
+      const priceData = pricesFromArnold[name];
+      
       if (!agg[name]) {
-        agg[name] = { name, qty, unit, days: [day.day] };
+        agg[name] = { 
+          name, 
+          qty, 
+          unit, 
+          days: [day.day],
+          hasPrice: !!priceData,
+          price: priceData?.price || null,
+          store: priceData?.store || null
+        };
       } else {
         if (!agg[name].days.includes(day.day)) {
           agg[name].days.push(day.day);
@@ -116,7 +140,7 @@ export default function ProfilPage() {
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
 
-  // Build grocery from all recipe ingredients
+  // Build grocery from recipe ingredients
   const groceryItems = useMemo(() => {
     if (!plan) return [];
     return buildGroceryList(plan.days);
@@ -135,6 +159,8 @@ export default function ProfilPage() {
   };
 
   const checkedCount = checkedItems.filter(Boolean).length;
+  const totalWithPrice = groceryItems.filter(i => i.hasPrice).reduce((sum, i) => sum + i.price, 0);
+  const itemsWithoutPrice = groceryItems.filter(i => !i.hasPrice).length;
 
   const logout = () => {
     if (typeof window !== 'undefined') {
@@ -191,7 +217,7 @@ export default function ProfilPage() {
               <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
               </div>
-              <div><p className="text-xs text-slate-500">Varer</p><p className="font-semibold text-emerald-600">{groceryItems.length}</p></div>
+              <div><p className="text-xs text-slate-500">Total</p><p className="font-semibold text-emerald-600">{totalWithPrice.toFixed(2)} kr</p></div>
             </div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
@@ -231,7 +257,7 @@ export default function ProfilPage() {
           })}
         </div>
 
-        {/* Grocery List - ALL recipe ingredients */}
+        {/* Grocery List - Indkøbsliste per rules */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
@@ -242,27 +268,46 @@ export default function ProfilPage() {
               <span className="text-white/80 text-sm">{plan?.supermarkets?.[0]}</span>
             </div>
           </div>
+          
+          {itemsWithoutPrice > 0 && (
+            <div className="px-6 py-3 bg-amber-50 border-b border-amber-100">
+              <p className="text-sm text-amber-700">
+                {itemsWithoutPrice} varer mangler pris ({itemsWithoutPrice} items marked med ?)
+              </p>
+            </div>
+          )}
+          
           <div className="p-6">
             <div className="space-y-2">
               {groceryItems.map((item, i) => {
                 const primaryDay = item.days[0];
                 return (
-                  <label key={i} className={`flex items-center gap-4 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
+                  <label key={i} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
                     {/* Color dots for each day */}
-                    <div className="flex gap-1 flex-shrink-0">
-                      {item.days.map((d, idx) => (
-                        <div key={idx} className="w-3 h-3 rounded-full" style={{ backgroundColor: dayColors[d]?.dot }}></div>
+                    <div className="flex gap-1 flex-shrink-0 w-16">
+                      {[1,2,3,4,5].map(d => (
+                        <div 
+                          key={d} 
+                          className={`w-2.5 h-2.5 rounded-full ${item.days.includes(d) ? '' : 'opacity-20'}`}
+                          style={{ backgroundColor: dayColors[d]?.dot }}
+                        ></div>
                       ))}
                     </div>
                     <input type="checkbox" checked={checkedItems[i]} onChange={() => toggleItem(i)} className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
                     <span className={checkedItems[i] ? 'line-through text-slate-400 flex-1' : 'text-slate-700 flex-1'}>{item.name}</span>
-                    <span className="text-sm text-slate-500">{item.qty} {item.unit}</span>
+                    <span className="text-sm text-slate-500 w-20 text-right">
+                      {item.qty} {item.unit}
+                    </span>
+                    <span className={`w-20 text-right font-medium ${item.hasPrice ? 'text-emerald-600' : 'text-amber-500'}`}>
+                      {item.hasPrice ? `${item.price.toFixed(2)} kr` : '(?)'}
+                    </span>
                   </label>
                 );
               })}
             </div>
-            <div className="mt-4 pt-4 border-t border-slate-100">
+            <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
               <span className="text-slate-500">{checkedCount}/{groceryItems.length} krydset af</span>
+              <span className="text-xl font-bold text-emerald-600">{totalWithPrice.toFixed(2)} kr</span>
             </div>
           </div>
         </div>
