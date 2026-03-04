@@ -47,16 +47,16 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
-                  href="/madplan" 
+                  href="/abonnement" 
                   className="px-8 py-4 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition shadow-lg hover:shadow-xl"
                 >
-                  Se din madplan
+                  Kom i gang
                 </Link>
                 <Link 
                   href="/opskrifter" 
                   className="px-8 py-4 border-2 border-slate-200 text-slate-700 font-semibold rounded-full hover:border-emerald-500 hover:text-emerald-600 transition"
                 >
-                  Browse opskrifter
+                  Se opskrifter
                 </Link>
               </div>
             </div>
