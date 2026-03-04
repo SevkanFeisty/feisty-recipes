@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-100">
+      <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <img 
@@ -88,22 +88,22 @@ export default function HomePage() {
       </section>
 
       {/* How it works */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-24 px-4 bg-emerald-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
             Sa nemt virker det
           </h2>
           
-          <div className="grid md:grid-cols-5 gap-8">
+          <div className="grid md:grid-cols-5 gap-6">
             {[
-              { step: "1", title: "F inspiration", desc: "Vælg dine favoritretter og kostvaner" },
+              { step: "1", title: "Va lg", desc: "Vælg dine favoritretter og kostvaner" },
               { step: "2", title: "Vi planlægger", desc: "Vi sammensætter din ugentlige madplan" },
-              { step: "3", title: "Indkøb", desc: "Få en automatisk indkøbsliste" },
+              { step: "3", title: "Indkob", desc: "F en automatisk indkobsliste" },
               { step: "4", title: "Kog", desc: "Følg opskrifterne og nyd maden" },
               { step: "5", title: "Nyd", desc: "Spar tid og penge hver uge" },
             ].map((item, i) => (
               <div key={i} className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-xl font-bold text-emerald-600 mx-auto mb-4">
+                <div className="w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center text-xl font-bold text-emerald-600 mx-auto mb-4">
                   {item.step}
                 </div>
                 <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
