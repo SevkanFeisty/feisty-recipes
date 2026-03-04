@@ -31,13 +31,19 @@ export default function AbonnementPage() {
             </div>
             <ul className="space-y-2 mb-6 flex-grow">
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> 1 uges madplan
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> 1 uges madplan
               </li>
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> Alle opskrifter
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> Alle opskrifter
               </li>
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> Indkøbsliste
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> Indkøbsliste
               </li>
             </ul>
             <Link href="/register?plan=solo" className="w-full block py-3 border-2 border-emerald-500 text-emerald-600 font-semibold rounded-full hover:bg-emerald-500 hover:text-white transition text-center">
@@ -59,16 +65,24 @@ export default function AbonnementPage() {
             </div>
             <ul className="space-y-2 mb-6 flex-grow">
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> Ubegrænset madplan
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> Ubegrænset madplan
               </li>
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> Alle opskrifter
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> Alle opskrifter
               </li>
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> Automatisk indkøbsliste
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> Automatisk indkøbsliste
               </li>
               <li className="flex items-center gap-2 text-slate-600 text-sm">
-                <span className="text-emerald-500">✓</span> Kostvaner
+                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> Kostvaner
               </li>
             </ul>
             <Link href="/register?plan=family" className="w-full block py-3 border-2 border-emerald-500 text-emerald-600 font-semibold rounded-full hover:bg-emerald-500 hover:text-white transition text-center">
