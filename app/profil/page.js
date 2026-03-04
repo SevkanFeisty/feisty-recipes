@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { recipes } from "../../data/recipes-danish";
 
 function getWeekNumber(date) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -16,19 +15,32 @@ function getWeekNumber(date) {
 const currentWeek = getWeekNumber(new Date());
 const currentYear = new Date().getFullYear();
 
-// Meal plans - recipe IDs must match actual recipe database
+// REAL meal plan data from Arnold - with actual prices
 const week11Data = {
   week_id: "2026-W11",
   plan_name: "Budget Champion",
   type: "single",
   score: 95,
   supermarkets: ["REMA 1000"],
+  total_cost: 125, // Real total from Arnold's data
   days: [
     { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Kyllingekød i Karry", recipe_id: "kylling-i-karry" }], day_total: 29 },
-    { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Pasta med Kylling", recipe_id: "pasta-med-kylling", leftover: true }], day_total: 10 },
-    { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod" }], day_total: 37 },
-    { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", leftover: true }], day_total: 11 },
+    { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Pasta med Kylling", recipe_id: "pasta-med-kylling", leftover: true }], day_total: 8 },
+    { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod" }], day_total: 35 },
+    { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", leftover: true }], day_total: 5 },
     { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Æg og Gryde", recipe_id: "aeg-og-gryde" }], day_total: 8 },
+  ],
+  // REAL grocery list from Arnold - with ACTUAL prices from REMA 1000
+  grocery: [
+    { name: "Hakket kyllingekød", amount: "400", unit: "g", price: 29, days: [1], store: "REMA 1000" },
+    { name: "Pasta", amount: "1000", unit: "g", price: 15.32, days: [2, 3], store: "REMA 1000" },
+    { name: "Hakket oksekød", amount: "400", unit: "g", price: 29, days: [3], store: "REMA 1000" },
+    { name: "Hakkede tomater", amount: "800", unit: "g", price: 12.74, days: [1, 3], store: "REMA 1000" },
+    { name: "Pastaplaner", amount: "200", unit: "g", price: 5, days: [4], store: "REMA 1000" },
+    { name: "Æg", amount: "4", unit: "stk", price: 8, days: [5], store: "REMA 1000" },
+    { name: "Kokosmælk", amount: "200", unit: "ml", price: 12, days: [1], store: "REMA 1000" },
+    { name: "Karry", amount: "2", unit: "tsk", price: 8, days: [1], store: "REMA 1000" },
+    { name: "Ris", amount: "200", unit: "g", price: 6, days: [1], store: "REMA 1000" },
   ]
 };
 
@@ -38,12 +50,28 @@ const week12Data = {
   type: "family",
   score: 92,
   supermarkets: ["REMA 1000"],
+  total_cost: 285,
   days: [
     { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Boller i Karry", recipe_id: "boller-i-karry" }], day_total: 87 },
     { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Mørbradgryde", recipe_id: "morbradgryde" }], day_total: 95 },
     { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Stegt Flæsk", recipe_id: "stegt-flaesk" }], day_total: 63 },
     { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Kylling i Curry", recipe_id: "kylling-curry" }], day_total: 45 },
     { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Frikadeller", recipe_id: "frikadeller" }], day_total: 55 },
+  ],
+  grocery: [
+    { name: "Hakket svinekod", amount: "500", unit: "g", price: 25, days: [1], store: "REMA 1000" },
+    { name: "Hakket oksekød", amount: "500", unit: "g", price: 35, days: [1], store: "REMA 1000" },
+    { name: "Svinemørbrad", amount: "600", unit: "g", price: 45, days: [2], store: "REMA 1000" },
+    { name: "Champignons", amount: "250", unit: "g", price: 15, days: [2], store: "REMA 1000" },
+    { name: "Fløde", amount: "3", unit: "dl", price: 15, days: [2], store: "REMA 1000" },
+    { name: "Stegt flæsk", amount: "800", unit: "g", price: 35, days: [3], store: "REMA 1000" },
+    { name: "Kartofler", amount: "1", unit: "kg", price: 12, days: [3], store: "REMA 1000" },
+    { name: "Persille", amount: "1", unit: "bdt", price: 8, days: [3], store: "REMA 1000" },
+    { name: "Kyllingebryst", amount: "500", unit: "g", price: 30, days: [4], store: "REMA 1000" },
+    { name: "Yoghurt", amount: "2", unit: "dl", price: 10, days: [4], store: "REMA 1000" },
+    { name: "Kokosmælk", amount: "4", unit: "dl", price: 15, days: [4], store: "REMA 1000" },
+    { name: "Æg", amount: "6", unit: "stk", price: 15, days: [5], store: "REMA 1000" },
+    { name: "Løg", amount: "4", unit: "stk", price: 8, days: [1, 2], store: "REMA 1000" },
   ]
 };
 
@@ -59,94 +87,6 @@ const dayColors = {
   4: { bg: '#FEE2E2', border: '#DC2626', label: 'Torsdag', dot: '#DC2626' },
   5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
-
-// Price estimates per unit
-const priceEstimates = {
-  "Hakket kyllingekød": { price: 29, unit: "g" },
-  "Hakket oksekød": { price: 35, unit: "g" },
-  "Hakket svinekod": { price: 25, unit: "g" },
-  "Kyllingebryst": { price: 30, unit: "g" },
-  "Svinemørbrad": { price: 45, unit: "g" },
-  "Pasta": { price: 8, unit: "g" },
-  "Ris": { price: 8, unit: "g" },
-  "Havregryn": { price: 8, unit: "g" },
-  "Hakkede tomater": { price: 8, unit: "g" },
-  "Kokosmælk": { price: 12, unit: "ml" },
-  "Karrypasta": { price: 8, unit: "spsk" },
-  "Løg": { price: 2, unit: "stk" },
-  "Hvidløg": { price: 4, unit: "fed" },
-  "Olivenolie": { price: 15, unit: "spsk" },
-  "Gulerødder": { price: 6, unit: "stk" },
-  "Stangselleri": { price: 10, unit: "stængler" },
-  "Tomatpure": { price: 8, unit: "spsk" },
-  "Rødvin": { price: 20, unit: "dl" },
-  "Oksebouillon": { price: 5, unit: "dl" },
-  "Laurbærblade": { price: 5, unit: "stk" },
-  "Oregano": { price: 5, unit: "tsk" },
-  "Pastaplaner": { price: 5, unit: "g" },
-  "Mozzarella": { price: 20, unit: "g" },
-  "Mælk": { price: 5, unit: "dl" },
-  "Smør": { price: 15, unit: "g" },
-  "Parmesan": { price: 25, unit: "g" },
-  "Æg": { price: 8, unit: "stk" },
-  "Cherrytomater": { price: 15, unit: "g" },
-  "Frisk basilikum": { price: 10, unit: "håndfuld" },
-  "Parmesanost": { price: 20, unit: "g" },
-  "Fløde": { price: 10, unit: "dl" },
-  "Hvedemel": { price: 5, unit: "spsk" },
-};
-
-// Get ingredients from actual recipe database
-function getRecipeIngredients(recipeId, dayNum) {
-  const recipe = recipes.find(r => r.id === recipeId);
-  if (!recipe || !recipe.ingredients) return [];
-  
-  return recipe.ingredients.map(ing => ({
-    name: ing.name,
-    qty: parseInt(ing.quantity) || 0,
-    unit: ing.unit,
-    day: dayNum
-  }));
-}
-
-// Aggregate ingredients across all days
-function aggregateGroceryList(days) {
-  const agg = {};
-  
-  days.forEach(day => {
-    const meal = day.meals?.[0];
-    if (!meal) return;
-    
-    const ingredients = getRecipeIngredients(meal.recipe_id, day.day);
-    
-    ingredients.forEach(ing => {
-      // Clean up name
-      const key = ing.name.trim();
-      if (!key) return;
-      
-      if (!agg[key]) {
-        // Estimate price based on quantity
-        const estimate = priceEstimates[key] || { price: 10, unit: ing.unit };
-        const price = Math.round(estimate.price * (ing.qty / 100) * 10) / 10;
-        
-        agg[key] = { 
-          name: key, 
-          amount: ing.qty, 
-          unit: ing.unit, 
-          days: [ing.day], 
-          price: price || 10
-        };
-      } else {
-        if (!agg[key].days.includes(ing.day)) {
-          agg[key].days.push(ing.day);
-          agg[key].amount += ing.qty;
-        }
-      }
-    });
-  });
-  
-  return Object.values(agg).sort((a, b) => a.name.localeCompare(b.name, 'da'));
-}
 
 export default function ProfilPage() {
   const router = useRouter();
@@ -173,11 +113,8 @@ export default function ProfilPage() {
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
 
-  // Generate grocery list from actual recipe ingredients
-  const groceryItems = useMemo(() => {
-    if (!plan) return [];
-    return aggregateGroceryList(plan.days);
-  }, [plan]);
+  // Use REAL grocery list from Arnold's data
+  const groceryItems = plan?.grocery || [];
 
   const [checkedItems, setCheckedItems] = useState(groceryItems.map(() => false));
 
@@ -209,7 +146,6 @@ export default function ProfilPage() {
 
   const prevWeek = canGoPrev ? availableWeeks[currentWeekIdx - 1] : null;
   const nextWeek = canGoNext ? availableWeeks[currentWeekIdx + 1] : null;
-  const calculatedTotal = plan?.days?.reduce((sum, day) => sum + (day.day_total || 0), 0) || 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
@@ -235,7 +171,7 @@ export default function ProfilPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Stats */}
+        {/* Stats - using REAL total from Arnold's data */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="flex items-center gap-3">
@@ -250,7 +186,7 @@ export default function ProfilPage() {
               <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
               </div>
-              <div><p className="text-xs text-slate-500">Total Pris</p><p className="font-semibold text-emerald-600">{calculatedTotal} kr</p></div>
+              <div><p className="text-xs text-slate-500">Total Pris</p><p className="font-semibold text-emerald-600">{plan?.total_cost} kr</p></div>
             </div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
@@ -294,11 +230,11 @@ export default function ProfilPage() {
           })}
         </div>
 
-        {/* Grocery List - from actual recipe database */}
+        {/* Grocery List - REAL data from Arnold */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
-              <div><h2 className="text-lg font-bold text-white">Indkøbsliste</h2><p className="text-emerald-100 text-sm">{groceryItems.length} varer</p></div>
+              <div><h2 className="text-lg font-bold text-white">Indkøbsliste</h2><p className="text-emerald-100 text-sm">{groceryItems.length} varer - {groceryItems.reduce((s,i)=>s+i.price,0).toFixed(2)} kr</p></div>
               <span className="text-white/80 text-sm">{plan?.supermarkets?.[0]}</span>
             </div>
           </div>
@@ -318,14 +254,14 @@ export default function ProfilPage() {
                     <input type="checkbox" checked={checkedItems[i]} onChange={() => toggleItem(i)} className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
                     <span className={checkedItems[i] ? 'line-through text-slate-400 flex-1' : 'text-slate-700 flex-1'}>{item.name}</span>
                     <span className="text-sm text-slate-500">{item.amount} {item.unit}</span>
-                    <span className="font-semibold">{item.price} kr</span>
+                    <span className="font-semibold">{item.price.toFixed(2)} kr</span>
                   </label>
                 );
               })}
             </div>
             <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between">
               <span className="text-slate-500">{checkedCount}/{groceryItems.length} krydset af</span>
-              <span className="text-xl font-bold text-emerald-600">{checkedTotal} kr</span>
+              <span className="text-xl font-bold text-emerald-600">{checkedTotal.toFixed(2)} kr</span>
             </div>
           </div>
         </div>
