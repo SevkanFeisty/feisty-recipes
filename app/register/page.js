@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const planParam = searchParams.get("plan") || "solo";
+  
+  const [isLoading, setIsLoading] = useState(false);
   
   const planNames = {
     solo: "Solo",
@@ -18,6 +21,17 @@ export default function RegisterPage() {
     solo: "24 kr",
     family: "39 kr",
     premium: "59 kr"
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate registration delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Redirect to profile (in real app, would create user and process payment)
+    router.push("/profil");
   };
 
   return (
@@ -41,7 +55,7 @@ export default function RegisterPage() {
 
         {/* Register Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Fuldt navn
@@ -102,9 +116,10 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full py-4 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition"
+              disabled={isLoading}
+              className="w-full py-4 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition disabled:opacity-50"
             >
-              Opret konto og start
+              {isLoading ? "Opretter konto..." : "Opret konto og start"}
             </button>
           </form>
 
