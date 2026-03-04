@@ -12,15 +12,15 @@ function getWeekNumber(date) {
   return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
 }
 
-// Current week data
 const currentWeek = getWeekNumber(new Date());
 const currentYear = new Date().getFullYear();
 
-// Weekly plan data
-const weeklyPlan = {
+// Family plans
+const familyPlans = {
   "2026-W10": {
     week_id: "2026-W10",
     plan_name: "Vegetarisk",
+    type: "family",
     start_date: "2026-03-02",
     score: 88,
     total_cost_dkk: 245,
@@ -36,6 +36,7 @@ const weeklyPlan = {
   "2026-W11": {
     week_id: "2026-W11",
     plan_name: "Standard Danish",
+    type: "family",
     start_date: "2026-03-09",
     score: 85,
     total_cost_dkk: 320,
@@ -50,7 +51,43 @@ const weeklyPlan = {
   }
 };
 
-// Day colors - matching profile
+// Single person plans with high synergy
+const singlePlans = {
+  "2026-W11": {
+    week_id: "2026-W11",
+    plan_name: "Single Person High-Synergy",
+    type: "single",
+    start_date: "2026-03-09",
+    score: 95,
+    total_cost_dkk: 95,
+    supermarkets: ["REMA 1000"],
+    days: [
+      { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Kyllingekød Curry", type: "dinner" }], day_total: 29, leftover: "Full 400g kylling" },
+      { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Kylling Pasta", type: "dinner" }], day_total: 3, leftover: "Leftover sauce" },
+      { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Kylling Fried Rice", type: "dinner" }], day_total: 6, leftover: "Last kylling" },
+      { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Bolognese", type: "dinner" }], day_total: 29, leftover: "New oksekød" },
+      { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Pasta Bolognese", type: "dinner" }], day_total: 3, leftover: "Leftover sauce" },
+    ]
+  },
+  "2026-W12": {
+    week_id: "2026-W12",
+    plan_name: "Single Person High-Synergy",
+    type: "single",
+    start_date: "2026-03-16",
+    score: 97,
+    total_cost_dkk: 90,
+    supermarkets: ["REMA 1000"],
+    days: [
+      { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Kyllingewok", type: "dinner" }], day_total: 20, leftover: "Full 300g kylling" },
+      { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Kylling og Pasta", type: "dinner" }], day_total: 3, leftover: "Leftover kylling" },
+      { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Kylling Salat", type: "dinner" }], day_total: 13, leftover: "Last kylling + æg" },
+      { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Fiskefrikadeller", type: "dinner" }], day_total: 18, leftover: "Full pack" },
+      { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Fiskepasta", type: "dinner" }], day_total: 3, leftover: "Leftover fisk" },
+    ]
+  }
+};
+
+// Day colors
 const dayColors = {
   1: { bg: '#DBEAFE', border: '#3B82F6', color: '#93C5FD', label: 'Mandag' },
   2: { bg: '#DCFCE7', border: '#22C55E', color: '#86EFAC', label: 'Tirsdag' },
@@ -60,18 +97,17 @@ const dayColors = {
 };
 
 export default function MadplanPage() {
+  const [planType, setPlanType] = useState("single");
   const [selectedWeek, setSelectedWeek] = useState(`${currentYear}-W${currentWeek.toString().padStart(2, '0')}`);
   
-  // Get available weeks
-  const availableWeeks = Object.keys(weeklyPlan);
+  const plans = planType === "single" ? singlePlans : familyPlans;
+  const availableWeeks = Object.keys(plans);
   const weeks = [...availableWeeks].sort();
-  
-  // Find current week index
   const currentWeekIdx = weeks.indexOf(selectedWeek);
   const canGoPrev = currentWeekIdx > 0;
   const canGoNext = currentWeekIdx < weeks.length - 1;
   
-  const plan = weeklyPlan[selectedWeek];
+  const plan = plans[selectedWeek];
 
   const prevWeek = canGoPrev ? weeks[currentWeekIdx - 1] : null;
   const nextWeek = canGoNext ? weeks[currentWeekIdx + 1] : null;
@@ -87,40 +123,64 @@ export default function MadplanPage() {
               <p className="text-emerald-100 text-sm mt-1">Uge {plan?.week_id?.replace('2026-W', '') || ''} - {plan?.plan_name || ''}</p>
             </div>
             
-            {/* Week Navigation */}
-            <div className="flex items-center gap-2">
+            {/* Toggle Single/Family */}
+            <div className="flex items-center gap-2 bg-white/20 rounded-full p-1">
               <button
-                onClick={() => prevWeek && setSelectedWeek(prevWeek)}
-                disabled={!canGoPrev}
-                className={`p-2 rounded-full transition ${
-                  canGoPrev 
-                    ? 'bg-white/20 text-white hover:bg-white/30' 
-                    : 'bg-white/10 text-white/40 cursor-not-allowed'
+                onClick={() => setPlanType("single")}
+                className={`px-4 py-2 text-sm font-medium rounded-full transition ${
+                  planType === "single" 
+                    ? 'bg-white text-emerald-600' 
+                    : 'text-white/80 hover:text-white'
                 }`}
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
+                Single
               </button>
-              
-              <span className="px-4 py-2 bg-white/20 text-white font-medium rounded-full">
-                {selectedWeek.replace('2026-', '')}
-              </span>
-              
               <button
-                onClick={() => nextWeek && setSelectedWeek(nextWeek)}
-                disabled={!canGoNext}
-                className={`p-2 rounded-full transition ${
-                  canGoNext 
-                    ? 'bg-white/20 text-white hover:bg-white/30' 
-                    : 'bg-white/10 text-white/40 cursor-not-allowed'
+                onClick={() => setPlanType("family")}
+                className={`px-4 py-2 text-sm font-medium rounded-full transition ${
+                  planType === "family" 
+                    ? 'bg-white text-emerald-600' 
+                    : 'text-white/80 hover:text-white'
                 }`}
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                Family
               </button>
             </div>
+          </div>
+          
+          {/* Week Navigation */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <button
+              onClick={() => prevWeek && setSelectedWeek(prevWeek)}
+              disabled={!canGoPrev}
+              className={`p-2 rounded-full transition ${
+                canGoPrev 
+                  ? 'bg-white/20 text-white hover:bg-white/30' 
+                  : 'bg-white/10 text-white/40 cursor-not-allowed'
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <span className="px-4 py-2 bg-white/20 text-white font-medium rounded-full">
+              {selectedWeek.replace('2026-', '')}
+            </span>
+            
+            <button
+              onClick={() => nextWeek && setSelectedWeek(nextWeek)}
+              disabled={!canGoNext}
+              className={`p-2 rounded-full transition ${
+                canGoNext 
+                  ? 'bg-white/20 text-white hover:bg-white/30' 
+                  : 'bg-white/10 text-white/40 cursor-not-allowed'
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -171,7 +231,7 @@ export default function MadplanPage() {
           </div>
         </div>
 
-        {/* Week Days Grid - Same as profile */}
+        {/* Week Days Grid */}
         <div className="grid grid-cols-5 gap-3 mb-8">
           {plan?.days?.map((day) => {
             const color = dayColors[day.day];
@@ -188,7 +248,12 @@ export default function MadplanPage() {
                 >
                   <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
                   {meal ? (
-                    <p className="text-sm font-medium text-slate-700 line-clamp-2">{meal.recipe_name}</p>
+                    <>
+                      <p className="text-sm font-medium text-slate-700 line-clamp-2">{meal.recipe_name}</p>
+                      {day.leftover && planType === "single" && (
+                        <p className="text-xs text-emerald-600 mt-1 font-medium">♻️ {day.leftover}</p>
+                      )}
+                    </>
                   ) : (
                     <p className="text-sm text-slate-400">Ingen ret</p>
                   )}
@@ -199,7 +264,7 @@ export default function MadplanPage() {
           })}
         </div>
 
-        {/* Grocery List Preview */}
+        {/* Grocery List */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-4">
             <h2 className="text-lg font-bold text-white">Indkøbsliste</h2>
@@ -208,38 +273,58 @@ export default function MadplanPage() {
           
           <div className="p-6">
             <div className="space-y-2">
-              <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
-                <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="font-medium text-slate-900">Hakket kød</p>
-                  <p className="text-xs text-slate-500">400g • Kød</p>
-                </div>
-                <span className="font-semibold text-slate-700">29 kr</span>
-              </div>
-              <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
-                <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="font-medium text-slate-900">Kyllingebryst</p>
-                  <p className="text-xs text-slate-500">600g • Kød</p>
-                </div>
-                <span className="font-semibold text-slate-700">40 kr</span>
-              </div>
-              <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
-                <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="font-medium text-slate-900">Kartofler</p>
-                  <p className="text-xs text-slate-500">1kg • Grøntsager</p>
-                </div>
-                <span className="font-semibold text-slate-700">10 kr</span>
-              </div>
-              <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
-                <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="font-medium text-slate-900">Peberfrugt</p>
-                  <p className="text-xs text-slate-500">2stk • Grøntsager</p>
-                </div>
-                <span className="font-semibold text-slate-700">24 kr</span>
-              </div>
+              {planType === "single" ? (
+                <>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Hakket kyllingekød</p><p className="text-xs text-slate-500">400g • Kød</p></div>
+                    <span className="font-semibold text-slate-700">29 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Pasta</p><p className="text-xs text-slate-500">500g • Tørvarer</p></div>
+                    <span className="font-semibold text-slate-700">8 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Hakket oksekød</p><p className="text-xs text-slate-500">400g • Kød</p></div>
+                    <span className="font-semibold text-slate-700">29 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Ris</p><p className="text-xs text-slate-500">500g • Tørvarer</p></div>
+                    <span className="font-semibold text-slate-700">6 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Æg</p><p className="text-xs text-slate-500">6 stk • Mejeri</p></div>
+                    <span className="font-semibold text-slate-700">12 kr</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Hakket kød</p><p className="text-xs text-slate-500">400g • Kød</p></div>
+                    <span className="font-semibold text-slate-700">29 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Kyllingebryst</p><p className="text-xs text-slate-500">600g • Kød</p></div>
+                    <span className="font-semibold text-slate-700">40 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Kartofler</p><p className="text-xs text-slate-500">1kg • Grøntsager</p></div>
+                    <span className="font-semibold text-slate-700">10 kr</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
+                    <div className="w-5 h-5 border-2 border-slate-300 rounded flex-shrink-0"></div>
+                    <div className="flex-1"><p className="font-medium text-slate-900">Peberfrugt</p><p className="text-xs text-slate-500">2stk • Grøntsager</p></div>
+                    <span className="font-semibold text-slate-700">24 kr</span>
+                  </div>
+                </>
+              )}
             </div>
             
             <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
