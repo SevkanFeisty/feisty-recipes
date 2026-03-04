@@ -44,7 +44,7 @@ export default function OpskrifterPage() {
           {categories.map((cat) => (
             <button
               key={cat.slug}
-              onClick={() => setSelectedCategory(cat.slug)}
+              onClick={() => setSelectedCategory(selectedCategory === cat.slug ? "all" : cat.slug)}
               className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 ${
                 selectedCategory === cat.slug
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
