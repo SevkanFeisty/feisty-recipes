@@ -460,6 +460,92 @@ const recipes = [
       "Bland varm pasta med bacon, tilsæt æggeblanding.",
       "Rør hurtigt så æggene ikke stivner. Server straks."
     ]
+  },
+  {
+    id: "pasta-primavera",
+    title: "Pasta Primavera",
+    subtitle: "Frisk pasta med forårsgrøntsager",
+    description: "En let og frisk pastaret med farverige grøntsager.",
+    category: "Hurtig",
+    prepTime: "10",
+    cookTime: "15",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&h=600&fit=crop",
+    ingredients: [
+      { name: "Pasta", quantity: "400", unit: "g" },
+      { name: "Broccoli", quantity: "200", unit: "g" },
+      { name: "Gulerødder", quantity: "2", unit: "stk" },
+      { name: "Ærter", quantity: "150", unit: "g" },
+      { name: "Cherrytomater", quantity: "200", unit: "g" },
+      { name: "Hvidløg", quantity: "2", unit: "fed" },
+      { name: "Olivenolie", quantity: "3", unit: "spsk" },
+      { name: "Parmesan", quantity: "50", unit: "g" }
+    ],
+    instructions: [
+      "Kog pasta efter anvisningen.",
+      "Skær grøntsager i passende stykker.",
+      "Steg hvidløg i olie, tilsæt grøntsager.",
+      "Bland pasta med grøntsager.",
+      "Server med parmesan og frisk basilikum."
+    ]
+  },
+  {
+    id: "veggie-tacos",
+    title: "Veggie Tacos",
+    subtitle: "Farverige tacos med grøntsager og bønner",
+    description: "Vegetariske tacos fyldt med smagfulde grøntsager og bønner.",
+    category: "Vegetarisk",
+    prepTime: "15",
+    cookTime: "10",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&h=600&fit=crop",
+    ingredients: [
+      { name: "Tortillas", quantity: "8", unit: "stk" },
+      { name: "Sorte bønner", quantity: "400", unit: "g" },
+      { name: "Majs", quantity: "200", unit: "g" },
+      { name: "Avocado", quantity: "2", unit: "stk" },
+      { name: "Tomater", quantity: "2", unit: "stk" },
+      { name: "Løg", quantity: "1", unit: "stk" },
+      { name: "Creme Fraiche", quantity: "200", unit: "g" },
+      { name: "Chili", quantity: "1", unit: "stk" }
+    ],
+    instructions: [
+      "Varm tortillas i ovnen.",
+      "Skær avocado, tomater og chili i tern.",
+      "Varm bønner og majs i en gryde.",
+      "Fyld tortillas med bønner og grøntsager.",
+      "Top med creme fraiche og server."
+    ]
+  },
+  {
+    id: "butter-chicken",
+    title: "Butter Chicken",
+    subtitle: "Cremed indisk kylling i tomatsauce",
+    description: "Klassisk indisk curry med mør kylling i en cremet tomatsauce.",
+    category: "Trending",
+    prepTime: "20",
+    cookTime: "30",
+    servings: 4,
+    image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&h=600&fit=crop",
+    ingredients: [
+      { name: "Kyllingebryst", quantity: "600", unit: "g" },
+      { name: "Yoghurt", quantity: "200", unit: "g" },
+      { name: "Hakkede tomater", quantity: "400", unit: "g" },
+      { name: "Fløde", quantity: "200", unit: "ml" },
+      { name: "Smør", quantity: "50", unit: "g" },
+      { name: "Ingefær", quantity: "3", unit: "cm" },
+      { name: "Hvidløg", quantity: "4", unit: "fed" },
+      { name: "Garam masala", quantity: "2", unit: "spsk" },
+      { name: "Karry", quantity: "1", unit: "spsk" },
+      { name: "Ris", quantity: "400", unit: "g" }
+    ],
+    instructions: [
+      "Mariner kylling i yoghurt og krydderier i 30 minutter.",
+      "Steg kylling gylden og sæt til side.",
+      "Smelt smør, tilsæt ingefær og hvidløg.",
+      "Tilsæt tomater og krydderier, lad det koge.",
+      "Tilsæt fløde og kylling, server med ris."
+    ]
   }
 ];
 
