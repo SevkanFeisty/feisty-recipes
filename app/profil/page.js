@@ -205,11 +205,24 @@ export default function ProfilPage() {
             const meal = day.meals?.[0];
             return (
               <Link key={day.day} href={meal ? `/opskrifter/${meal.recipe_id}` : '#'} className="group">
-                <div className="rounded-xl p-4 text-center border-2 transition-all group-hover:scale-105" style={{ backgroundColor: color.bg, borderColor: color.border }}>
+                <div className="rounded-xl p-4 text-center border-2 transition-all group-hover:scale-105 h-full flex flex-col" style={{ backgroundColor: color.bg, borderColor: color.border }}>
                   <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
-                  {meal ? <><p className="text-sm font-medium text-slate-700 line-clamp-2">{meal.recipe_name}</p>
-                  {meal.leftover && <p className="text-xs text-emerald-600 mt-1 font-medium">Brug rest fra i går</p>}</> : <p className="text-sm text-slate-400">Ingen ret</p>}
-                  <p className="text-sm mt-2 font-semibold" style={{ color: color.border }}>{day.day_total} kr</p>
+                  {meal ? (
+                    <>
+                      <p className="text-sm font-medium text-slate-700 flex-grow">{meal.recipe_name}</p>
+                      {meal.leftover && (
+                        <div className="mt-2 px-2 py-1 bg-emerald-100 rounded-full">
+                          <p className="text-xs text-emerald-700 font-medium">Spar penge med rest</p>
+                        </div>
+                      )}
+                      <p className="text-sm mt-2 font-semibold" style={{ color: color.border }}>{day.day_total} kr</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-sm text-slate-400 flex-grow">Ingen ret</p>
+                      <p className="text-sm mt-2 font-semibold" style={{ color: color.border }}>0 kr</p>
+                    </>
+                  )}
                 </div>
               </Link>
             );
