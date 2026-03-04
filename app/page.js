@@ -157,53 +157,89 @@ export default function HomePage() {
             Start med 2 uger for at prøve det af. Der er ingen binding.
           </p>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            <div className="border-2 border-emerald-200 rounded-3xl p-8">
-              <h3 className="text-xl font-bold text-slate-900">Proeve</h3>
-              <div className="mt-4 mb-6">
-                <span className="text-4xl font-bold text-slate-900">99 kr</span>
-                <span className="text-slate-500">/ 2 uger</span>
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {/* Free */}
+            <div className="border-2 border-slate-200 rounded-3xl p-8">
+              <h3 className="text-xl font-bold text-slate-900">Gratis</h3>
+              <p className="text-slate-500 text-sm mt-2 mb-4">Proev det af</p>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-slate-900">0 kr</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-2 text-slate-600">
-                  <span className="text-emerald-500">✓</span> 2 ugers madplan
+                  <span className="text-emerald-500">✓</span> 1 uges madplan
+                </li>
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> Basale opskrifter
+                </li>
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> Simpel indkobsliste
+                </li>
+              </ul>
+              <Link 
+                href="/madplan" 
+                className="block w-full py-3 text-center border-2 border-slate-200 text-slate-600 font-semibold rounded-full hover:border-emerald-500 hover:text-emerald-600 transition"
+              >
+                Proev det af
+              </Link>
+            </div>
+            
+            {/* Standard */}
+            <div className="border-2 border-emerald-200 rounded-3xl p-8">
+              <h3 className="text-xl font-bold text-slate-900">Standard</h3>
+              <p className="text-slate-500 text-sm mt-2 mb-4">For hele familien</p>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-slate-900">49 kr</span>
+                <span className="text-slate-500">/md</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> Ubegranset madplan
+                </li>
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> Alle opskrifter
                 </li>
                 <li className="flex items-center gap-2 text-slate-600">
                   <span className="text-emerald-500">✓</span> Automatisk indkobsliste
                 </li>
                 <li className="flex items-center gap-2 text-slate-600">
-                  <span className="text-emerald-500">✓</span> 100+ opskrifter
+                  <span className="text-emerald-500">✓</span> Kostvaner
                 </li>
               </ul>
               <Link 
                 href="/madplan" 
                 className="block w-full py-3 text-center border-2 border-emerald-500 text-emerald-600 font-semibold rounded-full hover:bg-emerald-50 transition"
               >
-                Proev det af
+                Valg Standard
               </Link>
             </div>
             
+            {/* Premium */}
             <div className="bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl p-8 text-white">
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">MEST POPULÆR</span>
+                <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">BEDST VALG</span>
               </div>
-              <h3 className="text-xl font-bold">Fuld adgang</h3>
-              <div className="mt-4 mb-6">
-                <span className="text-4xl font-bold">249 kr</span>
+              <h3 className="text-xl font-bold">Premium</h3>
+              <p className="text-emerald-100 text-sm mt-2 mb-4">Skraddersyet losning</p>
+              <div className="mb-6">
+                <span className="text-4xl font-bold">74 kr</span>
                 <span className="text-emerald-100">/md</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-2">
-                  <span className="text-emerald-200">✓</span> Ubegrænset madplan
+                  <span className="text-emerald-200">✓</span> Alt i Standard
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-emerald-200">✓</span> Tilpasning af kost
+                  <span className="text-emerald-200">✓</span> Tilpasset til dig
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-emerald-200">✓</span> Alle allergener
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-emerald-200">✓</span> Særlige kostbehov
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-200">✓</span> +25 kr Lunchbox
                 </li>
               </ul>
               <Link 

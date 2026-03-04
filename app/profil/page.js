@@ -38,7 +38,8 @@ export default function ProfilPage() {
 
   const userData = {
     name: "Anders",
-    currentPlan: "Feisty Pro",
+    currentPlan: "Premium",
+    planPrice: "74 kr",
     nextDelivery: "Mandag 9. marts",
     weeklyStreak: 3,
     savedThisMonth: 245,
@@ -334,17 +335,17 @@ export default function ProfilPage() {
                     <div>
                       <p className="text-emerald-100 text-sm">Nuværende plan</p>
                       <h3 className="text-2xl font-bold">{userData.currentPlan}</h3>
-                      <p className="text-emerald-100">99 kr/måned</p>
+                      <p className="text-emerald-100">{userData.planPrice}/md</p>
                     </div>
                     <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Aktiv</span>
                   </div>
                 </div>
                 
                 <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-3 text-slate-600">✓ Ubegrænsede madplaner</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Ubegranset madplan</div>
                   <div className="flex items-center gap-3 text-slate-600">✓ Alle opskrifter</div>
-                  <div className="flex items-center gap-3 text-slate-600">✓ Kostbegrænsninger</div>
-                  <div className="flex items-center gap-3 text-slate-600">✓ Særlige kostbehov</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Tilpasset kost</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Lunchbox opskrifter</div>
                 </div>
 
                 <button 
