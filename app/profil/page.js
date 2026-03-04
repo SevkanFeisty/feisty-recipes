@@ -57,6 +57,7 @@ export default async function ProfilPage() {
       <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 py-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
                 <span className="text-3xl">👤</span>
@@ -66,6 +67,10 @@ export default async function ProfilPage() {
                 <p className="text-emerald-100 text-sm">Velkommen til dit Feisty dashboard</p>
               </div>
             </div>
+            <Link href="/konto" className="px-4 py-2 bg-white/20 text-white text-sm font-medium rounded-full hover:bg-white/30 transition">
+              Min konto
+            </Link>
+          </div>
           </div>
         </div>
       </div>
