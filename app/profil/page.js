@@ -47,35 +47,43 @@ export default function ProfilPage() {
   };
 
   const tabs = [
-    { id: "dashboard", label: "Dashboard", icon: "🏠" },
-    { id: "madindstillinger", label: "Madindstillinger", icon: "🍽️" },
-    { id: "butikker", label: "Butikker", icon: "🏪" },
-    { id: "abonnement", label: "Abonnement", icon: "💳" },
+    { id: "dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+    { id: "madindstillinger", label: "Madindstillinger", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
+    { id: "butikker", label: "Butikker", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
+    { id: "abonnement", label: "Abonnement", icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" },
   ];
 
   const supermarkets = [
-    { name: "Netto", logo: "🛒", selected: true },
-    { name: "Føtex", logo: "🏪", selected: true },
-    { name: "Bilka", logo: "🛍️", selected: false },
-    { name: "Rema 1000", logo: "💚", selected: false },
+    { name: "Netto", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4", selected: true },
+    { name: "Føtex", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4", selected: true },
+    { name: "Bilka", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4", selected: false },
+    { name: "Rema 1000", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4", selected: false },
   ];
 
   // Plan data
   const plans = [
     {
       id: "free",
-      name: "Feisty Gratis",
+      name: "Gratis",
       price: "0 kr",
       period: "for evigt",
-      features: ["1 uges madplan", "Basale opskrifter", "Indkøbsliste"],
+      features: ["1 uges madplan", "Basale opskrifter", "Simpel indkøbsliste"],
       popular: false,
     },
     {
-      id: "pro",
-      name: "Feisty Pro",
-      price: "99 kr",
+      id: "standard",
+      name: "Standard",
+      price: "49 kr",
       period: "md",
-      features: ["Ubegrænsede madplaner", "Alle opskrifter", "Kostbegrænsninger", "Særlige kostbehov", "Prioriteret support"],
+      features: ["Ubegrænset madplan", "Alle opskrifter", "Automatisk indkøbsliste", "Kostvaner"],
+      popular: false,
+    },
+    {
+      id: "premium",
+      name: "Premium",
+      price: "74 kr",
+      period: "md",
+      features: ["Alt i Standard", "Tilpasset til dig", "Alle allergener", "Særlige kostbehov"],
       popular: true,
     },
   ];
@@ -111,17 +119,23 @@ export default function ProfilPage() {
           {/* Quick Stats */}
           <div className="grid grid-cols-3 gap-4 mb-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-3xl mb-2">🔥</div>
+              <svg className="w-8 h-8 text-orange-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+              </svg>
               <div className="text-2xl font-bold text-slate-900">{userData.weeklyStreak}</div>
               <div className="text-sm text-slate-500">uger i træk</div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-3xl mb-2">💰</div>
+              <svg className="w-8 h-8 text-emerald-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <div className="text-2xl font-bold text-emerald-600">{userData.savedThisMonth} kr</div>
               <div className="text-sm text-slate-500">sparet denne måned</div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-3xl mb-2">🍳</div>
+              <svg className="w-8 h-8 text-blue-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
               <div className="text-2xl font-bold text-slate-900">{userData.mealsCooked}</div>
               <div className="text-sm text-slate-500">retter tilberedt</div>
             </div>
@@ -227,7 +241,9 @@ export default function ProfilPage() {
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
-                  <span>{tab.icon}</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
+                  </svg>
                   {tab.label}
                 </button>
               ))}
@@ -262,8 +278,10 @@ export default function ProfilPage() {
                 <h3 className="text-lg font-bold text-slate-900 mb-4">Dine butikker</h3>
                 <div className="flex gap-3">
                   {supermarkets.filter(s => s.selected).map((store) => (
-                    <div key={store.name} className="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center text-2xl" title={store.name}>
-                      {store.logo}
+                    <div key={store.name} className="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center">
+                      <svg className="w-6 h-6 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={store.icon} />
+                      </svg>
                     </div>
                   ))}
                 </div>
@@ -342,10 +360,9 @@ export default function ProfilPage() {
                 </div>
                 
                 <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-3 text-slate-600">✓ Ubegranset madplan</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Ubegrænset madplan</div>
                   <div className="flex items-center gap-3 text-slate-600">✓ Alle opskrifter</div>
                   <div className="flex items-center gap-3 text-slate-600">✓ Tilpasset kost</div>
-                  <div className="flex items-center gap-3 text-slate-600">✓ Lunchbox opskrifter</div>
                 </div>
 
                 <button 

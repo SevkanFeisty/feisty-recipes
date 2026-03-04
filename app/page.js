@@ -43,7 +43,7 @@ export default function HomePage() {
                 Fresh og <span className="text-emerald-500">enkel</span> madplan
               </h1>
               <p className="text-xl text-slate-600 mb-8 max-w-lg">
-                Feisty giver dig skrddersyede madplaner hver uge. Bare folg planen, sa handler du ind, og sa er du klar til at lave mad.
+                Feisty giver dig skræddersyede madplaner hver uge. Bare følg planen, så handler du ind, og så er du klar til at lave mad.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
@@ -91,14 +91,14 @@ export default function HomePage() {
       <section className="py-24 px-4 bg-emerald-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
-            Sa nemt virker det
+            Så nemt virker det
           </h2>
           
           <div className="grid md:grid-cols-5 gap-6">
             {[
-              { step: "1", title: "Va lg", desc: "Vælg dine favoritretter og kostvaner" },
+              { step: "1", title: "Vælg", desc: "Vælg dine favoritretter og kostvaner" },
               { step: "2", title: "Vi planlægger", desc: "Vi sammensætter din ugentlige madplan" },
-              { step: "3", title: "Indkob", desc: "F en automatisk indkobsliste" },
+              { step: "3", title: "Indkøb", desc: "Få en automatisk indkøbsliste" },
               { step: "4", title: "Kog", desc: "Følg opskrifterne og nyd maden" },
               { step: "5", title: "Nyd", desc: "Spar tid og penge hver uge" },
             ].map((item, i) => (
@@ -126,7 +126,7 @@ export default function HomePage() {
               },
               { 
                 title: "Automatisk indkøbsliste", 
-                desc: "Vi laver listen for dig. Bare folge den i butikken og check varerne af.",
+                desc: "Vi laver listen for dig. Bare følge den i butikken og tjekke varerne af.",
                 img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop"
               },
               { 
@@ -173,7 +173,7 @@ export default function HomePage() {
                   <span className="text-emerald-500">✓</span> Basale opskrifter
                 </li>
                 <li className="flex items-center gap-2 text-slate-600">
-                  <span className="text-emerald-500">✓</span> Simpel indkobsliste
+                  <span className="text-emerald-500">✓</span> Simpel indkøbsliste
                 </li>
               </ul>
               <Link 
@@ -200,7 +200,7 @@ export default function HomePage() {
                   <span className="text-emerald-500">✓</span> Alle opskrifter
                 </li>
                 <li className="flex items-center gap-2 text-slate-600">
-                  <span className="text-emerald-500">✓</span> Automatisk indkobsliste
+                  <span className="text-emerald-500">✓</span> Automatisk indkøbsliste
                 </li>
                 <li className="flex items-center gap-2 text-slate-600">
                   <span className="text-emerald-500">✓</span> Kostvaner
@@ -237,9 +237,6 @@ export default function HomePage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-emerald-200">✓</span> Særlige kostbehov
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-200">✓</span> +25 kr Lunchbox
                 </li>
               </ul>
               <Link 

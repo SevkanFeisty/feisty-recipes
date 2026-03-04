@@ -14,13 +14,13 @@ const days = [
 
 // Categories for ingredients
 const categories = {
-  "Grøntsager": { icon: "🥬", color: "bg-green-100 border-green-300" },
-  "Kød & Fisk": { icon: "🥩", color: "bg-rose-100 border-rose-300" },
-  "Mejeri": { icon: "🧀", color: "bg-yellow-100 border-yellow-300" },
-  "Tørvarer": { icon: "🥫", color: "bg-amber-100 border-amber-300" },
-  "Krydderier": { icon: "🧂", color: "bg-orange-100 border-orange-300" },
-  "Brød": { icon: "🍞", color: "bg-amber-50 border-amber-200" },
-  "Diverse": { icon: "📦", color: "bg-slate-100 border-slate-300" }
+  "Grøntsager": { icon: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", color: "bg-green-100 border-green-300" },
+  "Kød & Fisk": { icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 8 6.5 8 8 8.67 8 9.5 7.33 11 6.5 11zm3-4C8.67 7 8 6.33 8 5.5S8.67 4 9.5 4s1.5.67 1.5 1.5S10.33 7 9.5 7zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 4 14.5 4s1.5.67 1.5 1.5S15.33 7 14.5 7zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z", color: "bg-rose-100 border-rose-300" },
+  "Mejeri": { icon: "M7 2v2h1v14c0 2.21 1.79 4 4 4s4-1.79 4-4V4h1V2H7zm4 14c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z", color: "bg-yellow-100 border-yellow-300" },
+  "Tørvarer": { icon: "M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H4V4h16v16z", color: "bg-amber-100 border-amber-300" },
+  "Krydderier": { icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z", color: "bg-orange-100 border-orange-300" },
+  "Brød": { icon: "M18.5 2.5c.83 0 1.5.67 1.5 1.5v2c0 .83-.67 1.5-1.5 1.5S17 6.83 17 6V4c0-.83.67-1.5 1.5-1.5zM3 13h18v-2c0-2-4-3.5-9-3.5S3 11 3 13v2z", color: "bg-amber-50 border-amber-200" },
+  "Diverse": { icon: "M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2zm-5 12H9v-2h6v2zm5-7H4V4h16v3z", color: "bg-slate-100 border-slate-300" }
 };
 
 // Categorize ingredient
@@ -344,7 +344,9 @@ export default function MadplanPage() {
         </div>
         <div className="mx-auto max-w-7xl px-4 py-12">
           <div className="bg-slate-100 border border-slate-200 rounded-2xl p-8 text-center">
-            <div className="text-4xl mb-4">📅</div>
+            <svg className="w-12 h-12 mx-auto mb-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
             <h2 className="text-xl font-bold text-slate-700 mb-2">Ingen madplan tilgængelig</h2>
             <p className="text-slate-500">Der er ikke uploadet en madplan for denne uge endnu.</p>
           </div>
@@ -369,25 +371,33 @@ export default function MadplanPage() {
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
           <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
-              <div className="text-3xl mb-2">🏪</div>
+              <svg className="w-8 h-8 mx-auto mb-2 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Supermarked</div>
               <div className="text-xl font-bold text-slate-900">{weeklyPlan.supermarkets?.join(', ') || 'Ikke specificeret'}</div>
             </div>
             
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
-              <div className="text-3xl mb-2">💰</div>
+              <svg className="w-8 h-8 mx-auto mb-2 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Total Pris</div>
               <div className="text-xl font-bold text-emerald-600">{groceryData.total.toFixed(2)} kr</div>
             </div>
             
             <div className="text-center p-4 bg-emerald-50 rounded-xl">
-              <div className="text-3xl mb-2">🏆</div>
+              <svg className="w-8 h-8 mx-auto mb-2 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Score</div>
               <div className="text-xl font-bold text-slate-900">{weeklyPlan.score}/100</div>
             </div>
             
             <div className="text-center p-4 bg-amber-50 rounded-xl">
-              <div className="text-3xl mb-2">♻️</div>
+              <svg className="w-8 h-8 mx-auto mb-2 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
               <div className="text-xs text-slate-500 uppercase tracking-wide">Genbruges</div>
               <div className="text-xl font-bold text-amber-600">{groceryData.multiDay.length} varer</div>
             </div>
@@ -463,7 +473,9 @@ export default function MadplanPage() {
         {groceryData.multiDay.length > 0 && (
           <div className="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">♻️</span>
+              <svg className="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
               <h3 className="text-lg font-bold text-amber-800">Disse ingredienser bruges på flere dage</h3>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -490,7 +502,9 @@ export default function MadplanPage() {
             return (
               <div key={category} className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xl">{catInfo.icon}</span>
+                  <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={catInfo.icon} />
+                  </svg>
                   <h3 className="text-lg font-bold text-slate-900">{category}</h3>
                   <span className="text-xs text-slate-500">({items.length} varer)</span>
                 </div>
