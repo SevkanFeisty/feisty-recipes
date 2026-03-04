@@ -5,11 +5,25 @@ import Link from "next/link";
 
 // Recipe name to slug mapping
 const recipeSlugs = {
+  // Week 10 (current)
   "Veggie Curry": "veggie-curry",
   "Pasta Primavera": "pasta-primavera",
   "Veggie Tacos": "veggie-tacos",
   "Linsesuppe": "lentil-soup",
   "Falafel Bowl": "falafel-bowl",
+  // Week 11 (new)
+  "Kyllingekød i Karry": "kylling-i-karry",
+  "Pasta med Kylling og Grønt": "pasta-med-kylling",
+  "Bolognese med Oksekød": "bolognese-med-oksekod",
+  "Lasagne med Bolognese": "lasagne-med-bolognese",
+  "Æg og Gryde": "lasagne-med-bolognese",
+  // Week 12 (new)
+  "Kyllingebryst med Grøntsager": "kyllingebryst-groentsager",
+  "Kyllingewok med Ris": "kyllingewok-med-ris",
+  "Fiskefrikadeller med Kartofler": "fiskefrikadeller-med-kartofler",
+  "Spaghetti Bolognese": "spaghetti-bolognese",
+  "Pastret med Bolognese": "pastret-med-bolognese",
+  // Legacy
   "Boller i Karry": "boller-i-karry",
   "Mørbradgryde": "morbradgryde",
   "Stegt Flæsk": "stegt-flaesk",
