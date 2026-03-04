@@ -83,7 +83,7 @@ export default function ProfilPage() {
       name: "Premium",
       price: "74 kr",
       period: "md",
-      features: ["Alt i Standard", "Tilpasset til dig", "Alle allergener", "Særlige kostbehov", "Lunchbox"],
+      features: ["Alt i Standard", "Tilpasset til dig", "Alle allergener", "Særlige kostbehov", "+ The Lunchbox: +19 kr/md"],
       popular: true,
     },
   ];

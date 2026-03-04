@@ -238,8 +238,8 @@ export default function HomePage() {
                 <li className="flex items-center gap-2">
                   <span className="text-emerald-200">✓</span> Særlige kostbehov
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-200">✓</span> Lunchbox
+                <li className="flex items-center gap-2 text-emerald-200 text-sm">
+                  <span className="text-emerald-200">+</span> The Lunchbox add-on: +19 kr/md
                 </li>
               </ul>
               <Link 

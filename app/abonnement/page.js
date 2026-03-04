@@ -148,8 +148,8 @@ export default function AbonnementPage() {
               </ul>
             </div>
             <div className="text-center lg:text-right lg:min-w-[200px]">
-              <p className="text-3xl font-bold text-emerald-600">+25 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
-              <p className="text-sm text-slate-500 mb-4">Tillæg til hovedabonnement</p>
+              <p className="text-3xl font-bold text-emerald-600">+19 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
+              <p className="text-sm text-slate-500 mb-4">The Lunchbox add-on</p>
               <button className="w-full lg:w-auto px-6 py-3 rounded-full border-2 border-emerald-500 text-emerald-600 font-semibold hover:bg-emerald-500 hover:text-white transition">
                 Tilføj The Lunchbox
               </button>
