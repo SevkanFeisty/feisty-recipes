@@ -208,7 +208,7 @@ export default function ProfilPage() {
                 <div className="rounded-xl p-4 text-center border-2 transition-all group-hover:scale-105" style={{ backgroundColor: color.bg, borderColor: color.border }}>
                   <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
                   {meal ? <><p className="text-sm font-medium text-slate-700 line-clamp-2">{meal.recipe_name}</p>
-                  {meal.leftover && <p className="text-xs text-emerald-600 mt-1 font-medium">Rest fra dag {day.day - 1}</p>}</> : <p className="text-sm text-slate-400">Ingen ret</p>}
+                  {meal.leftover && <p className="text-xs text-emerald-600 mt-1 font-medium">Brug rest fra i går</p>}</> : <p className="text-sm text-slate-400">Ingen ret</p>}
                   <p className="text-sm mt-2 font-semibold" style={{ color: color.border }}>{day.day_total} kr</p>
                 </div>
               </Link>
