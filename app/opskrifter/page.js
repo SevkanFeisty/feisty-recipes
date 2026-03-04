@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { recipes, categories } from "../../data/recipes-new";
+import { recipes, categories } from "../../data/recipes-danish";
 
 export default function OpskrifterPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");

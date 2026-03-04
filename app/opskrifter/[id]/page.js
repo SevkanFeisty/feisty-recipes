@@ -1,4 +1,4 @@
-import { recipes } from "../../../data/recipes-new";
+import { recipes } from "../../../data/recipes-danish";
 import Link from "next/link";
 
 export async function generateStaticParams() {
@@ -49,6 +49,7 @@ export default function RecipePage({ params }) {
           </span>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">{recipe.title}</h1>
           <p className="mt-2 text-lg text-slate-600">{recipe.subtitle}</p>
+          <p className="mt-4 text-slate-600">{recipe.description}</p>
 
           <div className="mt-6 flex flex-wrap gap-4 py-4 border-t border-b border-slate-100">
             <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full">
@@ -76,16 +77,51 @@ export default function RecipePage({ params }) {
           </div>
         </div>
 
-        {/* Note about ingredients */}
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 mb-8">
-          <p className="text-emerald-700 text-center">
-            Denne opskrift er en del af din madplan. Komplette ingredienser og fremgangsmåde findes i din ugentlige madplan.
-          </p>
-          <Link href="/profil" className="mt-4 block w-full py-3 text-center bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 transition">
-            Se i min madplan →
-          </Link>
-        </div>
+        {/* Ingredients */}
+        {recipe.ingredients && (
+          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+            <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <svg className="w-7 h-7 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Ingredienser
+            </h2>
+            <ul className="space-y-3">
+              {recipe.ingredients.map((ing, i) => (
+                <li key={i} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                  <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                  <span className="text-slate-700">
+                    <span className="font-semibold">{ing.quantity} {ing.unit}</span> {ing.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
+        {/* Instructions */}
+        {recipe.instructions && (
+          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+            <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <svg className="w-7 h-7 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              Fremgangsmåde
+            </h2>
+            <ol className="space-y-4">
+              {recipe.instructions.map((step, i) => (
+                <li key={i} className="flex gap-4 p-4 bg-slate-50 rounded-xl">
+                  <span className="flex-shrink-0 w-8 h-8 bg-orange-100 text-orange-600 font-bold rounded-full flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <p className="text-slate-700 pt-1">{step}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {/* Back to recipes */}
         <div className="text-center mb-8">
           <Link href="/opskrifter" className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition">
             Se flere opskrifter →
