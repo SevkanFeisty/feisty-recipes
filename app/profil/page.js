@@ -283,16 +283,14 @@ export default function ProfilPage() {
                 const primaryDay = item.days[0];
                 return (
                   <label key={i} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
-                    {/* Color dots - only show for days used */}
+                    {/* Color dots - ONLY for days used, no gray placeholders */}
                     <div className="flex gap-1 flex-shrink-0">
-                      {[1,2,3,4,5].map(d => (
-                        item.days.includes(d) ? (
-                          <div 
-                            key={d} 
-                            className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: dayColors[d]?.dot }}
-                          ></div>
-                        ) : null
+                      {item.days.map(d => (
+                        <div 
+                          key={d} 
+                          className="w-2.5 h-2.5 rounded-full"
+                          style={{ backgroundColor: dayColors[d]?.dot }}
+                        ></div>
                       ))}
                     </div>
                     <input type="checkbox" checked={checkedItems[i]} onChange={() => toggleItem(i)} className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
