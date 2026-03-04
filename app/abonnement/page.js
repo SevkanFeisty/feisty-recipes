@@ -24,10 +24,10 @@ export default function AbonnementPage() {
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold text-slate-900">Feisty Standard</h2>
-              <span className="px-3 py-1 bg-slate-100 text-slate-600 text-sm font-medium rounded-full">Gratis at starte</span>
+              <span className="px-3 py-1 bg-slate-100 text-slate-600 text-sm font-medium rounded-full">49 kr/md</span>
             </div>
             <p className="text-slate-600 mb-4">Perfekt til dig der vil prøve Feisty af.</p>
-            <p className="mt-2 text-4xl font-bold text-emerald-600">0 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
+            <p className="mt-2 text-4xl font-bold text-emerald-600">49 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
             <ul className="mt-6 space-y-3 text-slate-600">
               <li className="flex items-start gap-3">
                 <span className="text-emerald-500 mt-1">✓</span>
@@ -66,7 +66,7 @@ export default function AbonnementPage() {
           {/* Pro */}
           <div className="relative bg-white rounded-2xl p-8 shadow-xl border-2 border-emerald-500">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-6 py-2 text-sm font-bold text-white shadow-lg">
-              ✨ Mest populær
+              Mest populær
             </div>
             <div className="flex items-center justify-between mb-4 mt-2">
               <h2 className="text-2xl font-bold text-slate-900">Feisty Pro</h2>
@@ -121,7 +121,9 @@ export default function AbonnementPage() {
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl">🥗</span>
+                <svg className="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
                 <h3 className="text-2xl font-bold text-slate-900">The Lunchbox</h3>
                 <span className="px-3 py-1 bg-emerald-500 text-white text-sm font-bold rounded-full">Add-on</span>
               </div>

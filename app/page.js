@@ -238,6 +238,9 @@ export default function HomePage() {
                 <li className="flex items-center gap-2">
                   <span className="text-emerald-200">✓</span> Særlige kostbehov
                 </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-200">✓</span> Lunchbox
+                </li>
               </ul>
               <Link 
                 href="/madplan" 
