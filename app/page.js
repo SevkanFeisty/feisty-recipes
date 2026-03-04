@@ -7,98 +7,107 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  const features = [
-    {
-      icon: "📅",
-      title: "Ugentlig Madplan",
-      desc: "Få en skræddersyet madplan hver uge baseret på dine præferencer",
-    },
-    {
-      icon: "🛒",
-      title: "Auto Indkøbsliste",
-      desc: "Automatiske indkøbslister med præcise mængder og priser",
-    },
-    {
-      icon: "🥗",
-      title: "Lækre Opskrifter",
-      desc: "Adgang til hundredvis af opskrifter fra klassisk dansk til international",
-    },
-    {
-      icon: "♻️",
-      title: "Reducer Madspild",
-      desc: "Smart planlægning der udnytter ingredienser på tværs af dage",
-    },
-  ];
-
-  const stats = [
-    { number: "50+", label: "Opskrifter" },
-    { number: "4 uger", label: "Planlægning" },
-    { number: "40%", label: "Spar tid" },
-    { number: "0 kr", label: "Madspild" },
-  ];
-
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-emerald-500 via-teal-500 to-emerald-600 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-10 right-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3">
+            <img 
+              src="/feisty-logo.png" 
+              alt="Feisty" 
+              className="h-10 w-auto rounded-lg"
+              style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
+            />
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/opskrifter" className="text-slate-600 hover:text-emerald-600 font-medium transition">Opskrifter</Link>
+            <Link href="/madplan" className="text-slate-600 hover:text-emerald-600 font-medium transition">Madplan</Link>
+            <Link href="/profil" className="text-slate-600 hover:text-emerald-600 font-medium transition">Profil</Link>
+          </div>
+          <Link 
+            href="/madplan" 
+            className="px-5 py-2 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition"
+          >
+            Kom i gang
+          </Link>
         </div>
+      </nav>
 
-        <div className="relative max-w-7xl mx-auto px-4 py-24 md:py-32">
-          <div className="text-center">
-            {/* Logo - LARGER */}
-            <div className="mb-8">
-              <img 
-                src="/feisty-logo.png" 
-                alt="Feisty" 
-                className="h-32 w-auto mx-auto rounded-2xl"
-                style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
-              />
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-b from-emerald-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-tight mb-6">
+                Fresh og <span className="text-emerald-500">enkel</span> madplan
+              </h1>
+              <p className="text-xl text-slate-600 mb-8 max-w-lg">
+                Feisty giver dig skrddersyede madplaner hver uge. Bare folg planen, sa handler du ind, og sa er du klar til at lave mad.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  href="/madplan" 
+                  className="px-8 py-4 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition shadow-lg hover:shadow-xl"
+                >
+                  Se din madplan
+                </Link>
+                <Link 
+                  href="/opskrifter" 
+                  className="px-8 py-4 border-2 border-slate-200 text-slate-700 font-semibold rounded-full hover:border-emerald-500 hover:text-emerald-600 transition"
+                >
+                  Browse opskrifter
+                </Link>
+              </div>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-              Din smarte madplan
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-10">
-              Spar tid, penge og reducer madspild med personlige madplaner leveret til dig hver uge.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/madplan"
-                className="px-8 py-4 bg-white text-emerald-600 font-bold rounded-full hover:bg-emerald-50 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-              >
-                Se madplan →
-              </Link>
-              <Link 
-                href="/opskrifter"
-                className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-bold rounded-full hover:bg-white/30 transition-all border-2 border-white/30"
-              >
-                Browse opskrifter
-              </Link>
+            {/* Illustration placeholder - in production would be custom illustrations */}
+            <div className="relative">
+              <div className="aspect-square max-w-md mx-auto">
+                <img 
+                  src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&h=800&fit=crop" 
+                  alt="Fresh food" 
+                  className="rounded-3xl shadow-2xl"
+                />
+              </div>
+              {/* Floating cards */}
+              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">📅</span>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Ugentlig plan</p>
+                    <p className="font-bold text-slate-900">Klar til dig</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Wave divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/>
-          </svg>
-        </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-16 bg-stone-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
+      {/* How it works */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
+            Sa nemt virker det
+          </h2>
+          
+          <div className="grid md:grid-cols-5 gap-8">
+            {[
+              { step: "1", title: "F inspiration", desc: "Vælg dine favoritretter og kostvaner" },
+              { step: "2", title: "Vi planlægger", desc: "Vi sammensætter din ugentlige madplan" },
+              { step: "3", title: "Indkøb", desc: "Få en automatisk indkøbsliste" },
+              { step: "4", title: "Kog", desc: "Følg opskrifterne og nyd maden" },
+              { step: "5", title: "Nyd", desc: "Spar tid og penge hver uge" },
+            ].map((item, i) => (
               <div key={i} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-emerald-600 mb-2">{stat.number}</div>
-                <div className="text-slate-500 font-medium">{stat.label}</div>
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-xl font-bold text-emerald-600 mx-auto mb-4">
+                  {item.step}
+                </div>
+                <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-slate-500">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -106,83 +115,125 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
-            Hvordan Feisty virker
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, i) => (
-              <div 
-                key={i} 
-                className="text-center p-8 rounded-3xl bg-gradient-to-b from-stone-50 to-white shadow-lg hover:shadow-xl transition-all"
-              >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                <p className="text-slate-500">{feature.desc}</p>
+      <section className="py-20 px-4 bg-slate-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { 
+                title: "100+ opskrifter", 
+                desc: "Fra klassisk dansk til internationale retter. Alt er testet og velsmagende.",
+                img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=400&fit=crop"
+              },
+              { 
+                title: "Automatisk indkøbsliste", 
+                desc: "Vi laver listen for dig. Bare folge den i butikken og check varerne af.",
+                img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop"
+              },
+              { 
+                title: "Tilpasset til dig", 
+                desc: "Vegetarisk, allergier, familiestorrelse - vi tilpasser planen dine behov.",
+                img: "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=600&h=400&fit=crop"
+              },
+            ].map((feature, i) => (
+              <div key={i} className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <img src={feature.img} alt={feature.title} className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{feature.title}</h3>
+                  <p className="text-slate-600">{feature.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="py-20 bg-gradient-to-b from-stone-50 to-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
-            Kom i gang i 3 trin
+      {/* Pricing */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-4">
+            Vælg din plan
           </h2>
+          <p className="text-center text-slate-600 mb-12">
+            Start med 2 uger for at prøve det af. Der er ingen binding.
+          </p>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">1</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Vælg dine præferencer</h3>
-              <p className="text-slate-500">Fortæl os om dine kostvaner, allergier og familie</p>
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            <div className="border-2 border-emerald-200 rounded-3xl p-8">
+              <h3 className="text-xl font-bold text-slate-900">Proeve</h3>
+              <div className="mt-4 mb-6">
+                <span className="text-4xl font-bold text-slate-900">99 kr</span>
+                <span className="text-slate-500">/ 2 uger</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> 2 ugers madplan
+                </li>
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> Automatisk indkobsliste
+                </li>
+                <li className="flex items-center gap-2 text-slate-600">
+                  <span className="text-emerald-500">✓</span> 100+ opskrifter
+                </li>
+              </ul>
+              <Link 
+                href="/madplan" 
+                className="block w-full py-3 text-center border-2 border-emerald-500 text-emerald-600 font-semibold rounded-full hover:bg-emerald-50 transition"
+              >
+                Proev det af
+              </Link>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">2</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Modtag din madplan</h3>
-              <p className="text-slate-500">Hver mandag får du en komplet ugentlig plan</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">3</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Nyd din mad</h3>
-              <p className="text-slate-500">Med din automatiske indkøbsliste er det nemt at handle ind og lave maden</p>
+            
+            <div className="bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl p-8 text-white">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">MEST POPULÆR</span>
+              </div>
+              <h3 className="text-xl font-bold">Fuld adgang</h3>
+              <div className="mt-4 mb-6">
+                <span className="text-4xl font-bold">249 kr</span>
+                <span className="text-emerald-100">/md</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-200">✓</span> Ubegrænset madplan
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-200">✓</span> Tilpasning af kost
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-200">✓</span> Alle allergener
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-200">✓</span> Særlige kostbehov
+                </li>
+              </ul>
+              <Link 
+                href="/madplan" 
+                className="block w-full py-3 text-center bg-white text-emerald-600 font-semibold rounded-full hover:bg-emerald-50 transition"
+              >
+                Kom i gang nu
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-emerald-600 to-teal-500">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Klar til at smarte din madlavning?
-          </h2>
-          <p className="text-xl text-white/90 mb-8">
-            Start med at se vores ugentlige madplan og indkøbsliste.
-          </p>
-          <Link 
-            href="/madplan"
-            className="inline-block px-10 py-5 bg-white text-emerald-600 font-bold rounded-full hover:bg-emerald-50 transition-all shadow-2xl transform hover:-translate-y-1"
-          >
-            Se eksempel på madplan →
-          </Link>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="bg-slate-900 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+      <footer className="bg-slate-900 py-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
               <img 
                 src="/feisty-logo.png" 
                 alt="Feisty" 
-                className="h-10 w-auto rounded-lg"
+                className="h-8 w-auto rounded"
                 style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
               />
+              <span className="text-white font-bold">Feisty</span>
+            </div>
+            <div className="flex gap-8">
+              <Link href="/opskrifter" className="text-slate-400 hover:text-white transition">Opskrifter</Link>
+              <Link href="/madplan" className="text-slate-400 hover:text-white transition">Madplan</Link>
+              <Link href="/profil" className="text-slate-400 hover:text-white transition">Profil</Link>
             </div>
             <p className="text-slate-400 text-sm">
               © 2026 Feisty. Alle rettigheder forbeholdes.
