@@ -9,151 +9,107 @@ export default function AbonnementPage() {
       {/* Hero */}
       <div className="bg-gradient-to-r from-emerald-600 to-teal-500 py-16">
         <div className="mx-auto max-w-7xl px-4 text-center text-white">
-          <h1 className="font-display text-4xl font-bold">Vælg dit abonnement</h1>
+          <h1 className="font-display text-4xl font-bold">Vælg din plan</h1>
           <p className="mt-3 text-xl text-emerald-100 max-w-2xl mx-auto">
-            Få en personlig madplan, der tilpasser sig din families behov. 
-            Spar tid, penge og undgå madspild.
+            Start med 2 uger for at prøve det af. Der er ingen binding.
           </p>
         </div>
       </div>
 
-      <main className="mx-auto max-w-6xl px-4 py-12">
-        {/* Main Plans */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {/* Standard */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold text-slate-900">Feisty Standard</h2>
-              <span className="px-3 py-1 bg-slate-100 text-slate-600 text-sm font-medium rounded-full">49 kr/md</span>
+      <main className="mx-auto max-w-5xl px-4 py-12">
+        {/* Pricing Cards - Same as front page */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Solo - 24 kr */}
+          <div className="group border-2 border-slate-200 rounded-3xl p-6 transition-all hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-100">
+            <h3 className="text-xl font-bold text-slate-900">Solo</h3>
+            <p className="text-slate-500 text-sm mt-2 mb-4">For dig der bor alene</p>
+            <div className="mb-4">
+              <span className="text-4xl font-bold text-slate-900">24 kr</span>
+              <span className="text-lg font-normal text-slate-500">/md</span>
             </div>
-            <p className="text-slate-600 mb-4">Perfekt til dig der vil prøve Feisty af.</p>
-            <p className="mt-2 text-4xl font-bold text-emerald-600">49 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
-            <ul className="mt-6 space-y-3 text-slate-600">
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">7-dages madplan</strong>
-                  <p className="text-sm">Tilpasset din husstandsstørrelse</p>
-                </div>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> 1 uges madplan
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Automatisk indkøbsliste</strong>
-                  <p className="text-sm">Baseret på ugens opskrifter</p>
-                </div>
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> Alle opskrifter
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Danske klassikere</strong>
-                  <p className="text-sm">Frikadeller, rugbrød og mere</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Rester genbruges</strong>
-                  <p className="text-sm">Mandagsragout → tirsdagslasagne</p>
-                </div>
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> Indkøbsliste
               </li>
             </ul>
-            <button className="mt-8 w-full rounded-full bg-slate-900 py-4 text-white font-semibold hover:bg-slate-800 transition">
-              Start gratis
+            <button className="w-full py-3 border-2 border-emerald-500 text-emerald-600 font-semibold rounded-full hover:bg-emerald-500 hover:text-white transition">
+              Vælg Solo
             </button>
+            <label className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl cursor-pointer hover:bg-emerald-50 transition">
+              <input type="checkbox" className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
+              <span className="text-sm text-slate-600">The Lunchbox +14 kr</span>
+            </label>
           </div>
-
-          {/* Pro */}
-          <div className="relative bg-white rounded-2xl p-8 shadow-xl border-2 border-emerald-500">
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-6 py-2 text-sm font-bold text-white shadow-lg">
-              Mest populær
+          
+          {/* Family - 39 kr */}
+          <div className="group border-2 border-slate-200 rounded-3xl p-6 transition-all hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-100">
+            <h3 className="text-xl font-bold text-slate-900">Family</h3>
+            <p className="text-slate-500 text-sm mt-2 mb-4">For hele familien</p>
+            <div className="mb-4">
+              <span className="text-4xl font-bold text-slate-900">39 kr</span>
+              <span className="text-lg font-normal text-slate-500">/md</span>
             </div>
-            <div className="flex items-center justify-between mb-4 mt-2">
-              <h2 className="text-2xl font-bold text-slate-900">Feisty Pro</h2>
-            </div>
-            <p className="text-slate-600 mb-4">Fuld kontrol over din madplan med kosttilpasning.</p>
-            <p className="mt-2 text-4xl font-bold text-emerald-600">74 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
-            <ul className="mt-6 space-y-3 text-slate-600">
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Alt i Standard</strong>
-                  <p className="text-sm">Inklusive alle basisfunktioner</p>
-                </div>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> Ubegrænset madplan
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Kostbegrænsninger</strong>
-                  <p className="text-sm">Vegetarisk, vegansk, keto, low-carb</p>
-                </div>
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> Alle opskrifter
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Allergen-filtrering</strong>
-                  <p className="text-sm">Ingen gluten, laktose, nødder m.m.</p>
-                </div>
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> Automatisk indkøbsliste
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Spar op til 40%</strong>
-                  <p className="text-sm">På ugens indkøb med tilbud</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-1">✓</span>
-                <div>
-                  <strong className="text-slate-900">Prioriteret support</strong>
-                  <p className="text-sm">Hurtig hjælp når du har brug for det</p>
-                </div>
+              <li className="flex items-center gap-2 text-slate-600 text-sm">
+                <span className="text-emerald-500">✓</span> Kostvaner
               </li>
             </ul>
-            <button className="mt-8 w-full rounded-full bg-emerald-500 py-4 text-white font-semibold hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/30">
-              Vælg Pro
+            <button className="w-full py-3 border-2 border-emerald-500 text-emerald-600 font-semibold rounded-full hover:bg-emerald-500 hover:text-white transition">
+              Vælg Family
             </button>
+            <label className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl cursor-pointer hover:bg-emerald-50 transition">
+              <input type="checkbox" className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
+              <span className="text-sm text-slate-600">The Lunchbox +14 kr</span>
+            </label>
           </div>
-        </div>
-
-        {/* The Lunchbox Add-on */}
-        <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-200">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3">
-                <svg className="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-                <h3 className="text-2xl font-bold text-slate-900">The Lunchbox</h3>
-                <span className="px-3 py-1 bg-emerald-500 text-white text-sm font-bold rounded-full">Add-on</span>
-              </div>
-              <p className="text-slate-600 mb-4">
-                Tilføj frokostplanlægning til din madplan. Feisty finder opskrifter 
-                og tilbud, der passer til familiens madpakker – så du smider mindre ud 
-                og sparer mere.
-              </p>
-              <ul className="space-y-2 text-slate-600">
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-500">✓</span> Ugentlige madpakke-opskrifter
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-500">✓</span> Bruger overskud fra aftensmad
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-500">✓</span> Separat indkøbsliste til frokost
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-emerald-500">✓</span> Børnevenlige og voksenvenlige muligheder
-                </li>
-              </ul>
+          
+          {/* Premium - 59 kr */}
+          <div className="group bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl p-6 text-white transition-all hover:shadow-xl hover:shadow-emerald-300">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-medium">MEST POPULÆR</span>
             </div>
-            <div className="text-center lg:text-right lg:min-w-[200px]">
-              <p className="text-3xl font-bold text-emerald-600">+19 kr<span className="text-lg font-normal text-slate-500">/md</span></p>
-              <p className="text-sm text-slate-500 mb-4">The Lunchbox add-on</p>
-              <button className="w-full lg:w-auto px-6 py-3 rounded-full border-2 border-emerald-500 text-emerald-600 font-semibold hover:bg-emerald-500 hover:text-white transition">
-                Tilføj The Lunchbox
-              </button>
+            <h3 className="text-xl font-bold">Premium</h3>
+            <p className="text-emerald-100 text-sm mt-2 mb-4">Skræddersyet løsning</p>
+            <div className="mb-4">
+              <span className="text-4xl font-bold">59 kr</span>
+              <span className="text-emerald-100">/md</span>
             </div>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center gap-2 text-emerald-100 text-sm">
+                <span className="text-emerald-200">✓</span> Alt i Family
+              </li>
+              <li className="flex items-center gap-2 text-emerald-100 text-sm">
+                <span className="text-emerald-200">✓</span> Tilpasset til dig
+              </li>
+              <li className="flex items-center gap-2 text-emerald-100 text-sm">
+                <span className="text-emerald-200">✓</span> Alle allergener
+              </li>
+              <li className="flex items-center gap-2 text-emerald-100 text-sm">
+                <span className="text-emerald-200">✓</span> Særlige kostbehov
+              </li>
+            </ul>
+            <button className="w-full py-3 bg-white text-emerald-600 font-semibold rounded-full hover:bg-emerald-50 transition">
+              Vælg Premium
+            </button>
+            <label className="mt-4 flex items-center gap-3 p-3 bg-white/10 rounded-xl cursor-pointer hover:bg-white/20 transition">
+              <input type="checkbox" className="w-5 h-5 rounded border-2 border-white/30 text-emerald-400" />
+              <span className="text-sm text-white">The Lunchbox +14 kr</span>
+            </label>
           </div>
         </div>
 
@@ -175,7 +131,7 @@ export default function AbonnementPage() {
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <h3 className="font-bold text-slate-900 mb-2">Hvilke supermarkeder dækker i?</h3>
-              <p className="text-slate-600 text-sm">Vi dækker Netto, Føtex, Bilka, Rema 1000, Aldi og flere. Vælg dine foretrukne butikker i profilen.</p>
+              <p className="text-slate-600 text-sm">Vi dækker Netto, Føtex, Bilka, Rema 1000, Aldi og flere.</p>
             </div>
           </div>
         </div>
