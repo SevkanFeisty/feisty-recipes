@@ -2,13 +2,40 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ProfilPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Set to true for demo
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Demo mode
   const [theme, setTheme] = useState("light");
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [groceryExpanded, setGroceryExpanded] = useState(false);
 
-  // User data (would come from backend in real app)
+  // Sample grocery items
+  const groceryItems = [
+    { name: "Hakket kød", amount: "400g", price: 29, checked: false },
+    { name: "Kyllingebryst", amount: "600g", price: 40, checked: false },
+    { name: "Kartofler", amount: "1kg", price: 10, checked: false },
+    { name: "Peberfrugt", amount: "2stk", price: 24, checked: false },
+    { name: "Løg", amount: "2stk", price: 6, checked: false },
+    { name: "Hvidløg", amount: "1hoved", price: 5, checked: false },
+    { name: "Fløde", amount: "2dl", price: 15, checked: false },
+    { name: "Pasta", amount: "500g", price: 10, checked: false },
+  ];
+
+  const [checkedItems, setCheckedItems] = useState(groceryItems.map(() => false));
+
+  const toggleItem = (index) => {
+    const newChecked = [...checkedItems];
+    newChecked[index] = !newChecked[index];
+    setCheckedItems(newChecked);
+  };
+
+  const checkedCount = checkedItems.filter(Boolean).length;
+  const checkedTotal = groceryItems.reduce((sum, item, i) => 
+    checkedItems[i] ? sum + item.price : sum, 0
+  );
+
   const userData = {
     name: "Anders",
     currentPlan: "Feisty Pro",
@@ -30,7 +57,26 @@ export default function ProfilPage() {
     { name: "Føtex", logo: "🏪", selected: true },
     { name: "Bilka", logo: "🛍️", selected: false },
     { name: "Rema 1000", logo: "💚", selected: false },
-    { name: "Aldi", logo: "🇩🇪", selected: false },
+  ];
+
+  // Plan data
+  const plans = [
+    {
+      id: "free",
+      name: "Feisty Gratis",
+      price: "0 kr",
+      period: "for evigt",
+      features: ["1 uges madplan", "Basale opskrifter", "Indkøbsliste"],
+      popular: false,
+    },
+    {
+      id: "pro",
+      name: "Feisty Pro",
+      price: "99 kr",
+      period: "md",
+      features: ["Ubegrænsede madplaner", "Alle opskrifter", "Kostbegrænsninger", "Særlige kostbehov", "Prioriteret support"],
+      popular: true,
+    },
   ];
 
   // LOGGED IN DASHBOARD VIEW
@@ -50,11 +96,12 @@ export default function ProfilPage() {
                   <p className="text-emerald-100">Din næste madplan kommer {userData.nextDelivery}</p>
                 </div>
               </div>
-              <div className="hidden md:block">
-                <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium">
-                  {userData.currentPlan}
-                </span>
-              </div>
+              <button 
+                onClick={() => setIsLoggedIn(false)}
+                className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium hover:bg-white/30 transition"
+              >
+                Log ud
+              </button>
             </div>
           </div>
         </div>
@@ -102,29 +149,66 @@ export default function ProfilPage() {
                     <span className="text-slate-700">Stegt Flæsk</span>
                   </div>
                 </div>
-                <Link href="/madplan" className="mt-4 block w-full py-3 text-center bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 transition">
+                <button 
+                  onClick={() => router.push('/madplan')}
+                  className="mt-4 block w-full py-3 text-center bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 transition"
+                >
                   Se komplet plan →
-                </Link>
+                </button>
               </div>
             </div>
 
-            {/* Grocery List Preview */}
+            {/* Grocery List - Interactive */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-4">
                 <h2 className="text-lg font-bold text-white">Indkøbsliste</h2>
-                <p className="text-teal-100 text-sm">8 varer • 320 kr</p>
+                <p className="text-teal-100 text-sm">{groceryItems.length} varer • {groceryItems.reduce((s,i)=>s+i.price,0)} kr</p>
               </div>
               <div className="p-6">
-                <div className="space-y-2 text-sm text-slate-600">
-                  <div className="flex justify-between"><span>400g Hakket kød</span><span>29 kr</span></div>
-                  <div className="flex justify-between"><span>600g Kylling</span><span>40 kr</span></div>
-                  <div className="flex justify-between"><span>1kg Kartofler</span><span>10 kr</span></div>
-                  <div className="flex justify-between"><span>2 peberfrugter</span><span>24 kr</span></div>
-                  <div className="text-slate-400 text-xs mt-2">+ 4 flere varer</div>
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {groceryItems.slice(0, groceryExpanded ? 8 : 4).map((item, i) => (
+                    <label 
+                      key={i} 
+                      className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}
+                    >
+                      <input 
+                        type="checkbox" 
+                        checked={checkedItems[i]}
+                        onChange={() => toggleItem(i)}
+                        className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500 focus:ring-emerald-500"
+                      />
+                      <div className="flex-1">
+                        <span className={checkedItems[i] ? 'line-through text-slate-400' : 'text-slate-700'}>
+                          {item.name}
+                        </span>
+                      </div>
+                      <span className="text-sm text-slate-500">{item.amount}</span>
+                      <span className="font-medium">{item.price} kr</span>
+                    </label>
+                  ))}
                 </div>
-                <button className="mt-4 w-full py-3 text-center border-2 border-emerald-500 text-emerald-600 font-semibold rounded-xl hover:bg-emerald-50 transition">
-                  Download liste
+                
+                {/* Show more / less */}
+                <button 
+                  onClick={() => setGroceryExpanded(!groceryExpanded)}
+                  className="mt-2 text-sm text-emerald-600 font-medium hover:underline"
+                >
+                  {groceryExpanded ? 'Vis mindre ↑' : `+ ${groceryItems.length - 4} flere varer`}
                 </button>
+
+                {/* Progress */}
+                <div className="mt-4 pt-4 border-t border-slate-100">
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-slate-500">{checkedCount}/{groceryItems.length} krydset af</span>
+                    <span className="font-bold text-emerald-600">{checkedTotal} kr</span>
+                  </div>
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-emerald-500 transition-all"
+                      style={{ width: `${(checkedCount / groceryItems.length) * 100}%` }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -152,7 +236,6 @@ export default function ProfilPage() {
           {/* Tab Content */}
           {activeTab === "dashboard" && (
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Dietary Preferences */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-slate-900 mb-4">Dine kostindstillinger</h3>
                 <div className="space-y-3">
@@ -174,7 +257,6 @@ export default function ProfilPage() {
                 </button>
               </div>
 
-              {/* supermarkets */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-slate-900 mb-4">Dine butikker</h3>
                 <div className="flex gap-3">
@@ -194,7 +276,6 @@ export default function ProfilPage() {
           {activeTab === "madindstillinger" && (
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-lg font-bold text-slate-900 mb-6">Madindstillinger</h3>
-              
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-3">Kostvaner</label>
@@ -213,7 +294,7 @@ export default function ProfilPage() {
                     <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs rounded-full">PRO</span>
                   </label>
                   <textarea
-                    placeholder="F.eks. Jeg kan ikke lide koriander, foretrækker less salt..."
+                    placeholder="F.eks. Jeg kan ikke lide koriander, foretrækker mindre salt..."
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     rows={3}
                   />
@@ -246,28 +327,83 @@ export default function ProfilPage() {
           )}
 
           {activeTab === "abonnement" && (
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-6 text-white mb-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-emerald-100 text-sm">Nuværende plan</p>
-                    <h3 className="text-2xl font-bold">{userData.currentPlan}</h3>
-                    <p className="text-emerald-100">99 kr/måned</p>
+            <div className="space-y-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-6 text-white mb-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-emerald-100 text-sm">Nuværende plan</p>
+                      <h3 className="text-2xl font-bold">{userData.currentPlan}</h3>
+                      <p className="text-emerald-100">99 kr/måned</p>
+                    </div>
+                    <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Aktiv</span>
                   </div>
-                  <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">Aktiv</span>
                 </div>
-              </div>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-3 text-slate-600">✓ Ubegrænsede madplaner</div>
-                <div className="flex items-center gap-3 text-slate-600">✓ Alle opskrifter</div>
-                <div className="flex items-center gap-3 text-slate-600">✓ Kostbegrænsninger</div>
-                <div className="flex items-center gap-3 text-slate-600">✓ Særlige kostbehov</div>
-              </div>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-slate-600">✓ Ubegrænsede madplaner</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Alle opskrifter</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Kostbegrænsninger</div>
+                  <div className="flex items-center gap-3 text-slate-600">✓ Særlige kostbehov</div>
+                </div>
 
-              <button className="w-full py-3 border border-slate-200 text-slate-700 font-medium rounded-full hover:bg-slate-50 transition">
-                Administrer abonnement
+                <button 
+                  onClick={() => setActiveTab("skift-abonnement")}
+                  className="w-full py-3 border border-slate-200 text-slate-700 font-medium rounded-full hover:bg-slate-50 transition"
+                >
+                  Skift abonnement
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Change Subscription View */}
+          {activeTab === "skift-abonnement" && (
+            <div className="space-y-6">
+              <button 
+                onClick={() => setActiveTab("abonnement")}
+                className="text-emerald-600 font-medium hover:underline mb-4"
+              >
+                ← Tilbage til abonnement
               </button>
+              
+              <h3 className="text-xl font-bold text-slate-900">Vælg din plan</h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                {plans.map((plan) => (
+                  <div 
+                    key={plan.id}
+                    className={`bg-white rounded-2xl p-6 shadow-lg border-2 transition-all ${plan.popular ? 'border-emerald-500' : 'border-transparent'}`}
+                  >
+                    {plan.popular && (
+                      <span className="px-3 py-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs font-bold rounded-full">
+                        MEST POPULÆR
+                      </span>
+                    )}
+                    <h4 className="text-xl font-bold text-slate-900 mt-2">{plan.name}</h4>
+                    <div className="mt-2">
+                      <span className="text-3xl font-bold text-emerald-600">{plan.price}</span>
+                      <span className="text-slate-500">/{plan.period}</span>
+                    </div>
+                    <ul className="mt-4 space-y-2">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-slate-600">
+                          <span className="text-emerald-500">✓</span> {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <button 
+                      className={`mt-6 w-full py-3 rounded-full font-semibold transition ${
+                        plan.id === 'pro' 
+                          ? 'bg-emerald-500 text-white hover:bg-emerald-600' 
+                          : 'border-2 border-slate-200 text-slate-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {plan.id === 'pro' ? 'Nuværende plan' : 'Vælg denne'}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </main>
@@ -275,7 +411,7 @@ export default function ProfilPage() {
     );
   }
 
-  // GUEST LOGIN VIEW
+  // GUEST VIEW
   return (
     <div className="min-h-screen bg-stone-50">
       <div className="bg-gradient-to-r from-emerald-600 to-teal-500 py-12">
