@@ -147,8 +147,8 @@ export default function HomePage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">3</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Shop & kog</h3>
-              <p className="text-slate-500">Med din automatiske indkøbsliste er det nemt</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Nyd din mad</h3>
+              <p className="text-slate-500">Med din automatiske indkøbsliste er det nemt at handle ind og lave maden</p>
             </div>
           </div>
         </div>
