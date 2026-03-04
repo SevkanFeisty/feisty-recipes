@@ -10,10 +10,12 @@ export default function OpskrifterPage() {
 
   // Filter recipes
   const filteredRecipes = recipes.filter((recipe) => {
-    const matchesCategory = selectedCategory === "all" || recipe.category?.toLowerCase() === selectedCategory.toLowerCase();
+    const categoryMatch = selectedCategory === "all" || 
+      recipe.category?.toLowerCase() === selectedCategory.toLowerCase() ||
+      recipe.category === categories.find(c => c.slug === selectedCategory)?.name;
     const matchesSearch = recipe.title?.toLowerCase().includes(searchQuery.toLowerCase()) || 
                         recipe.subtitle?.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return categoryMatch && matchesSearch;
   });
 
   return (
