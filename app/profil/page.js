@@ -80,11 +80,11 @@ const allPlans = {
 };
 
 const dayColors = {
-  1: { bg: '#DBEAFE', border: '#3B82F6', label: 'Mandag', dot: '#3B82F6' },
-  2: { bg: '#DCFCE7', border: '#22C55E', label: 'Tirsdag', dot: '#22C55E' },
-  3: { bg: '#FEF3C7', border: '#F59E0B', label: 'Onsdag', dot: '#F59E0B' },
-  4: { bg: '#FEE2E2', border: '#EF4444', label: 'Torsdag', dot: '#EF4444' },
-  5: { bg: '#EDE9FE', border: '#8B5CF6', label: 'Fredag', dot: '#8B5CF6' },
+  1: { bg: '#E0F2FE', border: '#0284C7', label: 'Mandag', dot: '#0284C7' },
+  2: { bg: '#DCFCE7', border: '#16A34A', label: 'Tirsdag', dot: '#16A34A' },
+  3: { bg: '#FEF3C7', border: '#D97706', label: 'Onsdag', dot: '#D97706' },
+  4: { bg: '#FEE2E2', border: '#DC2626', label: 'Torsdag', dot: '#DC2626' },
+  5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
 
 export default function ProfilPage() {
@@ -111,6 +111,9 @@ export default function ProfilPage() {
   const canGoPrev = currentWeekIdx > 0;
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
+
+  // Calculate total from actual day totals
+  const calculatedTotal = plan?.days?.reduce((sum, day) => sum + (day.day_total || 0), 0) || 0;
 
   // Dynamic grocery items from the plan
   const groceryItems = plan?.grocery || [];
@@ -185,7 +188,7 @@ export default function ProfilPage() {
               <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
               </div>
-              <div><p className="text-xs text-slate-500">Total Pris</p><p className="font-semibold text-emerald-600">{plan?.total_cost_dkk} kr</p></div>
+              <div><p className="text-xs text-slate-500">Total Pris</p><p className="font-semibold text-emerald-600">{calculatedTotal} kr</p></div>
             </div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
