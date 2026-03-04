@@ -190,6 +190,43 @@ const recipes = [
     cookTime: "5",
     image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&h=600&fit=crop",
   },
+  // === Danish Classics ===
+  {
+    id: "morbradgryde",
+    title: "Mørbradgryde",
+    subtitle: "Klassisk dansk mørbrad i cremet sauce med champignoner",
+    category: "Comfort",
+    prepTime: "20",
+    cookTime: "30",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop",
+  },
+  {
+    id: "stegt-flaesk",
+    title: "Stegt Flæsk med Persillesovs",
+    subtitle: "Traditionel dansk ret med sprødt flæsk og persillesovs",
+    category: "Comfort",
+    prepTime: "15",
+    cookTime: "25",
+    image: "https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=800&h=600&fit=crop",
+  },
+  {
+    id: "kylling-curry",
+    title: "Kylling i Curry",
+    subtitle: "Saftig kylling i cremet karry-sauce med ris",
+    category: "Hurtig",
+    prepTime: "15",
+    cookTime: "25",
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&h=600&fit=crop",
+  },
+  {
+    id: "fiskefrikadeller",
+    title: "Fiskefrikadeller",
+    subtitle: "Hjemmelavede fiskefrikadeller med remoulade og kartofler",
+    category: "Comfort",
+    prepTime: "20",
+    cookTime: "15",
+    image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=800&h=600&fit=crop",
+  },
 ];
 
 const categories = [

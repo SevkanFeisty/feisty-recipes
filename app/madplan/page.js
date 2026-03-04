@@ -3,6 +3,20 @@
 import { useState } from "react";
 import Link from "next/link";
 
+// Recipe name to slug mapping
+const recipeSlugs = {
+  "Veggie Curry": "veggie-curry",
+  "Pasta Primavera": "pasta-primavera",
+  "Veggie Tacos": "veggie-tacos",
+  "Linsesuppe": "lentil-soup",
+  "Falafel Bowl": "falafel-bowl",
+  "Boller i Karry": "karry-suppe",
+  "Mørbradgryde": "morbradgryde",
+  "Stegt Flæsk": "stegt-flaesk",
+  "Kylling i Curry": "kylling-curry",
+  "Fiskefrikadeller": "fiskefrikadeller",
+};
+
 // Pastel colors for each day
 const days = [
   { name: 'Mandag', day_en: 'Monday', color: '#93C5FD', bg: '#DBEAFE', border: '#3B82F6' },
@@ -446,13 +460,13 @@ export default function MadplanPage() {
                 
                 <div className="divide-y divide-slate-100">
                   {meal ? (
-                    <div className="p-3">
+                    <Link href={`/opskrifter/${recipeSlugs[meal.recipe_name] || ''}`} className="block p-3 hover:bg-emerald-50 transition">
                       <span className="text-xs text-slate-400 block mb-1">Aftensmad</span>
                       <span className="text-sm font-medium text-emerald-600 block">
                         {meal.recipe_name}
                       </span>
                       <span className="text-xs text-slate-400 mt-1 block">Klik for opskrift →</span>
-                    </div>
+                    </Link>
                   ) : (
                     <div className="p-3">
                       <span className="text-xs text-slate-400 block">Ingen ret planlagt</span>
