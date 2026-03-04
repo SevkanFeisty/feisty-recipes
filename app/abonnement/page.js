@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = {
   title: "Abonnement - Feisty",
   description: "Vælg dit Feisty abonnement og tilføj The Lunchbox til frokostplanlægning",
