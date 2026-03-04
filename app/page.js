@@ -9,7 +9,7 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      {/* Navigation */}
+      {/* Navigation - uses same style as layout */}
       <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
@@ -20,16 +20,16 @@ export default function HomePage() {
               style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
             />
           </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/opskrifter" className="text-slate-600 hover:text-emerald-600 font-medium transition">Opskrifter</Link>
-            <Link href="/madplan" className="text-slate-600 hover:text-emerald-600 font-medium transition">Madplan</Link>
-            <Link href="/profil" className="text-slate-600 hover:text-emerald-600 font-medium transition">Profil</Link>
+          <div className="hidden md:flex items-center gap-1">
+            <Link href="/" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-600 rounded-full transition">Forside</Link>
+            <Link href="/opskrifter" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-600 rounded-full transition">Opskrifter</Link>
+            <Link href="/abonnement" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-600 rounded-full transition">Abonnement</Link>
+            <Link href="/login" className="ml-4 px-4 py-2 text-sm font-medium bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition">Log ind</Link>
           </div>
-          <Link 
-            href="/madplan" 
-            className="px-5 py-2 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition"
-          >
-            Kom i gang
+          <Link href="/login" className="md:hidden p-2 text-slate-600">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
           </Link>
         </div>
       </nav>
@@ -268,9 +268,10 @@ export default function HomePage() {
               <span className="text-white font-bold">Feisty</span>
             </div>
             <div className="flex gap-8">
+              <Link href="/" className="text-slate-400 hover:text-white transition">Forside</Link>
               <Link href="/opskrifter" className="text-slate-400 hover:text-white transition">Opskrifter</Link>
-              <Link href="/madplan" className="text-slate-400 hover:text-white transition">Madplan</Link>
-              <Link href="/profil" className="text-slate-400 hover:text-white transition">Profil</Link>
+              <Link href="/abonnement" className="text-slate-400 hover:text-white transition">Abonnement</Link>
+              <Link href="/login" className="text-slate-400 hover:text-white transition">Log ind</Link>
             </div>
             <p className="text-slate-400 text-sm">
               © 2026 Feisty. Alle rettigheder forbeholdes.
