@@ -1,12 +1,5 @@
 import Link from "next/link";
 
-const multiDayIngredients = ['kikærter', 'løg', 'hvidløg', 'broccoli', 'tomater'];
-
-function isMultiDayIngredient(name) {
-  const lower = name.toLowerCase();
-  return multiDayIngredients.some(m => lower.includes(m));
-}
-
 export default function FalafelBowlPage() {
   const recipe = {
     title: "Falafel Bowl",
@@ -17,16 +10,26 @@ export default function FalafelBowlPage() {
     servings: 4,
     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=800&fit=crop",
     ingredients: [
-      { name: "300 g falafel", day: "Fredag" },
-      { name: "250 g hummus", day: "Fredag" },
-      { name: "1 pose blandet salat", day: "Fredag" },
-      { name: "1 agurk", day: "Fredag" },
-      { name: "2 tomater", day: "Fredag" },
-      { name: "1 rødløg", day: "Fredag" },
-      { name: "4 pitabrød", day: "Fredag" },
-      { name: "150 g tzatziki", day: "Fredag" },
-      { name: "Olivenolie", day: "Fredag" },
-      { name: "Frisk mynte", day: "Fredag" }
+      "2 spsk solsikkeolie",
+      "1 stk løg (hakket)",
+      "2 fed hvidløg (presset)",
+      "400 g kikærter (dåse, drænet)",
+      "1 tsk spidskommen",
+      "1 tsk koriander",
+      "1 håndfuld persille",
+      "1 stk æg (pisket)",
+      "Salt og peber",
+      "Hummus til servering",
+      "Pitabrød",
+      "Salat"
+    ],
+    instructions: [
+      "Varm 1 spsk olie i en stor pande og steg løg og hvidløg ved lav varme i 5 minutter til de er bløde.",
+      "Kom kikærter, krydderier og persille i en stor skål og mos sammen med en gaffel til kikærterne er fuldstændig moseædt.",
+      "Tilsæt ægget og bland det hele sammen med hænderne.",
+      "Form blandingen til 6 kugler og fladtryk dem til bøffer.",
+      "Varm den resterende olie på panden og steg falaflerne ved medium varme i 3 minutter på hver side.",
+      "Server falaflerne varme eller kolde med hummus, pitabrød og salat."
     ]
   };
 
@@ -36,8 +39,8 @@ export default function FalafelBowlPage() {
         <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="absolute top-4 left-4">
-          <Link href="/madplan" className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm text-white hover:bg-white/30">
-            ← Tilbage til madplan
+          <Link href="/opskrifter" className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm text-white hover:bg-white/30">
+            ← Tilbage til opskrifter
           </Link>
         </div>
       </div>
@@ -66,67 +69,36 @@ export default function FalafelBowlPage() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">📝</span>
-              Ingredienser
-            </h2>
-            
-            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-              <p className="text-sm text-amber-700">
-                <span className="font-medium">Orange ingredienser</span> bruges også på andre dage - køb lidt ekstra! ♻️
-              </p>
-            </div>
-            
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Ingredienser</h2>
             <ul className="space-y-3">
-              {recipe.ingredients.map((ing, i) => {
-                const isMulti = isMultiDayIngredient(ing.name);
-                return (
-                  <li key={i} className={`flex items-start gap-3 p-2 rounded-lg ${isMulti ? 'bg-amber-50 border border-amber-200' : ''}`}>
-                    <span className={`w-2 h-2 mt-2 rounded-full flex-shrink-0 ${isMulti ? 'bg-amber-400' : 'bg-emerald-400'}`} />
-                    <span className={isMulti ? 'text-amber-700 font-medium' : 'text-slate-700'}>
-                      {ing.name}
-                    </span>
-                  </li>
-                );
-              })}
+              {recipe.ingredients.map((ing, i) => (
+                <li key={i} className="flex items-start gap-3 text-slate-700">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                  {ing}
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">👩‍🍳</span>
-              Fremgangsmåde
-            </h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Fremgangsmåde</h2>
             <ol className="space-y-4">
-              {[
-                "Bag falafel efter anvisning.",
-                "Skær agurk og tomater.",
-                "Anret salat i bunden.",
-                "Tilsæt falafel og hummus.",
-                "Top med grøntsager.",
-                "Servér med pitabrød."
-              ].map((step, i) => (
+              {recipe.instructions.map((step, i) => (
                 <li key={i} className="flex gap-4">
-                  <span className="flex-shrink-0 w-7 h-7 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">
+                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">
                     {i + 1}
                   </span>
-                  <span className="text-slate-700 pt-0.5">{step}</span>
+                  <p className="text-slate-700 pt-1">{step}</p>
                 </li>
               ))}
             </ol>
           </div>
         </div>
 
-        <div className="mt-10 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-semibold">Vil du lave denne opskrift?</h3>
-              <p className="text-emerald-100 text-sm">Tilføj til din madplan og få en automatisk indkøbsliste</p>
-            </div>
-            <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-emerald-600 hover:bg-emerald-50 transition shadow-lg">
-              Tilføj til madplan
-            </button>
-          </div>
+        <div className="mt-8 text-center">
+          <Link href="/madplan" className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition">
+            ← Tilbage til madplan
+          </Link>
         </div>
       </main>
     </div>
