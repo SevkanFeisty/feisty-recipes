@@ -265,6 +265,22 @@ export default function ProfilPage() {
                     </div>
                   </div>
 
+                  {/* Custom Dietary Needs - Premium Feature */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-3">
+                      Særlige kostbehov
+                      <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs rounded-full">PRO</span>
+                    </label>
+                    <textarea
+                      placeholder="F.eks. Jeg kan ikke lide koriander, foretrækker less salt, elsker asiatisk mad..."
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                      rows={3}
+                    />
+                    <p className="text-xs text-slate-500 mt-2">
+                      Vi tilpasser din madplan baseret på dine specifikke ønsker.
+                    </p>
+                  </div>
+
                   <button className="px-6 py-3 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition-colors">
                     Gem indstillinger
                   </button>
