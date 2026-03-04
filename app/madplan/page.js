@@ -100,17 +100,20 @@ export default function MadplanPage() {
   const [planType, setPlanType] = useState("single");
   const [selectedWeek, setSelectedWeek] = useState(`${currentYear}-W${currentWeek.toString().padStart(2, '0')}`);
   
+  // Get plans based on type
   const plans = planType === "single" ? singlePlans : familyPlans;
-  const availableWeeks = Object.keys(plans);
-  const weeks = [...availableWeeks].sort();
-  const currentWeekIdx = weeks.indexOf(selectedWeek);
-  const canGoPrev = currentWeekIdx > 0;
-  const canGoNext = currentWeekIdx < weeks.length - 1;
+  const availableWeeks = Object.keys(plans).sort();
   
-  const plan = plans[selectedWeek];
+  // Ensure selected week exists in current plan type
+  const validSelectedWeek = availableWeeks.includes(selectedWeek) ? selectedWeek : availableWeeks[0];
+  const currentWeekIdx = availableWeeks.indexOf(validSelectedWeek);
+  const canGoPrev = currentWeekIdx > 0;
+  const canGoNext = currentWeekIdx < availableWeeks.length - 1;
+  
+  const plan = plans[validSelectedWeek];
 
-  const prevWeek = canGoPrev ? weeks[currentWeekIdx - 1] : null;
-  const nextWeek = canGoNext ? weeks[currentWeekIdx + 1] : null;
+  const prevWeek = canGoPrev ? availableWeeks[currentWeekIdx - 1] : null;
+  const nextWeek = canGoNext ? availableWeeks[currentWeekIdx + 1] : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
@@ -126,7 +129,12 @@ export default function MadplanPage() {
             {/* Toggle Single/Family */}
             <div className="flex items-center gap-2 bg-white/20 rounded-full p-1">
               <button
-                onClick={() => setPlanType("single")}
+                onClick={() => {
+                  setPlanType("single");
+                  // Reset to first available week for this type
+                  const weeks = Object.keys(singlePlans).sort();
+                  setSelectedWeek(weeks[0]);
+                }}
                 className={`px-4 py-2 text-sm font-medium rounded-full transition ${
                   planType === "single" 
                     ? 'bg-white text-emerald-600' 
@@ -136,7 +144,12 @@ export default function MadplanPage() {
                 Single
               </button>
               <button
-                onClick={() => setPlanType("family")}
+                onClick={() => {
+                  setPlanType("family");
+                  // Reset to first available week for this type
+                  const weeks = Object.keys(familyPlans).sort();
+                  setSelectedWeek(weeks[0]);
+                }}
                 className={`px-4 py-2 text-sm font-medium rounded-full transition ${
                   planType === "family" 
                     ? 'bg-white text-emerald-600' 
