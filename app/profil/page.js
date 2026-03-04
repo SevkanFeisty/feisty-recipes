@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { recipes } from "../../data/recipes-danish";
 
 function getWeekNumber(date) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -86,6 +87,32 @@ const dayColors = {
   5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
 
+// Calculate total recipe amount needed for each ingredient
+function getRecipeAmountsNeeded(days) {
+  const totals = {};
+  
+  days.forEach(day => {
+    const meal = day.meals?.[0];
+    if (!meal) return;
+    
+    const recipe = recipes.find(r => r.id === meal.recipe_id);
+    if (!recipe || !recipe.ingredients) return;
+    
+    recipe.ingredients.forEach(ing => {
+      const name = ing.name.trim();
+      const qty = parseInt(ing.quantity) || 0;
+      if (!name || qty === 0) return;
+      
+      if (!totals[name]) {
+        totals[name] = { qty: 0, unit: ing.unit };
+      }
+      totals[name].qty += qty;
+    });
+  });
+  
+  return totals;
+}
+
 export default function ProfilPage() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -111,7 +138,12 @@ export default function ProfilPage() {
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
 
-  // Use Arnold's grocery data directly
+  // Get recipe amounts needed
+  const recipeAmounts = useMemo(() => {
+    if (!plan) return {};
+    return getRecipeAmountsNeeded(plan.days);
+  }, [plan]);
+
   const groceryItems = plan?.grocery || [];
 
   const [checkedItems, setCheckedItems] = useState(groceryItems.map(() => false));
@@ -225,7 +257,7 @@ export default function ProfilPage() {
           })}
         </div>
 
-        {/* Grocery List - from Arnold with purchase quantities */}
+        {/* Grocery List - with purchase vs recipe comparison */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
@@ -241,6 +273,14 @@ export default function ProfilPage() {
               {groceryItems.map((item, i) => {
                 const primaryDay = item.days[0];
                 const color = dayColors[primaryDay];
+                
+                // Check if purchase amount matches recipe need
+                const recipeNeed = recipeAmounts[item.name];
+                let needsMore = false;
+                if (recipeNeed && item.unit === recipeNeed.unit) {
+                  needsMore = item.qty < recipeNeed.qty;
+                }
+                
                 return (
                   <label key={i} className={`flex items-center gap-4 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
                     {/* Color dots for each day */}
@@ -250,7 +290,12 @@ export default function ProfilPage() {
                       ))}
                     </div>
                     <input type="checkbox" checked={checkedItems[i]} onChange={() => toggleItem(i)} className="w-5 h-5 rounded border-2 border-slate-300 text-emerald-500" />
-                    <span className={checkedItems[i] ? 'line-through text-slate-400 flex-1' : 'text-slate-700 flex-1'}>{item.name}</span>
+                    <div className="flex-1">
+                      <span className={checkedItems[i] ? 'line-through text-slate-400' : 'text-slate-700'}>{item.name}</span>
+                      {needsMore && (
+                        <span className="ml-2 text-xs text-amber-600 font-medium">(Køb 2: opskrift {recipeNeed?.qty}{recipeNeed?.unit})</span>
+                      )}
+                    </div>
                     <span className="text-sm text-slate-500">{item.qty} {item.unit}</span>
                     <span className="font-semibold text-emerald-600">{item.price.toFixed(2)} kr</span>
                   </label>
