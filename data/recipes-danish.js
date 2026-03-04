@@ -92,7 +92,7 @@ const recipes = [
     prepTime: "15",
     cookTime: "60",
     servings: 6,
-    image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1622973536968-3ead9e780960?w=800&h=600&fit=crop",
     ingredients: [
       { name: "Hakket oksekød", quantity: "500", unit: "g" },
       { name: "Løg", quantity: "2", unit: "stk" },
@@ -121,7 +121,7 @@ const recipes = [
     id: "lasagne-med-bolognese",
     title: "Lasagne med Bolognese",
     subtitle: "Klassisk italiensk lasagne med kødsauce",
-    description: "Lagret pastret med bolognese, bechamel og ost.",
+    description: "Lagret pastret med bolognese, bechamel og ost. En favorit i enhver familie.",
     category: "Comfort",
     prepTime: "30",
     cookTime: "45",
@@ -561,6 +561,30 @@ const recipes = [
       "Smelt smør, tilsæt ingefær og hvidløg.",
       "Tilsæt tomater og krydderier, lad det koge.",
       "Tilsæt fløde og kylling, server med ris."
+    ]
+  },
+  {
+    id: "aeg-og-gryde",
+    title: "Æg og Gryde",
+    subtitle: "Hurtig og mættende æggeret med havregryn",
+    description: "En klassisk dansk hurtig ret med æg, havregryn og grøntsager. Perfekt til en travl hverdagsaften.",
+    category: "Hurtig",
+    prepTime: "5",
+    cookTime: "10",
+    servings: 1,
+    image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800&h=600&fit=crop",
+    ingredients: [
+      { name: "Æg", quantity: "4", unit: "stk" },
+      { name: "Havregryn", quantity: "200", unit: "g" },
+      { name: "Gulerødder", quantity: "100", unit: "g" },
+      { name: "Smør", quantity: "25", unit: "g" },
+      { name: "Salt og peber", quantity: "", unit: "" }
+    ],
+    instructions: [
+      "Kog havregryn efter anvisningen på pakken.",
+      "Steg æg på panden.",
+      "Riv gulerødder og bland i.",
+      "Server sammen med havregryn."
     ]
   }
 ];
