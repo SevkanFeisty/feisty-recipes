@@ -1,166 +1,190 @@
 import Link from "next/link";
+import "./globals.css";
 
 export const metadata = {
-  title: "Feisty - Danske Opskrifter",
-  description: "Klassiske danske opskrifter til hele familien. Spar tid og penge med smarte madplaner.",
+  title: "Feisty - Din smarte madplan",
+  description: "Spar tid og penge med Feisty. Personlige madplaner, automatiske indkøbslister og lækre opskrifter.",
 };
 
 export default function HomePage() {
+  const features = [
+    {
+      icon: "📅",
+      title: "Ugentlig Madplan",
+      desc: "Få en skræddersyet madplan hver uge baseret på dine præferencer",
+    },
+    {
+      icon: "🛒",
+      title: "Auto Indkøbsliste",
+      desc: "Automatiske indkøbslister med præcise mængder og priser",
+    },
+    {
+      icon: "🥗",
+      title: "Lækre Opskrifter",
+      desc: "Adgang til hundredvis af opskrifter fra klassisk dansk til international",
+    },
+    {
+      icon: "♻️",
+      title: "Reducer Madspild",
+      desc: "Smart planlægning der udnytter ingredienser på tværs af dage",
+    },
+  ];
+
+  const stats = [
+    { number: "50+", label: "Opskrifter" },
+    { number: "4 uger", label: "Planlægning" },
+    { number: "40%", label: "Spar tid" },
+    { number: "0 kr", label: "Madspild" },
+  ];
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section - Modern with overlay */}
-      <section className="relative h-[550px] lg:h-[650px] overflow-hidden">
-        {/* Background Image */}
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-emerald-500 via-teal-500 to-emerald-600 overflow-hidden">
+        {/* Animated background elements */}
         <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&h=1080&fit=crop" 
-            alt="Delicious Danish food" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/60 to-transparent" />
+          <div className="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
-        
-        {/* Hero Content */}
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 bg-emerald-500/90 text-white text-sm font-semibold rounded-full mb-4 animate-fade-up">
-              ✨ Danske Opskrifter
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-up delay-100 font-display">
-              Lækker mad, <br/>
-              <span className="text-emerald-400">hver dag.</span>
+
+        <div className="relative max-w-7xl mx-auto px-4 py-24 md:py-32">
+          <div className="text-center">
+            {/* Logo - LARGER */}
+            <div className="mb-8">
+              <img 
+                src="/feisty-logo.png" 
+                alt="Feisty" 
+                className="h-32 w-auto mx-auto rounded-2xl"
+                style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
+              />
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+              Din smarte madplan
             </h1>
-            <p className="mt-4 text-lg text-slate-200 max-w-lg animate-fade-up delay-200">
-              Klassiske danske opskrifter til hele familien. Planlæg dine måltider, 
-              spar penge, og undgå madspild.
+            <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-10">
+              Spar tid, penge og reducer madspild med personlige madplaner leveret til dig hver uge.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4 animate-fade-up delay-300">
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
-                href="/opskrifter" 
-                className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/30 hover:shadow-xl"
+                href="/madplan"
+                className="px-8 py-4 bg-white text-emerald-600 font-bold rounded-full hover:bg-emerald-50 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
-                Se opskrifter
-                <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                Se madplan →
               </Link>
               <Link 
-                href="/madplan" 
-                className="inline-flex items-center px-6 py-3 bg-white/10 text-white font-semibold rounded-full hover:bg-white/20 backdrop-blur-sm transition-all border border-white/20"
+                href="/opskrifter"
+                className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-bold rounded-full hover:bg-white/30 transition-all border-2 border-white/30"
               >
-                Opret madplan
+                Browse opskrifter
               </Link>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Features Section - Clean cards */}
-      <section className="py-16 bg-slate-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow animate-fade-up">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">Smart Madplan</h3>
-              <p className="mt-2 text-slate-600">Planlæg ugens måltider på forhånd og slip for "hvad skal vi have?"</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow animate-fade-up delay-100">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">Auto Indkøbsliste</h3>
-              <p className="mt-2 text-slate-600">Få en komplet indkøbsliste baseret på din madplan</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow animate-fade-up delay-200">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">Mindre Madspild</h3>
-              <p className="mt-2 text-slate-600">Brug rester smart og undgå at smide mad ud</p>
-            </div>
-          </div>
+        {/* Wave divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/>
+          </svg>
         </div>
       </section>
 
-      {/* Featured Recipes - Image focused */}
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-slate-900">Populære Opskrifter</h2>
-            <p className="mt-2 text-slate-600">Vores mest elskede klassiske danske retter</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredRecipes.map((recipe, i) => (
-              <Link key={recipe.id} href={`/opskrifter/${recipe.id}`} className="group animate-fade-up" style={{animationDelay: `${i * 0.1}s`}}>
-                <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={recipe.image} 
-                      alt={recipe.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
-                      {recipe.title}
-                    </h3>
-                    <p className="text-sm text-slate-500 mt-1">{recipe.time}</p>
-                  </div>
-                </article>
-              </Link>
+      {/* Stats */}
+      <section className="py-16 bg-stone-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-emerald-600 mb-2">{stat.number}</div>
+                <div className="text-slate-500 font-medium">{stat.label}</div>
+              </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
+            Hvordan Feisty virker
+          </h2>
           
-          <div className="text-center mt-10">
-            <Link 
-              href="/opskrifter" 
-              className="inline-flex items-center text-emerald-600 font-semibold hover:text-emerald-700"
-            >
-              Se alle opskrifter 
-              <svg className="ml-1 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, i) => (
+              <div 
+                key={i} 
+                className="text-center p-8 rounded-3xl bg-gradient-to-b from-stone-50 to-white shadow-lg hover:shadow-xl transition-all"
+              >
+                <div className="text-5xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                <p className="text-slate-500">{feature.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-emerald-500 to-teal-500">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl font-bold text-white">Klar til at komme i gang?</h2>
-          <p className="mt-3 text-lg text-emerald-100 max-w-2xl mx-auto">
-            Opret din gratis madplan i dag og få styr på ugens måltider
-          </p>
-          <div className="mt-8">
-            <Link 
-              href="/abonnement" 
-              className="inline-flex items-center px-8 py-4 bg-white text-emerald-600 font-bold rounded-full hover:bg-emerald-50 transition-colors shadow-lg"
-            >
-              Vælg dit abonnement
-            </Link>
+      {/* How it works */}
+      <section className="py-20 bg-gradient-to-b from-stone-50 to-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">
+            Kom i gang i 3 trin
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">1</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Vælg dine præferencer</h3>
+              <p className="text-slate-500">Fortæl os om dine kostvaner, allergier og familie</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">2</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Modtag din madplan</h3>
+              <p className="text-slate-500">Hver mandag får du en komplet ugentlig plan</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl font-bold text-emerald-600 mx-auto mb-4">3</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Shop & kog</h3>
+              <p className="text-slate-500">Med din automatiske indkøbsliste er det nemt</p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-gradient-to-r from-emerald-600 to-teal-500">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Klar til at smarte din madlavning?
+          </h2>
+          <p className="text-xl text-white/90 mb-8">
+            Start med at se vores ugentlige madplan og indkøbsliste.
+          </p>
+          <Link 
+            href="/madplan"
+            className="inline-block px-10 py-5 bg-white text-emerald-600 font-bold rounded-full hover:bg-emerald-50 transition-all shadow-2xl transform hover:-translate-y-1"
+          >
+            Se eksempel på madplan →
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-emerald-600 to-teal-600 py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <footer className="bg-slate-900 py-12">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <img src="/feisty-logo.png" alt="Feisty" className="h-10 w-auto rounded-md" style={{background: 'linear-gradient(to right, #10b981, #14b8a6)'}} />
+              <img 
+                src="/feisty-logo.png" 
+                alt="Feisty" 
+                className="h-10 w-auto rounded-lg"
+                style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
+              />
             </div>
-            <p className="text-white/80 text-sm">
+            <p className="text-slate-400 text-sm">
               © 2026 Feisty. Alle rettigheder forbeholdes.
             </p>
           </div>
@@ -169,30 +193,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-const featuredRecipes = [
-  {
-    id: "frikadeller",
-    title: "Frikadeller",
-    time: "35 min",
-    image: "/images/frikadeller.jpg",
-  },
-  {
-    id: "braendende-kaerlighed",
-    title: "Brændende Kærlighed",
-    time: "45 min",
-    image: "/images/braendende-kaerlighed.jpg",
-  },
-  {
-    id: "rugbrod",
-    title: "Rugbrød",
-    time: "90 min",
-    image: "/images/rugbrod.jpg",
-  },
-  {
-    id: "tarteletter",
-    title: "Tarteletter",
-    time: "60 min",
-    image: "/images/tarteletter.jpg",
-  },
-];
