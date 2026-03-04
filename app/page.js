@@ -160,10 +160,11 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {/* Free */}
             <div className="border-2 border-slate-200 rounded-3xl p-8">
-              <h3 className="text-xl font-bold text-slate-900">30 dages prøveperiode</h3>
-              <p className="text-slate-500 text-sm mt-2 mb-4">Proev det af</p>
+              <h3 className="text-xl font-bold text-slate-900">Standard</h3>
+              <p className="text-slate-500 text-sm mt-2 mb-4">Halv pris forste maned</p>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-slate-900">Gratis</span>
+                <span className="text-4xl font-bold text-slate-900">25 kr</span>
+                <span className="text-lg font-normal text-slate-500">/md</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-2 text-slate-600">

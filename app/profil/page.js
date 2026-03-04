@@ -64,8 +64,8 @@ export default function ProfilPage() {
   const plans = [
     {
       id: "free",
-      name: "30 dages prøveperiode",
-      price: "Gratis",
+      name: "Standard (halv pris)",
+      price: "25 kr",
       period: "for evigt",
       features: ["1 uges madplan", "Basale opskrifter", "Simpel indkøbsliste"],
       popular: false,
