@@ -283,12 +283,12 @@ export default function ProfilPage() {
                 const primaryDay = item.days[0];
                 return (
                   <label key={i} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
-                    {/* Color dots - ONLY for days used, no gray placeholders */}
-                    <div className="flex gap-1 flex-shrink-0">
+                    {/* Color dots - ONLY for days used */}
+                    <div className="flex gap-0.5 flex-shrink-0 w-12">
                       {item.days.map(d => (
                         <div 
                           key={d} 
-                          className="w-2.5 h-2.5 rounded-full"
+                          className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                           style={{ backgroundColor: dayColors[d]?.dot }}
                         ></div>
                       ))}
