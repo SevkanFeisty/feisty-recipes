@@ -1,7 +1,43 @@
-import { signIn } from "@/auth"
-import Link from "next/link"
- 
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 export default function LoginPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    if (!email || !password) {
+      setError("Udfyld venligst email og adgangskode");
+      setIsLoading(false);
+      return;
+    }
+
+    // Demo: accept any login
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Store demo session in localStorage (simple approach)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('feisty_session', JSON.stringify({
+        user: { name: "Demo Bruger", email: email },
+        loggedIn: true
+      }));
+    }
+    
+    router.push("/profil");
+    router.refresh();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -19,16 +55,13 @@ export default function LoginPage() {
         </div>
  
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form
-            action={async (formData) => {
-              "use server"
-              await signIn("credentials", {
-                email: formData.get("email"),
-                password: formData.get("password"),
-                redirectTo: "/profil",
-              })
-            }}
-          >
+          <form onSubmit={handleSubmit}>
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                {error}
+              </div>
+            )}
+            
             <div className="mb-4">
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Email
@@ -41,6 +74,7 @@ export default function LoginPage() {
                 placeholder="din@email.dk"
               />
             </div>
+            
             <div className="mb-6">
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Adgangskode
@@ -53,11 +87,13 @@ export default function LoginPage() {
                 placeholder="••••••••"
               />
             </div>
+            
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 transition"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 transition disabled:opacity-50"
             >
-              Log ind
+              {isLoading ? "Logger ind..." : "Log ind"}
             </button>
           </form>
  
@@ -79,5 +115,5 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
-  )
+  );
 }
