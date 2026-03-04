@@ -9,33 +9,8 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      {/* Navigation - uses same style as layout */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <img 
-              src="/feisty-logo.png" 
-              alt="Feisty" 
-              className="h-10 w-auto rounded-lg"
-              style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
-            />
-          </Link>
-          <div className="hidden md:flex items-center gap-1">
-            <Link href="/" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-600 rounded-full transition">Forside</Link>
-            <Link href="/opskrifter" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-600 rounded-full transition">Opskrifter</Link>
-            <Link href="/abonnement" className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-600 rounded-full transition">Abonnement</Link>
-            <Link href="/login" className="ml-4 px-4 py-2 text-sm font-medium bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition">Log ind</Link>
-          </div>
-          <Link href="/login" className="md:hidden p-2 text-slate-600">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-            </svg>
-          </Link>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-b from-emerald-50 to-white">
+      <section className="pt-24 pb-20 px-4 bg-gradient-to-b from-emerald-50 to-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
