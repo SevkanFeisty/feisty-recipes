@@ -38,7 +38,7 @@ const recipes = [
     prepTime: "30",
     cookTime: "30",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=800&h=600&fit=crop",
     ingredients: [
       { name: "Hakket svinekod", quantity: "500", unit: "g" },
       { name: "Æg", quantity: "1", unit: "stk" },
@@ -153,7 +153,7 @@ const recipes = [
     prepTime: "15",
     cookTime: "45",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1622973536968-3ead9e780960?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&h=600&fit=crop",
     ingredients: [
       { name: "Spaghetti", quantity: "400", unit: "g" },
       { name: "Hakket oksekød", quantity: "500", unit: "g" },
@@ -271,7 +271,7 @@ const recipes = [
     prepTime: "15",
     cookTime: "25",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&h=600&fit=crop",
     ingredients: [
       { name: "Kyllingebryst", quantity: "500", unit: "g" },
       { name: "Yoghurt", quantity: "2", unit: "dl" },
