@@ -128,7 +128,7 @@ function buildGroceryList(days) {
         const priceData = priceFromArnold[key];
         agg[key] = {
           name: key,
-          amount: ing.qty,
+          qty: ing.qty,
           unit: ing.unit,
           days: [ing.day],
           hasPrice: !!priceData,
@@ -138,7 +138,7 @@ function buildGroceryList(days) {
       } else {
         if (!agg[key].days.includes(ing.day)) {
           agg[key].days.push(ing.day);
-          agg[key].amount += ing.qty;
+          agg[key].qty += ing.qty;
         }
       }
     });
