@@ -3,57 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-// Import recipes for ingredient lookup
-const recipesData = [
-  { id: "kylling-i-karry", ingredients: [
-    { name: "Hakket kyllingekød", qty: 400, unit: "g" },
-    { name: "Hakkede tomater", qty: 400, unit: "g" },
-    { name: "Kokosmælk", qty: 200, unit: "ml" },
-    { name: "Karrypasta", qty: 2, unit: "spsk" },
-    { name: "Løg", qty: 1, unit: "stk" },
-    { name: "Hvidløg", qty: 2, unit: "fed" },
-    { name: "Olivenolie", qty: 2, unit: "spsk" },
-    { name: "Ris", qty: 400, unit: "g" }
-  ]},
-  { id: "pasta-med-kylling", ingredients: [
-    { name: "Pasta", qty: 400, unit: "g" },
-    { name: "Kyllingebryst", qty: 200, unit: "g" },
-    { name: "Fløde", qty: 1, unit: "dl" },
-    { name: "Parmesanost", qty: 50, unit: "g" },
-    { name: "Hvidløg", qty: 2, unit: "fed" },
-    { name: "Cherrytomater", qty: 200, unit: "g" },
-    { name: "Frisk basilikum", qty: 1, unit: "håndfuld" }
-  ]},
-  { id: "bolognese-med-oksekod", ingredients: [
-    { name: "Hakket oksekød", qty: 500, unit: "g" },
-    { name: "Løg", qty: 2, unit: "stk" },
-    { name: "Gulerødder", qty: 2, unit: "stk" },
-    { name: "Stangselleri", qty: 2, unit: "stængler" },
-    { name: "Hakkede tomater", qty: 400, unit: "g" },
-    { name: "Tomatpure", qty: 2, unit: "spsk" },
-    { name: "Rødvin", qty: 1, unit: "dl" },
-    { name: "Oksebouillon", qty: 2, unit: "dl" },
-    { name: "Laurbærblade", qty: 2, unit: "stk" },
-    { name: "Oregano", qty: 1, unit: "tsk" },
-    { name: "Pasta", qty: 500, unit: "g" }
-  ]},
-  { id: "lasagne-med-bolognese", ingredients: [
-    { name: "Bolognese", qty: 300, unit: "g", leftover: true },
-    { name: "Pastaplaner", qty: 200, unit: "g" },
-    { name: "Mozzarella", qty: 100, unit: "g" },
-    { name: "Mælk", qty: 5, unit: "dl" },
-    { name: "Smør", qty: 50, unit: "g" },
-    { name: "Hvedemel", qty: 4, unit: "spsk" },
-    { name: "Parmesan", qty: 100, unit: "g" }
-  ]},
-  { id: "aeg-og-gryde", ingredients: [
-    { name: "Æg", qty: 4, unit: "stk" },
-    { name: "Havregryn", qty: 200, unit: "g" },
-    { name: "Gulerødder", qty: 100, unit: "g" },
-    { name: "Smør", qty: 25, unit: "g" }
-  ]}
-];
+import { recipes } from "../../data/recipes-danish";
 
 function getWeekNumber(date) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -66,7 +16,7 @@ function getWeekNumber(date) {
 const currentWeek = getWeekNumber(new Date());
 const currentYear = new Date().getFullYear();
 
-// Meal plans - days reference recipe IDs
+// Meal plans - recipe IDs must match actual recipe database
 const week11Data = {
   week_id: "2026-W11",
   plan_name: "Budget Champion",
@@ -110,42 +60,82 @@ const dayColors = {
   5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
 
-// Price estimates
+// Price estimates per unit
 const priceEstimates = {
-  "Hakket kyllingekød": 29, "Hakket oksekød": 35, "Hakket svinekod": 25,
-  "Kyllingebryst": 30, "Svinemørbrad": 45, "Flæsk": 35,
-  "Pasta": 8, "Ris": 8, "Havregryn": 8,
-  "Hakkede tomater": 8, "Kokosmælk": 12, "Karrypasta": 8,
-  "Løg": 2, "Hvidløg": 4, "Olivenolie": 15,
-  "Gulerødder": 6, "Stangselleri": 10, "Tomatpure": 8,
-  "Rødvin": 20, "Oksebouillon": 5, "Laurbærblade": 5,
-  "Oregano": 5, "Pastaplaner": 5, "Mozzarella": 20,
-  "Mælk": 5, "Smør": 15, "Parmesan": 25,
-  "Æg": 8, "Cherrytomater": 15, "Frisk basilikum": 10,
-  "Parmesanost": 20, "Fløde": 10
+  "Hakket kyllingekød": { price: 29, unit: "g" },
+  "Hakket oksekød": { price: 35, unit: "g" },
+  "Hakket svinekod": { price: 25, unit: "g" },
+  "Kyllingebryst": { price: 30, unit: "g" },
+  "Svinemørbrad": { price: 45, unit: "g" },
+  "Pasta": { price: 8, unit: "g" },
+  "Ris": { price: 8, unit: "g" },
+  "Havregryn": { price: 8, unit: "g" },
+  "Hakkede tomater": { price: 8, unit: "g" },
+  "Kokosmælk": { price: 12, unit: "ml" },
+  "Karrypasta": { price: 8, unit: "spsk" },
+  "Løg": { price: 2, unit: "stk" },
+  "Hvidløg": { price: 4, unit: "fed" },
+  "Olivenolie": { price: 15, unit: "spsk" },
+  "Gulerødder": { price: 6, unit: "stk" },
+  "Stangselleri": { price: 10, unit: "stængler" },
+  "Tomatpure": { price: 8, unit: "spsk" },
+  "Rødvin": { price: 20, unit: "dl" },
+  "Oksebouillon": { price: 5, unit: "dl" },
+  "Laurbærblade": { price: 5, unit: "stk" },
+  "Oregano": { price: 5, unit: "tsk" },
+  "Pastaplaner": { price: 5, unit: "g" },
+  "Mozzarella": { price: 20, unit: "g" },
+  "Mælk": { price: 5, unit: "dl" },
+  "Smør": { price: 15, unit: "g" },
+  "Parmesan": { price: 25, unit: "g" },
+  "Æg": { price: 8, unit: "stk" },
+  "Cherrytomater": { price: 15, unit: "g" },
+  "Frisk basilikum": { price: 10, unit: "håndfuld" },
+  "Parmesanost": { price: 20, unit: "g" },
+  "Fløde": { price: 10, unit: "dl" },
+  "Hvedemel": { price: 5, unit: "spsk" },
 };
 
+// Get ingredients from actual recipe database
 function getRecipeIngredients(recipeId, dayNum) {
-  const recipe = recipesData.find(r => r.id === recipeId);
-  if (!recipe) return [];
+  const recipe = recipes.find(r => r.id === recipeId);
+  if (!recipe || !recipe.ingredients) return [];
+  
   return recipe.ingredients.map(ing => ({
-    ...ing,
-    day: dayNum,
-    isLeftover: ing.leftover
+    name: ing.name,
+    qty: parseInt(ing.quantity) || 0,
+    unit: ing.unit,
+    day: dayNum
   }));
 }
 
+// Aggregate ingredients across all days
 function aggregateGroceryList(days) {
   const agg = {};
+  
   days.forEach(day => {
     const meal = day.meals?.[0];
     if (!meal) return;
     
     const ingredients = getRecipeIngredients(meal.recipe_id, day.day);
+    
     ingredients.forEach(ing => {
-      const key = ing.name;
+      // Clean up name
+      const key = ing.name.trim();
+      if (!key) return;
+      
       if (!agg[key]) {
-        agg[key] = { name: key, amount: ing.qty, unit: ing.unit, days: [ing.day], price: priceEstimates[key] || 10 };
+        // Estimate price based on quantity
+        const estimate = priceEstimates[key] || { price: 10, unit: ing.unit };
+        const price = Math.round(estimate.price * (ing.qty / 100) * 10) / 10;
+        
+        agg[key] = { 
+          name: key, 
+          amount: ing.qty, 
+          unit: ing.unit, 
+          days: [ing.day], 
+          price: price || 10
+        };
       } else {
         if (!agg[key].days.includes(ing.day)) {
           agg[key].days.push(ing.day);
@@ -154,7 +144,8 @@ function aggregateGroceryList(days) {
       }
     });
   });
-  return Object.values(agg).sort((a, b) => a.name.localeCompare(b.name));
+  
+  return Object.values(agg).sort((a, b) => a.name.localeCompare(b.name, 'da'));
 }
 
 export default function ProfilPage() {
@@ -182,7 +173,7 @@ export default function ProfilPage() {
   const canGoNext = currentWeekIdx < availableWeeks.length - 1;
   const plan = allPlans[validSelectedWeek];
 
-  // Generate grocery list from recipe ingredients
+  // Generate grocery list from actual recipe ingredients
   const groceryItems = useMemo(() => {
     if (!plan) return [];
     return aggregateGroceryList(plan.days);
@@ -303,7 +294,7 @@ export default function ProfilPage() {
           })}
         </div>
 
-        {/* Grocery List - from actual recipe ingredients */}
+        {/* Grocery List - from actual recipe database */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
