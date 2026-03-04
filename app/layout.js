@@ -44,9 +44,7 @@ function TopNav() {
   const navItems = [
     { href: "/", label: "Forside" },
     { href: "/opskrifter", label: "Opskrifter" },
-    { href: "/madplan", label: "Madplan" },
     { href: "/abonnement", label: "Abonnement" },
-    { href: "/profil", label: "Profil" },
   ];
 
   return (
@@ -67,9 +65,15 @@ function TopNav() {
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/login"
+            className="px-4 py-2 ml-4 text-sm font-medium bg-white text-emerald-600 rounded-full hover:bg-emerald-50 transition-colors"
+          >
+            Log ind
+          </Link>
         </nav>
         <Link 
-          href="/profil"
+          href="/login"
           className="md:hidden p-2 text-white"
         >
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
