@@ -1,33 +1,31 @@
 import Link from "next/link";
 
-const multiDayIngredients = ['kikærter', 'løg', 'hvidløg', 'broccoli', 'tomater'];
-
-function isMultiDayIngredient(name) {
-  const lower = name.toLowerCase();
-  return multiDayIngredients.some(m => lower.includes(m));
-}
-
 export default function LentilSoupPage() {
   const recipe = {
     title: "Linsesuppe",
-    subtitle: "Nærende linsesuppe med grøntsager",
-    description: "En varmende og sund suppe med røde linser og krydderier.",
-    prepTime: "10 min",
+    subtitle: "Varm og mættende linsesuppe med gulerødder og porrer",
+    description: "En nærende vegetarisk suppe perfekt til kolde dage.",
+    prepTime: "15 min",
     cookTime: "30 min",
     servings: 4,
     image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=1200&h=800&fit=crop",
     ingredients: [
-      { name: "300 g røde linser", day: "Torsdag" },
-      { name: "3 gulerødder", day: "Torsdag" },
-      { name: "2 porrer", day: "Torsdag" },
-      { name: "1 løg", day: "Torsdag" },
-      { name: "3 fed hvidløg", day: "Torsdag" },
-      { name: "1 liter grøntsagsbouillon", day: "Torsdag" },
-      { name: "1 tsk spidskommen", day: "Torsdag" },
-      { name: "1 tsk gurkemeje", day: "Torsdag" },
-      { name: "2 laurbærblade", day: "Torsdag" },
-      { name: "2 spsk olivenolie", day: "Torsdag" },
-      { name: "Cremefraiche", day: "Torsdag" }
+      "1 kg gulerødder",
+      "1 stk porre",
+      "400 g hakkede tomater",
+      "1.5 kg kartofler",
+      "2 dl røde linser",
+      "1 l grøntsagsbouillon",
+      "Olivenolie",
+      "Salt og peber"
+    ],
+    instructions: [
+      "Skær gulerødder og porrer i skiver.",
+      "Kog kartoflerne møre i bouillon.",
+      "Svits grøntsager i olivenolie.",
+      "Tilsæt hakkede tomater og linser.",
+      "Lad suppen koge til linserne er møre.",
+      "Server varmt med brød."
     ]
   };
 
@@ -37,8 +35,8 @@ export default function LentilSoupPage() {
         <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="absolute top-4 left-4">
-          <Link href="/madplan" className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm text-white hover:bg-white/30">
-            ← Tilbage til madplan
+          <Link href="/opskrifter" className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm text-white hover:bg-white/30">
+            ← Tilbage til opskrifter
           </Link>
         </div>
       </div>
@@ -67,68 +65,36 @@ export default function LentilSoupPage() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">📝</span>
-              Ingredienser
-            </h2>
-            
-            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-              <p className="text-sm text-amber-700">
-                <span className="font-medium">Orange ingredienser</span> bruges også på andre dage - køb lidt ekstra! ♻️
-              </p>
-            </div>
-            
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Ingredienser</h2>
             <ul className="space-y-3">
-              {recipe.ingredients.map((ing, i) => {
-                const isMulti = isMultiDayIngredient(ing.name);
-                return (
-                  <li key={i} className={`flex items-start gap-3 p-2 rounded-lg ${isMulti ? 'bg-amber-50 border border-amber-200' : ''}`}>
-                    <span className={`w-2 h-2 mt-2 rounded-full flex-shrink-0 ${isMulti ? 'bg-amber-400' : 'bg-emerald-400'}`} />
-                    <span className={isMulti ? 'text-amber-700 font-medium' : 'text-slate-700'}>
-                      {ing.name}
-                    </span>
-                  </li>
-                );
-              })}
+              {recipe.ingredients.map((ing, i) => (
+                <li key={i} className="flex items-start gap-3 text-slate-700">
+                  <span className="w-2 h-2 mt-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                  {ing}
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">👩‍🍳</span>
-              Fremgangsmåde
-            </h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Fremgangsmåde</h2>
             <ol className="space-y-4">
-              {[
-                "Hak grøntsager.",
-                "Sauter løg og hvidløg.",
-                "Tilsæt gulerødder og porrer.",
-                "Tilsæt linser og bouillon.",
-                "Krydre med spidskommen.",
-                "Lad koge i 25 min.",
-                "Server med cremefraiche."
-              ].map((step, i) => (
+              {recipe.instructions.map((step, i) => (
                 <li key={i} className="flex gap-4">
-                  <span className="flex-shrink-0 w-7 h-7 bg-emerald-500 text-white rounded-full text-sm font-bold flex items-center justify-center">
+                  <span className="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">
                     {i + 1}
                   </span>
-                  <span className="text-slate-700 pt-0.5">{step}</span>
+                  <p className="text-slate-700 pt-1">{step}</p>
                 </li>
               ))}
             </ol>
           </div>
         </div>
 
-        <div className="mt-10 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-semibold">Vil du lave denne opskrift?</h3>
-              <p className="text-emerald-100 text-sm">Tilføj til din madplan og få en automatisk indkøbsliste</p>
-            </div>
-            <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-emerald-600 hover:bg-emerald-50 transition shadow-lg">
-              Tilføj til madplan
-            </button>
-          </div>
+        <div className="mt-8 text-center">
+          <Link href="/madplan" className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 text-white font-semibold rounded-full hover:bg-emerald-600 transition">
+            ← Tilbage til madplan
+          </Link>
         </div>
       </main>
     </div>

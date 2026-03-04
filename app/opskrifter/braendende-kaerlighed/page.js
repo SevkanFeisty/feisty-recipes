@@ -1,30 +1,28 @@
 import Link from "next/link";
 
-export default function MorbradgrydePage() {
+export default function BraendendeKaerlighedPage() {
   const recipe = {
-    title: "Mørbradgryde",
-    subtitle: "Klassisk dansk mørbradgryde med bacon, champignoner og fløde",
-    description: "En velsmagende dansk klassiker med mørt svinekød i en cremet sauce.",
-    prepTime: "20 min",
-    cookTime: "30 min",
+    title: "Brændende Kærlighed",
+    subtitle: "Klassisk dansk ret med kartoffelmos, bacon og løg",
+    description: "En traditionel dansk comfort food - cremet kartoffelmos toppet med sprødt bacon og stegte løg.",
+    prepTime: "15 min",
+    cookTime: "25 min",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1584589167171-541ce45f1eea?w=1200&h=800&fit=crop",
     ingredients: [
-      "600 g grismørbrad",
-      "100 g bacon",
-      "250 g champignoner",
-      "2 dl fløde",
-      "3 tsk paprika",
-      "500 g pasta",
+      "600 g kartofler",
+      "200 g bacon",
+      "2 stk løg",
+      "1 dl mælk",
+      "25 g smør",
       "Salt og peber"
     ],
     instructions: [
-      "Brun bacon i en pande og sæt til side.",
-      "Brun mørbrad i samme pande.",
-      "Tilsæt champignoner og paprika og steg i et par minutter.",
-      "Hæld fløde ved og lad det koge op.",
-      "Bland bacon i og server med pasta.",
-      "Smag til med salt og peber."
+      "Kog kartoflerne til de er møre og dræn dem.",
+      "Mos kartoflerne med mælk og smør til en cremet mos.",
+      "Steg bacon sprødt i en pande og læg til side.",
+      "Svits løg i baconfedtet til de er gyldne.",
+      "Servér kartoffelmos toppet med bacon og løg."
     ]
   };
 

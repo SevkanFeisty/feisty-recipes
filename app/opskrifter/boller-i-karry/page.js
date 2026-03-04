@@ -1,30 +1,30 @@
 import Link from "next/link";
 
-export default function MorbradgrydePage() {
+export default function BollerIKarryPage() {
   const recipe = {
-    title: "Mørbradgryde",
-    subtitle: "Klassisk dansk mørbradgryde med bacon, champignoner og fløde",
-    description: "En velsmagende dansk klassiker med mørt svinekød i en cremet sauce.",
+    title: "Boller i Karry",
+    subtitle: "Klassisk dansk karryret med kødboller i karrysovs",
+    description: "En elsket dansk klassiker med saftige kødboller i en varm karrysovs.",
     prepTime: "20 min",
-    cookTime: "30 min",
+    cookTime: "25 min",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=1200&h=800&fit=crop",
     ingredients: [
-      "600 g grismørbrad",
-      "100 g bacon",
-      "250 g champignoner",
-      "2 dl fløde",
-      "3 tsk paprika",
-      "500 g pasta",
+      "400 g hakket gris og kalv",
+      "1 stk løg",
+      "1 stk æg",
+      "2 spsk mel",
+      "1.5 dl mælk",
+      "2 tsk karry",
+      "400 g ris",
       "Salt og peber"
     ],
     instructions: [
-      "Brun bacon i en pande og sæt til side.",
-      "Brun mørbrad i samme pande.",
-      "Tilsæt champignoner og paprika og steg i et par minutter.",
-      "Hæld fløde ved og lad det koge op.",
-      "Bland bacon i og server med pasta.",
-      "Smag til med salt og peber."
+      "Form kødboller af farsen og kog dem i letsaltet vand i ca. 10 minutter.",
+      "Lav karrysovsen: smelt smør i en gryde, tilsæt mel og karry og rør rundt.",
+      "Tilsæt mælk under omrøring og lad sovsen koge op.",
+      "Tilsæt kødbollerne til sovsen og lad det simre i et par minutter.",
+      "Server med kogte ris."
     ]
   };
 

@@ -10,11 +10,14 @@ const recipeSlugs = {
   "Veggie Tacos": "veggie-tacos",
   "Linsesuppe": "lentil-soup",
   "Falafel Bowl": "falafel-bowl",
-  "Boller i Karry": "karry-suppe",
+  "Boller i Karry": "boller-i-karry",
   "Mørbradgryde": "morbradgryde",
   "Stegt Flæsk": "stegt-flaesk",
   "Kylling i Curry": "kylling-curry",
   "Fiskefrikadeller": "fiskefrikadeller",
+  "Frikadeller": "frikadeller",
+  "Brændende Kærlighed": "braendende-kaerlighed",
+  "Tarteletter": "tarteletter",
 };
 
 // Pastel colors for each day

@@ -1,30 +1,29 @@
 import Link from "next/link";
 
-export default function MorbradgrydePage() {
+export default function FrikadellerPage() {
   const recipe = {
-    title: "Mørbradgryde",
-    subtitle: "Klassisk dansk mørbradgryde med bacon, champignoner og fløde",
-    description: "En velsmagende dansk klassiker med mørt svinekød i en cremet sauce.",
+    title: "Frikadeller",
+    subtitle: "Klassiske danske frikadeller med kartofler og brun sovs",
+    description: "Traditionelle danske kødboller - sprøde udenpå og møre indeni.",
     prepTime: "20 min",
-    cookTime: "30 min",
+    cookTime: "15 min",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=1200&h=800&fit=crop",
     ingredients: [
-      "600 g grismørbrad",
-      "100 g bacon",
-      "250 g champignoner",
-      "2 dl fløde",
-      "3 tsk paprika",
-      "500 g pasta",
+      "500 g hakket gris og kalv",
+      "1 stk løg",
+      "1 stk æg",
+      "3 spsk mel",
+      "2 dl mælk",
+      "1 kg kartofler",
       "Salt og peber"
     ],
     instructions: [
-      "Brun bacon i en pande og sæt til side.",
-      "Brun mørbrad i samme pande.",
-      "Tilsæt champignoner og paprika og steg i et par minutter.",
-      "Hæld fløde ved og lad det koge op.",
-      "Bland bacon i og server med pasta.",
-      "Smag til med salt og peber."
+      "Bland kød med salt, æg og finthakket løg.",
+      "Tilsæt mel og mælk og rør til en ensartet fars.",
+      "Steg boller i pande med olie ved medium varme.",
+      "Vend bollerne når de er gyldne på den ene side.",
+      "Server med kogte kartofler og brun sovs."
     ]
   };
 
