@@ -149,7 +149,7 @@ export default function ProfilPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 py-8">
+      <div className="bg-gradient-to-r from-emerald-500 to-teal-500 py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
             <div>
@@ -218,7 +218,7 @@ export default function ProfilPage() {
 
         {/* Grocery List - REAL DATA */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 px-6 py-4">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
               <div><h2 className="text-lg font-bold text-white">Indkøbsliste</h2><p className="text-emerald-100 text-sm">{groceryItems.length} varer - {groceryItems.reduce((s,i)=>s+i.price,0).toFixed(2)} kr</p></div>
               <span className="text-white/80 text-sm">{plan?.supermarkets?.[0]}</span>
