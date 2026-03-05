@@ -15,34 +15,6 @@ function getWeekNumber(date) {
 const currentWeek = getWeekNumber(new Date());
 const currentYear = new Date().getFullYear();
 
-// REAL PRICES from Arnold's MASTER database
-const prices = {
-  "Hakket kyllingekød": { price: 29, store: "REMA", qty: "400g" },
-  "Hakket oksekød": { price: 29, store: "REMA", qty: "400g" },
-  "Kyllingebryst": { price: 29, store: "REMA", qty: "450g" },
-  "Svinemørbrad": { price: 59.94, store: "REMA", qty: "600g" },
-  "Æg": { price: 12, store: "REMA", qty: "10 stk" },
-  "Mælk": { price: 10.50, store: "REMA", qty: "1L" },
-  "Yoghurt": { price: 10, store: "REMA", qty: "1kg" },
-  "Smør": { price: 27.95, store: "REMA", qty: "200g" },
-  "Fløde": { price: 13.95, store: "REMA", qty: "250ml" },
-  "Mozzarella": { price: 12, store: "REMA", qty: "200g" },
-  "Gulerødder": { price: 5, store: "REMA", qty: "1kg" },
-  "Løg": { price: 6, store: "REMA", qty: "1kg" },
-  "Hvidløg": { price: 8, store: "REMA", qty: "2 fed" },
-  "Cherrytomater": { price: 15, store: "REMA", qty: "250g" },
-  "Persille": { price: 8, store: "REMA", qty: "1 bdt" },
-  "Champignons": { price: 15, store: "REMA", qty: "250g" },
-  "Kartofler": { price: 10, store: "REMA", qty: "2.5kg" },
-  "Hakkede tomater": { price: 6.37, store: "REMA", qty: "400g" },
-  "Tomatpure": { price: 6.10, store: "REMA", qty: "140g" },
-  "Kokosmælk": { price: 8.95, store: "REMA", qty: "400ml" },
-  "Pasta": { price: 7.66, store: "REMA", qty: "500g" },
-  "Havregryn": { price: 8.95, store: "REMA", qty: "1kg" },
-  "Hvedemel": { price: 11.66, store: "REMA", qty: "2kg" },
-  "Ris": { price: 12, store: "REMA", qty: "1kg" },
-};
-
 // Day colors
 const dayColors = {
   1: { bg: '#DBEAFE', border: '#2563EB', label: 'Mandag', dot: '#2563EB' },
@@ -52,7 +24,7 @@ const dayColors = {
   5: { bg: '#F3E8FF', border: '#9333EA', label: 'Fredag', dot: '#9333EA' },
 };
 
-// COMPLETE grocery list from ALL recipe ingredients - Week 11
+// NEW FORMAT: Week 11 with pack calculation + leftovers + color dots
 const week11Data = {
   week_id: "2026-W11",
   plan_name: "Budget Champion",
@@ -60,52 +32,48 @@ const week11Data = {
   score: 95,
   supermarkets: ["REMA 1000"],
   days: [
-    { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Kyllingekød i Karry", recipe_id: "kylling-i-karry" }] },
-    { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Pasta med Kylling", recipe_id: "pasta-med-kylling", leftover: true }] },
-    { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod" }] },
-    { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", leftover: true }] },
-    { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Æg og Gryde", recipe_id: "aeg-og-gryde" }] },
+    { day: 1, day_name: "Mandag", day_color: "blue", recipe: "Kylling i Karry", uses_leftover: false },
+    { day: 2, day_name: "Tirsdag", day_color: "green", recipe: "Pasta med Kylling", uses_leftover: true, leftover_from: "Mandag" },
+    { day: 3, day_name: "Onsdag", day_color: "yellow", recipe: "Bolognese med Oksekød", uses_leftover: false },
+    { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Lasagne med Bolognese", uses_leftover: true, leftover_from: "Onsdag" },
+    { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Æg og Gryde", uses_leftover: false },
   ],
-  // COMPLETE list from ALL recipes (not Arnold's optimized list)
+  // NEW FORMAT: Aggregated grocery with pack calculation
   grocery: [
-    // Monday - Kylling i Karry
-    { name: "Hakket kyllingekød", amount: "400", unit: "g", price: 29, days: [1], store: "REMA" },
-    { name: "Hakkede tomater", amount: "400", unit: "g", price: 6.37, days: [1], store: "REMA" },
-    { name: "Kokosmælk", amount: "200", unit: "ml", price: 8.95, days: [1], store: "REMA" },
-    { name: "Karrypasta", amount: "2", unit: "spsk", price: null, days: [1], store: null },
-    { name: "Løg", amount: "1", unit: "stk", price: 6, days: [1], store: "REMA" },
-    { name: "Hvidløg", amount: "2", unit: "fed", price: 8, days: [1], store: "REMA" },
-    { name: "Olivenolie", amount: "2", unit: "spsk", price: null, days: [1], store: null },
-    { name: "Ris", amount: "400", unit: "g", price: 12, days: [1], store: "REMA" },
-    // Tuesday - Pasta med Kylling (uses leftover chicken from Mon)
-    { name: "Pasta", amount: "400", unit: "g", price: 7.66, days: [2], store: "REMA" },
-    { name: "Fløde", amount: "2", unit: "dl", price: 13.95, days: [2], store: "REMA" },
-    { name: "Parmesanost", amount: "50", unit: "g", price: null, days: [2], store: null },
-    { name: "Cherrytomater", amount: "200", unit: "g", price: 15, days: [2], store: "REMA" },
-    { name: "Hvidløg", amount: "2", unit: "fed", price: 8, days: [2], store: "REMA" }, // from Mon
-    // Wednesday - Bolognese med Oksekød
-    { name: "Hakket oksekød", amount: "500", unit: "g", price: 29, days: [3], store: "REMA" },
-    { name: "Løg", amount: "2", unit: "stk", price: 6, days: [3], store: "REMA" },
-    { name: "Gulerødder", amount: "2", unit: "stk", price: 5, days: [3], store: "REMA" },
-    { name: "Stangselleri", amount: "2", unit: "stængler", price: null, days: [3], store: null },
-    { name: "Hakkede tomater", amount: "400", unit: "g", price: 6.37, days: [3], store: "REMA" }, // from Mon
-    { name: "Tomatpure", amount: "2", unit: "spsk", price: 6.10, days: [3], store: "REMA" },
-    { name: "Rødvin", amount: "1", unit: "dl", price: null, days: [3], store: null },
-    { name: "Oksebouillon", amount: "2", unit: "dl", price: null, days: [3], store: null },
-    { name: "Laurbærblade", amount: "2", unit: "stk", price: null, days: [3], store: null },
-    { name: "Oregano", amount: "1", unit: "tsk", price: null, days: [3], store: null },
-    { name: "Pasta", amount: "500", unit: "g", price: 7.66, days: [3], store: "REMA" },
-    // Thursday - Lasagne med Bolognese (uses leftover bolognese from Wed)
-    { name: "Lasagneplader", amount: "12", unit: "stk", price: null, days: [4], store: null },
-    { name: "Mælk", amount: "5", unit: "dl", price: 10.50, days: [4], store: "REMA" },
-    { name: "Smør", amount: "50", unit: "g", price: 27.95, days: [4], store: "REMA" },
-    { name: "Hvedemel", amount: "4", unit: "spsk", price: 11.66, days: [4], store: "REMA" },
-    { name: "Mozzarella", amount: "200", unit: "g", price: 12, days: [4], store: "REMA" },
-    // Friday - Æg og Gryde
-    { name: "Æg", amount: "4", unit: "stk", price: 12, days: [5], store: "REMA" },
+    // Meat - aggregated by days used
+    { name: "Hakket kyllingekød", recipeAmount: "400g", packSize: "400g", pricePerPack: 29, packs_needed: 1, total_amount: "400g", total_price: 29, days: [1], day_colors: ["blue"], used_for: "Mandag" },
+    { name: "Hakket oksekød", recipeAmount: "500g", packSize: "400g", pricePerPack: 29, packs_needed: 2, total_amount: "800g", total_price: 58, days: [3], day_colors: ["yellow"], used_for: "Onsdag" },
+    
+    // Pantry - aggregated
+    { name: "Pasta", recipeAmount: "900g", packSize: "500g", pricePerPack: 7.66, packs_needed: 2, total_amount: "1000g", total_price: 15.32, days: [2, 3], day_colors: ["green", "yellow"], used_for: "Tirsdag, Onsdag" },
+    { name: "Hakkede tomater", recipeAmount: "800g", packSize: "400g", pricePerPack: 6.37, packs_needed: 2, total_amount: "800g", total_price: 12.74, days: [1, 3], day_colors: ["blue", "yellow"], used_for: "Mandag, Onsdag" },
+    { name: "Ris", recipeAmount: "400g", packSize: "1kg", pricePerPack: 12, packs_needed: 1, total_amount: "400g", total_price: 12, days: [1], day_colors: ["blue"], used_for: "Mandag" },
+    { name: "Kokosmælk", recipeAmount: "200ml", packSize: "400ml", pricePerPack: 8.95, packs_needed: 1, total_amount: "400ml", total_price: 8.95, days: [1], day_colors: ["blue"], used_for: "Mandag" },
+    { name: "Tomatpure", recipeAmount: "2 spsk", packSize: "140g", pricePerPack: 6.10, packs_needed: 1, total_amount: "140g", total_price: 6.10, days: [3], day_colors: ["yellow"], used_for: "Onsdag" },
+    
+    // Dairy
+    { name: "Fløde", recipeAmount: "2 dl", packSize: "250ml", pricePerPack: 13.95, packs_needed: 1, total_amount: "250ml", total_price: 13.95, days: [2], day_colors: ["green"], used_for: "Tirsdag" },
+    { name: "Mælk", recipeAmount: "5 dl", packSize: "1L", pricePerPack: 10.50, packs_needed: 1, total_amount: "1L", total_price: 10.50, days: [4], day_colors: ["red"], used_for: "Torsdag" },
+    { name: "Smør", recipeAmount: "50g", packSize: "200g", pricePerPack: 27.95, packs_needed: 1, total_amount: "200g", total_price: 27.95, days: [4], day_colors: ["red"], used_for: "Torsdag" },
+    { name: "Mozzarella", recipeAmount: "200g", packSize: "200g", pricePerPack: 12, packs_needed: 1, total_amount: "200g", total_price: 12, days: [4], day_colors: ["red"], used_for: "Torsdag" },
+    { name: "Æg", recipeAmount: "4 stk", packSize: "10 stk", pricePerPack: 12, packs_needed: 1, total_amount: "10 stk", total_price: 12, days: [5], day_colors: ["purple"], used_for: "Fredag" },
+    
+    // Vegetables - aggregated by days
+    { name: "Løg", recipeAmount: "3 stk", packSize: "1kg", pricePerPack: 6, packs_needed: 1, total_amount: "1kg", total_price: 6, days: [1, 3], day_colors: ["blue", "yellow"], used_for: "Mandag, Onsdag" },
+    { name: "Hvidløg", recipeAmount: "4 fed", packSize: "2 fed", pricePerPack: 8, packs_needed: 2, total_amount: "4 fed", total_price: 16, days: [1, 2], day_colors: ["blue", "green"], used_for: "Mandag, Tirsdag" },
+    { name: "Gulerødder", recipeAmount: "2 stk", packSize: "1kg", pricePerPack: 5, packs_needed: 1, total_amount: "1kg", total_price: 5, days: [3], day_colors: ["yellow"], used_for: "Onsdag" },
+    { name: "Cherrytomater", recipeAmount: "200g", packSize: "250g", pricePerPack: 15, packs_needed: 1, total_amount: "250g", total_price: 15, days: [2], day_colors: ["green"], used_for: "Tirsdag" },
+    
+    // Spices/Condiments - prices unknown
+    { name: "Karrypasta", recipeAmount: "2 spsk", packSize: "1 glas", pricePerPack: null, packs_needed: 1, total_amount: "1 glas", total_price: null, days: [1], day_colors: ["blue"], used_for: "Mandag" },
+    { name: "Olivenolie", recipeAmount: "2 spsk", packSize: "250ml", pricePerPack: 35, packs_needed: 1, total_amount: "250ml", total_price: 35, days: [1], day_colors: ["blue"], used_for: "Mandag" },
+    { name: "Parmesanost", recipeAmount: "50g", packSize: "150g", pricePerPack: null, packs_needed: 1, total_amount: "150g", total_price: null, days: [2], day_colors: ["green"], used_for: "Tirsdag" },
+    { name: "Hvedemel", recipeAmount: "4 spsk", packSize: "2kg", pricePerPack: 11.66, packs_needed: 1, total_amount: "2kg", total_price: 11.66, days: [4], day_colors: ["red"], used_for: "Torsdag" },
+    { name: "Lasagneplader", recipeAmount: "12 stk", packSize: "12 stk", pricePerPack: null, packs_needed: 1, total_amount: "12 stk", total_price: null, days: [4], day_colors: ["red"], used_for: "Torsdag" },
   ]
 };
 
+// Week 12 - Family plan
 const week12Data = {
   week_id: "2026-W12",
   plan_name: "Family Favorites",
@@ -113,11 +81,11 @@ const week12Data = {
   score: 92,
   supermarkets: ["REMA 1000"],
   days: [
-    { day: 1, day_name: "Mandag", meals: [{ recipe_name: "Boller i Karry", recipe_id: "boller-i-karry" }] },
-    { day: 2, day_name: "Tirsdag", meals: [{ recipe_name: "Mørbradgryde", recipe_id: "morbradgryde" }] },
-    { day: 3, day_name: "Onsdag", meals: [{ recipe_name: "Stegt Flæsk", recipe_id: "stegt-flaesk" }] },
-    { day: 4, day_name: "Torsdag", meals: [{ recipe_name: "Kylling i Curry", recipe_id: "kylling-curry" }] },
-    { day: 5, day_name: "Fredag", meals: [{ recipe_name: "Frikadeller", recipe_id: "frikadeller" }] },
+    { day: 1, day_name: "Mandag", day_color: "blue", recipe: "Boller i Karry", uses_leftover: false },
+    { day: 2, day_name: "Tirsdag", day_color: "green", recipe: "Mørbradgryde", uses_leftover: false },
+    { day: 3, day_name: "Onsdag", day_color: "yellow", recipe: "Stegt Flæsk", uses_leftover: false },
+    { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Kylling i Curry", uses_leftover: false },
+    { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Frikadeller", uses_leftover: false },
   ],
   grocery: []
 };
@@ -154,12 +122,13 @@ export default function ProfilPage() {
 
   const groceryItems = plan?.grocery || [];
   
+  // Calculate totals from packs_needed * pricePerPack
   const totalWithPrice = groceryItems
-    .filter(i => i.price !== null)
-    .reduce((sum, i) => sum + i.price, 0);
+    .filter(i => i.total_price !== null)
+    .reduce((sum, i) => sum + i.total_price, 0);
   
-  const itemsWithPrice = groceryItems.filter(i => i.price !== null).length;
-  const itemsWithoutPrice = groceryItems.filter(i => i.price === null).length;
+  const itemsWithPrice = groceryItems.filter(i => i.total_price !== null).length;
+  const itemsWithoutPrice = groceryItems.filter(i => i.total_price === null).length;
 
   const [checkedItems, setCheckedItems] = useState(groceryItems.map(() => false));
 
@@ -174,7 +143,7 @@ export default function ProfilPage() {
   };
 
   const checkedCount = checkedItems.filter(Boolean).length;
-  const checkedTotal = groceryItems.reduce((sum, item, i) => checkedItems[i] && item.price ? sum + item.price : sum, 0);
+  const checkedTotal = groceryItems.reduce((sum, item, i) => checkedItems[i] && item.total_price ? sum + item.total_price : sum, 0);
 
   const logout = () => {
     if (typeof window !== 'undefined') {
@@ -191,6 +160,15 @@ export default function ProfilPage() {
 
   const prevWeek = canGoPrev ? availableWeeks[currentWeekIdx - 1] : null;
   const nextWeek = canGoNext ? availableWeeks[currentWeekIdx + 1] : null;
+
+  // Day color mapping
+  const colorMap = {
+    blue: '#2563EB',
+    green: '#16A34A', 
+    yellow: '#CA8A04',
+    red: '#DC2626',
+    purple: '#9333EA'
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
@@ -244,34 +222,25 @@ export default function ProfilPage() {
           </div>
         </div>
 
-        {/* Days Grid */}
+        {/* Days Grid - NEW FORMAT with leftover indicator */}
         <div className="grid grid-cols-5 gap-3 mb-8">
           {plan?.days?.map((day) => {
             const color = dayColors[day.day];
-            const meal = day.meals?.[0];
             return (
-              <Link key={day.day} href={meal ? `/opskrifter/${meal.recipe_id}` : '#'} className="group">
-                <div className="rounded-xl p-4 text-center border-2 transition-all group-hover:scale-105 h-full flex flex-col" style={{ backgroundColor: color.bg, borderColor: color.border }}>
-                  <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
-                  {meal ? (
-                    <>
-                      <p className="text-sm font-medium text-slate-700 flex-grow">{meal.recipe_name}</p>
-                      {meal.leftover && (
-                        <div className="mt-2 px-2 py-1 bg-emerald-100 rounded-full">
-                          <p className="text-xs text-emerald-700 font-medium">Spar penge med rest</p>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <p className="text-sm text-slate-400 flex-grow">Ingen ret</p>
-                  )}
-                </div>
-              </Link>
+              <div key={day.day} className="rounded-xl p-4 text-center border-2 h-full flex flex-col" style={{ backgroundColor: color.bg, borderColor: color.border }}>
+                <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
+                <p className="text-sm font-medium text-slate-700 flex-grow">{day.recipe}</p>
+                {day.uses_leftover && (
+                  <div className="mt-2 px-2 py-1 bg-emerald-100 rounded-full">
+                    <p className="text-xs text-emerald-700 font-medium">med rester fra {day.leftover_from}</p>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
 
-        {/* Indkøbsliste - COMPLETE from all recipes */}
+        {/* Indkøbsliste - NEW FORMAT with pack calculation + color dots */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-4">
             <div className="flex items-center justify-between">
@@ -289,8 +258,8 @@ export default function ProfilPage() {
                 <label key={i} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${checkedItems[i] ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
                   {/* Color dots - ONLY for days used */}
                   <div className="flex gap-0.5 flex-shrink-0 w-12">
-                    {item.days.map(d => (
-                      <div key={d} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: dayColors[d]?.dot }}></div>
+                    {item.day_colors?.map((color, idx) => (
+                      <div key={idx} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: colorMap[color] }}></div>
                     ))}
                   </div>
                   
@@ -300,12 +269,12 @@ export default function ProfilPage() {
                     {item.name}
                   </span>
                   
-                  <span className="text-sm text-slate-500 w-20 text-right">
-                    {item.amount} {item.unit}
+                  <span className="text-xs text-slate-500 w-24 text-right">
+                    {item.total_amount}
                   </span>
                   
-                  <span className={`w-20 text-right font-medium ${item.price ? 'text-emerald-600' : 'text-amber-500'}`}>
-                    {item.price !== null ? `${item.price.toFixed(2)} kr` : '(?)'}
+                  <span className={`w-8 text-right font-medium text-xs ${item.total_price ? 'text-emerald-600' : 'text-amber-500'}`}>
+                    {item.total_price !== null ? `${item.total_price.toFixed(2)} kr` : '?'}
                   </span>
                 </label>
               ))}
