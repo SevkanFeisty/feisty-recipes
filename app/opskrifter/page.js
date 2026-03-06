@@ -39,36 +39,18 @@ export default function OpskrifterPage() {
       </div>
 
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Category Filter Pills - inspired by Årstiderne */}
+        {/* Category Filter Pills */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
-          <button
-            onClick={() => setSelectedCategory("all")}
-            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 ${
-              selectedCategory === "all"
-                ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
-                : 'bg-white text-slate-600 border-2 border-emerald-100 hover:border-emerald-500 hover:bg-emerald-50 shadow-sm hover:shadow-md'
-            }`}
-          >
-            Alle
-          </button>
           {categories.map((cat) => (
             <button
               key={cat.slug}
               onClick={() => setSelectedCategory(selectedCategory === cat.slug ? "all" : cat.slug)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 ${
                 selectedCategory === cat.slug
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
                   : 'bg-white text-slate-600 border-2 border-emerald-100 hover:border-emerald-500 hover:bg-emerald-50 shadow-sm hover:shadow-md'
               }`}
             >
-              {cat.slug === 'comfort' && '🍲'}
-              {cat.slug === 'indisk' && '🌶️'}
-              {cat.slug === 'italiensk' && '🍝'}
-              {cat.slug === 'vegetarisk' && '🥗'}
-              {cat.slug === 'hurtig' && '⚡'}
-              {cat.slug === 'familiemad' && '👨‍👩‍👧‍👦'}
-              {cat.slug === 'trending' && '🔥'}
-              {cat.slug === 'classic' && '⭐'}
               {cat.name}
             </button>
           ))}
