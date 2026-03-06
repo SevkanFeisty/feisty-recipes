@@ -88,25 +88,7 @@ const week12Data = {
     { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Kylling i Curry", uses_leftover: false },
     { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Frikadeller", uses_leftover: false },
   ],
-<<<<<<< HEAD
   grocery: []
-=======
-  grocery: [
-    { name: "Hakket svinekød", amount: "500g", price: 25, days: [1], category: "Kød" },
-    { name: "Hakket oksekød", amount: "500g", price: 35, days: [1], category: "Kød" },
-    { name: "Svinemørbrad", amount: "600g", price: 45, days: [2], category: "Kød" },
-    { name: "Champignons", amount: "250g", price: 15, days: [2], category: "Grøntsager" },
-    { name: "Fløde", amount: "3 dl", price: 15, days: [2], category: "Mejeri" },
-    { name: "Stegt flæsk", amount: "800g", price: 35, days: [3], category: "Kød" },
-    { name: "Kartofler", amount: "1 kg", price: 12, days: [3], category: "Grøntsager" },
-    { name: "Persille", amount: "1 bdt", price: 8, days: [3], category: "Krydderier" },
-    { name: "Kyllingebryst", amount: "500g", price: 30, days: [4], category: "Kød" },
-    { name: "Yoghurt", amount: "2 dl", price: 10, days: [4], category: "Mejeri" },
-    { name: "Kokosmælk", amount: "4 dl", price: 15, days: [4], category: "Mejeri" },
-    { name: "Æg", amount: "6 stk", price: 15, days: [5], category: "Mejeri" },
-    { name: "Løg", amount: "4 stk", price: 8, days: [1, 2], category: "Grøntsager" },
-  ]
->>>>>>> 87e516ce (Auth: hook login/register/profil into NextAuth sessions)
 };
 
 const allPlans = {

@@ -1,6 +1,8 @@
 import { Inter, Playfair_Display } from "next/font/google";
+import { auth } from "@/auth";
 import Link from "next/link";
 import ClientNav from "./components/ClientNav";
+import AuthProvider from "./AuthProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -11,7 +13,8 @@ export const metadata = {
   description: "Klassiske danske opskrifter til hele familien. Spar tid og penge med smarte madplaner.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth();
   return (
     <html lang="da" className={`${inter.variable} ${playfair.variable}`}>
       <head>
@@ -37,8 +40,10 @@ export default function RootLayout({ children }) {
         `}</style>
       </head>
       <body className="antialiased min-h-screen bg-white">
-        <ClientNav />
-        {children}
+        <AuthProvider session={session}>
+          <ClientNav />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
