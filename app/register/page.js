@@ -3,14 +3,15 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const planParam = searchParams.get("plan") || "solo";
-  
+
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const planNames = {
     solo: "Solo",
     family: "Family", 
@@ -26,20 +27,21 @@ function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate registration delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Create demo session
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('feisty_session', JSON.stringify({
-        user: { name: "Demo Bruger", email: "demo@feisty.dk" },
-        plan: planParam,
-        loggedIn: true
-      }));
-    }
-    
-    // Redirect to profile (in real app, would create user and process payment)
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // Simulate registration delay (here you would call your backend to create the user)
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    // After "registration", automatically sign in the user via NextAuth
+    await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
     router.push("/profil");
   };
 

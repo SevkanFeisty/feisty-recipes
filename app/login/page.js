@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,19 +24,19 @@ export default function LoginPage() {
       return;
     }
 
-    // Demo: accept any login
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Store demo session in localStorage (simple approach)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('feisty_session', JSON.stringify({
-        user: { name: "Demo Bruger", email: email },
-        loggedIn: true
-      }));
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      setError("Kunne ikke logge ind. Tjek dine oplysninger og prøv igen.");
+      setIsLoading(false);
+      return;
     }
-    
+
     router.push("/profil");
-    router.refresh();
   };
 
   return (

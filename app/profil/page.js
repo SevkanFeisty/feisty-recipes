@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 
 function getWeekNumber(date) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -87,7 +88,25 @@ const week12Data = {
     { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Kylling i Curry", uses_leftover: false },
     { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Frikadeller", uses_leftover: false },
   ],
+<<<<<<< HEAD
   grocery: []
+=======
+  grocery: [
+    { name: "Hakket svinekød", amount: "500g", price: 25, days: [1], category: "Kød" },
+    { name: "Hakket oksekød", amount: "500g", price: 35, days: [1], category: "Kød" },
+    { name: "Svinemørbrad", amount: "600g", price: 45, days: [2], category: "Kød" },
+    { name: "Champignons", amount: "250g", price: 15, days: [2], category: "Grøntsager" },
+    { name: "Fløde", amount: "3 dl", price: 15, days: [2], category: "Mejeri" },
+    { name: "Stegt flæsk", amount: "800g", price: 35, days: [3], category: "Kød" },
+    { name: "Kartofler", amount: "1 kg", price: 12, days: [3], category: "Grøntsager" },
+    { name: "Persille", amount: "1 bdt", price: 8, days: [3], category: "Krydderier" },
+    { name: "Kyllingebryst", amount: "500g", price: 30, days: [4], category: "Kød" },
+    { name: "Yoghurt", amount: "2 dl", price: 10, days: [4], category: "Mejeri" },
+    { name: "Kokosmælk", amount: "4 dl", price: 15, days: [4], category: "Mejeri" },
+    { name: "Æg", amount: "6 stk", price: 15, days: [5], category: "Mejeri" },
+    { name: "Løg", amount: "4 stk", price: 8, days: [1, 2], category: "Grøntsager" },
+  ]
+>>>>>>> 87e516ce (Auth: hook login/register/profil into NextAuth sessions)
 };
 
 const allPlans = {
@@ -97,21 +116,21 @@ const allPlans = {
 
 export default function ProfilPage() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { data: session, status } = useSession();
   const [selectedWeek, setSelectedWeek] = useState(`${currentYear}-W${currentWeek.toString().padStart(2, '0')}`);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const session = localStorage.getItem('feisty_session');
-      if (!session) {
-        router.push('/login');
-      } else {
-        setIsLoggedIn(true);
-      }
-    }
-    setLoading(false);
-  }, [router]);
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500" />
+      </div>
+    );
+  }
+
+  if (!session) {
+    router.push("/login");
+    return null;
+  }
 
   const availableWeeks = Object.keys(allPlans).sort();
   const validSelectedWeek = availableWeeks.includes(selectedWeek) ? selectedWeek : availableWeeks[0];
@@ -135,7 +154,6 @@ export default function ProfilPage() {
   useEffect(() => {
     setCheckedItems(groceryItems.map(() => false));
   }, [selectedWeek, groceryItems]);
-
   const toggleItem = (index) => {
     const newChecked = [...checkedItems];
     newChecked[index] = !newChecked[index];
@@ -145,18 +163,9 @@ export default function ProfilPage() {
   const checkedCount = checkedItems.filter(Boolean).length;
   const checkedTotal = groceryItems.reduce((sum, item, i) => checkedItems[i] && item.total_price ? sum + item.total_price : sum, 0);
 
-  const logout = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('feisty_session');
-    }
-    router.push('/login');
+  const logout = async () => {
+    await signOut({ callbackUrl: "/login" });
   };
-
-  if (loading) {
-    return <div className="min-h-screen bg-stone-50 flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div></div>;
-  }
-
-  if (!isLoggedIn) return null;
 
   const prevWeek = canGoPrev ? availableWeeks[currentWeekIdx - 1] : null;
   const nextWeek = canGoNext ? availableWeeks[currentWeekIdx + 1] : null;
