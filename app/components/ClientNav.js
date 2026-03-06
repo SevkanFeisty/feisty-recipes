@@ -37,9 +37,12 @@ export default function ClientNav() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <div className="flex items-center py-2">
             <Link href="/">
-              <div className="h-14 w-auto rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center px-4">
-                <span className="text-white font-bold text-2xl">F</span>
-              </div>
+              <img 
+                src="/feisty-logo.png" 
+                alt="Feisty" 
+                className="h-12 w-auto rounded-lg"
+                style={{ background: "linear-gradient(135deg, #10b981, #14b8a6)", padding: "4px" }}
+              />
             </Link>
           </div>
         </div>
@@ -52,9 +55,12 @@ export default function ClientNav() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <div className="flex items-center py-2">
           <Link href="/">
-            <div className="h-14 w-auto rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center px-4">
-              <span className="text-white font-bold text-2xl">F</span>
-            </div>
+            <img 
+              src="/feisty-logo.png" 
+              alt="Feisty" 
+              className="h-12 w-auto rounded-lg"
+              style={{ background: "linear-gradient(135deg, #10b981, #14b8a6)", padding: "4px" }}
+            />
           </Link>
         </div>
         

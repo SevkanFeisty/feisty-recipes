@@ -51,12 +51,12 @@ function RegisterForm() {
         {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
-            <div 
-              className="h-12 w-12 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #10b981, #14b8a6)' }}
-            >
-              <span className="text-white font-bold text-xl">F</span>
-            </div>
+            <img 
+              src="/feisty-logo.png" 
+              alt="Feisty" 
+              className="h-12 w-auto rounded"
+              style={{ background: "linear-gradient(135deg, #10b981, #14b8a6)", padding: "4px" }}
+            />
           </Link>
           <h1 className="text-3xl font-bold text-slate-900">Opret konto</h1>
           <p className="text-slate-600 mt-2">
