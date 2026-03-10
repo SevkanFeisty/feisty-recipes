@@ -126,7 +126,7 @@ const recipes = [
     prepTime: "30",
     cookTime: "45",
     servings: 8,
-    image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&h=600&fit=crop",
+    image: "/images/lasagne.jpg",
     ingredients: [
       { name: "Bolognese sauce", quantity: "500", unit: "g" },
       { name: "Lasagneplader", quantity: "12", unit: "stk" },
@@ -190,7 +190,7 @@ const recipes = [
     prepTime: "20",
     cookTime: "15",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&h=600&fit=crop",
+    image: "/images/frikadeller.jpg",
     ingredients: [
       { name: "Hakket svinekod", quantity: "500", unit: "g" },
       { name: "Hakket oksekød", quantity: "250", unit: "g" },
@@ -325,7 +325,7 @@ const recipes = [
     prepTime: "15",
     cookTime: "30",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=800&h=600&fit=crop",
+    image: "/images/braendende-kaerlighed.jpg",
     ingredients: [
       { name: "Kartofler", quantity: "1", unit: "kg" },
       { name: "Bacon i tern", quantity: "200", unit: "g" },
@@ -351,7 +351,7 @@ const recipes = [
     prepTime: "20",
     cookTime: "25",
     servings: 6,
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&h=600&fit=crop",
+    image: "/images/tarteletter.jpg",
     ingredients: [
       { name: "Kyllingekød", quantity: "400", unit: "g" },
       { name: "Grønne asparges", quantity: "1", unit: "bdt" },
@@ -460,7 +460,7 @@ const recipes = [
     prepTime: "10",
     cookTime: "15",
     servings: 4,
-    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=600&fit=crop",
+    image: "/images/pasta-carbonara.jpg",
     ingredients: [
       { name: "Spaghetti", quantity: "400", unit: "g" },
       { name: "Bacon", quantity: "200", unit: "g" },
