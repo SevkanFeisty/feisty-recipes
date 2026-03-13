@@ -33,11 +33,11 @@ const week11Data = {
   score: 95,
   supermarkets: ["REMA 1000"],
   days: [
-    { day: 1, day_name: "Mandag", day_color: "blue", recipe: "Kylling i Karry", uses_leftover: false },
-    { day: 2, day_name: "Tirsdag", day_color: "green", recipe: "Pasta med Kylling", uses_leftover: true, leftover_from: "Mandag" },
-    { day: 3, day_name: "Onsdag", day_color: "yellow", recipe: "Bolognese med Oksekød", uses_leftover: false },
-    { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Lasagne med Bolognese", uses_leftover: true, leftover_from: "Onsdag" },
-    { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Æg og Gryde", uses_leftover: false },
+    { day: 1, day_name: "Mandag", day_color: "blue", recipe: "Kylling i Karry", recipe_id: "kylling-i-karry", uses_leftover: false },
+    { day: 2, day_name: "Tirsdag", day_color: "green", recipe: "Pasta med Kylling", recipe_id: "pasta-med-kylling", uses_leftover: true, leftover_from: "Mandag" },
+    { day: 3, day_name: "Onsdag", day_color: "yellow", recipe: "Bolognese med Oksekød", recipe_id: "bolognese-med-oksekod", uses_leftover: false },
+    { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Lasagne med Bolognese", recipe_id: "lasagne-med-bolognese", uses_leftover: true, leftover_from: "Onsdag" },
+    { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Æg og Gryde", recipe_id: "aeg-og-gryde", uses_leftover: false },
   ],
   // NEW FORMAT: Aggregated grocery with pack calculation
   grocery: [
@@ -82,11 +82,11 @@ const week12Data = {
   score: 92,
   supermarkets: ["REMA 1000"],
   days: [
-    { day: 1, day_name: "Mandag", day_color: "blue", recipe: "Boller i Karry", uses_leftover: false },
-    { day: 2, day_name: "Tirsdag", day_color: "green", recipe: "Mørbradgryde", uses_leftover: false },
-    { day: 3, day_name: "Onsdag", day_color: "yellow", recipe: "Stegt Flæsk", uses_leftover: false },
-    { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Kylling i Curry", uses_leftover: false },
-    { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Frikadeller", uses_leftover: false },
+    { day: 1, day_name: "Mandag", day_color: "blue", recipe: "Boller i Karry", recipe_id: "boller-i-karry", uses_leftover: false },
+    { day: 2, day_name: "Tirsdag", day_color: "green", recipe: "Mørbradgryde", recipe_id: "morbradgryde", uses_leftover: false },
+    { day: 3, day_name: "Onsdag", day_color: "yellow", recipe: "Stegt Flæsk", recipe_id: "stegt-flaesk", uses_leftover: false },
+    { day: 4, day_name: "Torsdag", day_color: "red", recipe: "Kylling i Curry", recipe_id: "kylling-curry", uses_leftover: false },
+    { day: 5, day_name: "Fredag", day_color: "purple", recipe: "Frikadeller", recipe_id: "frikadeller", uses_leftover: false },
   ],
   grocery: []
 };
@@ -218,7 +218,7 @@ export default function ProfilPage() {
           {plan?.days?.map((day) => {
             const color = dayColors[day.day];
             return (
-              <div key={day.day} className="rounded-xl p-4 text-center border-2 h-full flex flex-col" style={{ backgroundColor: color.bg, borderColor: color.border }}>
+              <Link key={day.day} href={day.recipe_id ? `/opskrifter/${day.recipe_id}` : '#'} className="rounded-xl p-4 text-center border-2 h-full flex flex-col hover:shadow-lg transition" style={{ backgroundColor: color.bg, borderColor: color.border }}>
                 <p className="text-sm font-bold mb-2" style={{ color: color.border }}>{color.label}</p>
                 <p className="text-sm font-medium text-slate-700 flex-grow">{day.recipe}</p>
                 {day.uses_leftover && (
@@ -226,7 +226,7 @@ export default function ProfilPage() {
                     <p className="text-xs text-emerald-700 font-medium">med rester fra {day.leftover_from}</p>
                   </div>
                 )}
-              </div>
+              </Link>
             );
           })}
         </div>
